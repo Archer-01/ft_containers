@@ -1,0 +1,11 @@
+CompileFlags:
+  Add: [-Wall, -Wextra, -Werror, -std=c++98, --analyze]
+  Compiler: c++
+
+Diagnostics:
+  ClangTidy:
+    Add: "*"
+    Remove: [
+      "llvmlibc*",
+      "cppcoreguidelines-prefer-member-initializer"
+    ]

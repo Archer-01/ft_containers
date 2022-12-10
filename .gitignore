@@ -1,0 +1,8 @@
+a.out
+ft_containers
+.DS_Store
+.vscode
+.*.swp
+**/*.o
+*.dSYM
+*.a
