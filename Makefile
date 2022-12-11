@@ -11,12 +11,15 @@ ITALIC := \033[1;3m
 UNDERLINE := \033[1;4m
 
 # ******************************** Directories *********************************
-TEST_DIR := test
-OBJ_DIR := obj
+TEST_DIR := tests
+TEMPLATES_DIR := templates
+INC_DIR := includes
+OBJ_DIR := tmp
 
 # ****************************** Compiler Options ******************************
 CXX := c++
-CXXFLAGS := -Wall -Wextra -Werror -std=c++98
+CXXFLAGS := -Wall -Wextra -Werror -std=c++98 -MMD
+INC_FLAGS := -I $(TEMPLATES_DIR) -I $(INC_DIR) -I $(TEST_DIR)/templates
 
 # ********************************* Main Files *********************************
 FT_NAME := ft_containers
@@ -44,14 +47,14 @@ $(STD_NAME): $(STD_OBJS)
 
 $(FT_NAME): $(FT_OBJS)
 	echo "$(BLUE)Linking $(ITALIC)$(UNDERLINE)$(PURPLE)$@$(NC)"
-	$(CXX) $(CXXFLAGS) $^ -o $@
+	$(CXX) $(CXXFLAGS) $(INC_FLAGS) $^ -o $@
 
 $(OBJ_DIR)/%.o: $(TEST_DIR)/%.cpp | $(OBJ_DIR)
 	echo "$(GREEN)Compiling $(ITALIC)$(UNDERLINE)$(YELLOW)$(shell basename $<)$(NC)"
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(INC_FLAGS) -c $< -o $@
 
 $(OBJ_DIR):
-	mkdir -p $@
+	mkdir $@
 
 # ****************************** Global Targets ********************************
 clean:
@@ -71,3 +74,7 @@ re: fclean all
 .SILENT: $(FT_NAME) $(STD_NAME) $(FT_OBJS) $(STD_OBJS) $(OBJ_DIR) $(OBJS) \
 	clean fclean
 .PHONY: all clean fclean re
+
+# ******************************** Dependencies ********************************
+-include $(patsubst %.o, %.d, $(FT_OBJS))
+-include $(patsubst %.o, %.d, $(STD_OBJS))
