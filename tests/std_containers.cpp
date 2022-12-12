@@ -4,13 +4,18 @@ int main()
 {
 	// Iterator traits
 	{
-		iterator_traits_vector<std::iterator_traits>();
-		iterator_traits_int_ptr<std::iterator_traits>();
-		iterator_traits_const_int_ptr<std::iterator_traits>();
+		test_iterator_traits_vector<std::iterator_traits>();
+		test_iterator_traits_int_ptr<std::iterator_traits>();
+		test_iterator_traits_const_int_ptr<std::iterator_traits>();
 	}
 	// Reverse Iterator
 	{
-		reverse_iterator_vector<std::reverse_iterator>();
+		test_reverse_iterator_vector<std::reverse_iterator>();
+	}
+	// Type traits
+	{
+		test_enable_if<std::enable_if>();
+		test_is_integral<std::is_integral>();
 	}
 	return 0;
 }

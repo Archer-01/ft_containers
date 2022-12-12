@@ -5,7 +5,7 @@
 #include <vector>
 
 template <template <typename Iterator> class IteratorTraits>
-void iterator_traits_vector()
+void test_iterator_traits_vector()
 {
 	typedef IteratorTraits<std::vector<int>::iterator> traits;
 
@@ -19,7 +19,7 @@ void iterator_traits_vector()
 }
 
 template <template <typename Iterator> class IteratorTraits>
-void iterator_traits_int_ptr()
+void test_iterator_traits_int_ptr()
 {
 	typedef IteratorTraits<int *> traits;
 
@@ -32,7 +32,7 @@ void iterator_traits_int_ptr()
 }
 
 template <template <typename Iterator> class IteratorTraits>
-void iterator_traits_const_int_ptr()
+void test_iterator_traits_const_int_ptr()
 {
 	typedef IteratorTraits<const int *> traits;
 

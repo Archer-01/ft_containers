@@ -1,10 +1,11 @@
 #pragma once
 
 #include "iterator.hpp"
+#include "tests.hpp"
 #include <vector>
 
 template <template <typename Iterator> class ReverseIterator>
-void reverse_iterator_vector()
+void test_reverse_iterator_vector()
 {
 	typedef ReverseIterator<std::vector<int>::iterator> reverse_iterator;
 
