@@ -8,5 +8,10 @@ Diagnostics:
     Remove: [
       "llvmlibc*",
       "cppcoreguidelines-prefer-member-initializer",
-      "fuchsia-overloaded-operator"
+      "fuchsia-overloaded-operator",
+      "cert-dcl21-cpp",
+      "google-explicit-constructor",
+      "hicpp-explicit-conversions",
+      "cppcoreguidelines-non-private-member-variables-in-classes",
+      "misc-non-private-member-variables-in-classes",
     ]
