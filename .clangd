@@ -7,5 +7,6 @@ Diagnostics:
     Add: "*"
     Remove: [
       "llvmlibc*",
-      "cppcoreguidelines-prefer-member-initializer"
+      "cppcoreguidelines-prefer-member-initializer",
+      "fuchsia-overloaded-operator"
     ]
