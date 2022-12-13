@@ -1,3 +1,5 @@
+#include "algorithm.hpp"
+#include "test_algorithm.hpp"
 #include "tests.hpp"
 
 int main()
@@ -16,6 +18,10 @@ int main()
 	{
 		test_enable_if<ft::enable_if>();
 		test_is_integral<ft::is_integral>();
+	}
+	// Algorithm
+	{
+		test_ft_equal();
 	}
 	return 0;
 }

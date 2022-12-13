@@ -1,4 +1,6 @@
+#include "test_algorithm.hpp"
 #include "tests.hpp"
+#include <algorithm.hpp>
 
 int main()
 {
@@ -16,6 +18,10 @@ int main()
 	{
 		test_enable_if<std::enable_if>();
 		test_is_integral<std::is_integral>();
+	}
+	// Algorithm
+	{
+		test_std_equal();
 	}
 	return 0;
 }

@@ -25,8 +25,10 @@ INC_FLAGS := -I $(TEMPLATES_DIR) -I $(INC_DIR) -I $(TEST_DIR)/templates
 FT_NAME := ft_containers
 STD_NAME := std_containers
 
-FT_TESTS := $(TEST_DIR)/ft_containers.cpp
-STD_TESTS := $(TEST_DIR)/std_containers.cpp
+FT_TESTS := $(TEST_DIR)/ft_containers.cpp \
+			$(TEST_DIR)/test_algorithm.cpp
+STD_TESTS := $(TEST_DIR)/std_containers.cpp \
+			$(TEST_DIR)/test_algorithm.cpp
 
 FT_OBJS := $(patsubst $(TEST_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(FT_TESTS))
 STD_OBJS := $(patsubst $(TEST_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(STD_TESTS))
