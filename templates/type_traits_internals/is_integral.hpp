@@ -39,6 +39,12 @@ struct ft::is_integral<wchar_t>
 };
 
 template <>
+struct ft::is_integral<char16_t>
+{
+	static const bool value = true;
+};
+
+template <>
 struct ft::is_integral<short>
 {
 	static const bool value = true;
