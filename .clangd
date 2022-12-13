@@ -15,4 +15,7 @@ Diagnostics:
       "cppcoreguidelines-non-private-member-variables-in-classes",
       "misc-non-private-member-variables-in-classes",
       "google-runtime-int",
+      "hicpp-special-member-functions",
+      "cppcoreguidelines-special-member-functions",
+      "google-build-explicit-make-pair",
     ]

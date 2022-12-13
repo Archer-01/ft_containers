@@ -1,6 +1,6 @@
-#include "algorithm.hpp"
-#include "test_algorithm.hpp"
+#include "test_utility.hpp"
 #include "tests.hpp"
+#include "utility.hpp"
 
 int main()
 {
@@ -23,6 +23,11 @@ int main()
 	{
 		test_ft_equal();
 		test_ft_lexicographical_compare();
+	}
+	// Utility
+	{
+		test_pair<ft::pair>();
+		test_ft_make_pair();
 	}
 	return 0;
 }

@@ -1,6 +1,5 @@
-#include "test_algorithm.hpp"
+#include "test_utility.hpp"
 #include "tests.hpp"
-#include <algorithm.hpp>
 
 int main()
 {
@@ -23,6 +22,11 @@ int main()
 	{
 		test_std_equal();
 		test_std_lexicographical_compare();
+	}
+	// Utility
+	{
+		test_pair<std::pair>();
+		test_std_make_pair();
 	}
 	return 0;
 }
