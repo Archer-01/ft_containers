@@ -22,6 +22,7 @@ int main()
 	// Algorithm
 	{
 		test_ft_equal();
+		test_ft_lexicographical_compare();
 	}
 	return 0;
 }

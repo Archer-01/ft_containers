@@ -22,6 +22,7 @@ int main()
 	// Algorithm
 	{
 		test_std_equal();
+		test_std_lexicographical_compare();
 	}
 	return 0;
 }
