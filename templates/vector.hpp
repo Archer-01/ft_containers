@@ -118,6 +118,28 @@ namespace ft
 			const_pointer data() const;
 
 			/**
+			 * @defgroup Iterators methods
+			 *
+			 *	- Begin method
+			 *	- End method
+			 *	- Rbegin method
+			 *	- Rend method
+			 *
+			 */
+
+			iterator begin();
+			const_iterator begin() const;
+
+			iterator end();
+			const_iterator end() const;
+
+			reverse_iterator rbegin();
+			const_reverse_iterator rbegin() const;
+
+			reverse_iterator rend();
+			const_reverse_iterator rend() const;
+
+			/**
 			 * @defgroup Clear method
 			 *
 			 */
@@ -176,14 +198,6 @@ namespace ft
 				m_Allocator.construct(&m_Data[m_Size], value);
 				++m_Size;
 			}
-
-			/**
-			 * @defgroup begin & end methods
-			 *
-			 */
-
-			iterator begin() const { return iterator(m_Data); }
-			iterator end() const { return iterator(m_Data + m_Size); }
 
 		private:
 			pointer m_Data;

@@ -192,3 +192,57 @@ ft::vector<T, Allocator>::data() const
 {
 	return m_Data;
 }
+
+template <typename T, typename Allocator>
+typename ft::vector<T, Allocator>::iterator ft::vector<T, Allocator>::begin()
+{
+	return iterator(m_Data);
+}
+
+template <typename T, typename Allocator>
+typename ft::vector<T, Allocator>::const_iterator
+ft::vector<T, Allocator>::begin() const
+{
+	return const_iterator(m_Data);
+}
+
+template <typename T, typename Allocator>
+typename ft::vector<T, Allocator>::iterator ft::vector<T, Allocator>::end()
+{
+	return iterator(m_Data + m_Size);
+}
+
+template <typename T, typename Allocator>
+typename ft::vector<T, Allocator>::const_iterator
+ft::vector<T, Allocator>::end() const
+{
+	return const_iterator(m_Data + m_Size);
+}
+
+template <typename T, typename Allocator>
+typename ft::vector<T, Allocator>::reverse_iterator
+ft::vector<T, Allocator>::rbegin()
+{
+	return reverse_iterator(this->end());
+}
+
+template <typename T, typename Allocator>
+typename ft::vector<T, Allocator>::const_reverse_iterator
+ft::vector<T, Allocator>::rbegin() const
+{
+	return const_reverse_iterator(this->end());
+}
+
+template <typename T, typename Allocator>
+typename ft::vector<T, Allocator>::reverse_iterator
+ft::vector<T, Allocator>::rend()
+{
+	return reverse_iterator(this->begin());
+}
+
+template <typename T, typename Allocator>
+typename ft::vector<T, Allocator>::const_reverse_iterator
+ft::vector<T, Allocator>::rend() const
+{
+	return const_reverse_iterator(this->begin());
+}
