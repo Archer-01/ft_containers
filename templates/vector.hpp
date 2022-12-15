@@ -85,6 +85,13 @@ namespace ft
 			void assign(InputIterator first, InputIterator last);
 
 			/**
+			 * @def Get allocator method
+			 *
+			 */
+
+			allocator_type get_allocator() const;
+
+			/**
 			 * @defgroup Clear method
 			 *
 			 */

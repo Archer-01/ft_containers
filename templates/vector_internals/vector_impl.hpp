@@ -106,3 +106,10 @@ void ft::vector<T, Allocator>::assign(InputIterator first, InputIterator last)
 		this->push_back(*it);
 	}
 }
+
+template <typename T, typename Allocator>
+typename ft::vector<T, Allocator>::allocator_type
+ft::vector<T, Allocator>::get_allocator() const
+{
+	return m_Allocator;
+}
