@@ -18,4 +18,6 @@ Diagnostics:
       "hicpp-special-member-functions",
       "cppcoreguidelines-special-member-functions",
       "google-build-explicit-make-pair",
+      "modernize-use-auto",
+      "hicpp-use-auto",
     ]

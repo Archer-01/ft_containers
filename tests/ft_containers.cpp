@@ -1,6 +1,4 @@
-#include "test_utility.hpp"
 #include "tests.hpp"
-#include "utility.hpp"
 
 int main()
 {
