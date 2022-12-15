@@ -81,3 +81,28 @@ ft::vector<T, Allocator>& ft::vector<T, Allocator>::operator=(const vector& othe
 	}
 	return *this;
 }
+
+template <typename T, typename Allocator>
+void ft::vector<T, Allocator>::assign(size_type count, const T& value)
+{
+	this->clear();
+	this->reserve(count);
+	#pragma unroll
+	for (size_type i = 0; i < count; i++)
+	{
+		this->push_back(value);
+	}
+}
+
+template <typename T, typename Allocator>
+template <typename InputIterator>
+void ft::vector<T, Allocator>::assign(InputIterator first, InputIterator last)
+{
+	this->clear();
+	this->reserve(std::distance(first, last));
+	#pragma unroll
+	for (InputIterator it = first; it != last; it++)
+	{
+		this->push_back(*it);
+	}
+}
