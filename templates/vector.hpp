@@ -92,6 +92,32 @@ namespace ft
 			allocator_type get_allocator() const;
 
 			/**
+			 * @defgroup Elements access methods
+			 *
+			 *	- At method
+			 *	- Subscript operator []
+			 *	- Front method
+			 *	- Back method
+			 *	- Data method
+			 *
+			 */
+
+			reference at(size_type pos);
+			const_reference at(size_type pos) const;
+
+			reference operator[](size_type pos);
+			const_reference operator[](size_type pos) const;
+
+			reference front();
+			const_reference front() const;
+
+			reference back();
+			const_reference back() const;
+
+			pointer data();
+			const_pointer data() const;
+
+			/**
 			 * @defgroup Clear method
 			 *
 			 */
