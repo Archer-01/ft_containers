@@ -20,4 +20,5 @@ Diagnostics:
       "google-build-explicit-make-pair",
       "modernize-use-auto",
       "hicpp-use-auto",
+      "fuchsia-default-arguments-declarations",
     ]

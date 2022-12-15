@@ -21,6 +21,8 @@ class ft::random_access_iterator
 		template <typename U>
 		random_access_iterator& operator=(const random_access_iterator<U> &rhs);
 
+		random_access_iterator(pointer ptr);
+
 		template <typename U>
 		bool operator==(const random_access_iterator<U> &rhs) const;
 
@@ -60,8 +62,6 @@ class ft::random_access_iterator
 
 	private:
 		pointer m_Current;
-
-		random_access_iterator(pointer ptr);
 };
 
 template <typename T>
