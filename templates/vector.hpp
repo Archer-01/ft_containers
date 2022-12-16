@@ -3,6 +3,7 @@
 #include "iterator.hpp"
 #include "stl_iterators.hpp"
 #include "type_traits.hpp"
+#include "type_traits_internals/is_integral.hpp"
 #include <memory>
 
 namespace ft
@@ -157,41 +158,45 @@ namespace ft
 			size_type capacity() const;
 
 			/**
-			 * @defgroup Clear method
+			 * @defgroup Modifier methods
+			 *
+			 *	- Clear method
+			 *	- Insert method
+			 *	- Erase method
+			 *	- Push back method
+			 *	- Pop back method
+			 *	- Resize method
+			 *	- Swap method
 			 *
 			 */
 
-			void clear()
-			{
-				#pragma unroll
-				for (size_type i = 0; i < m_Size; i++)
-				{
-					m_Allocator.destroy(&m_Data[i]);
-				}
-				m_Size = 0;
-			}
+			void clear();
 
-			/**
-			 * @brief push_back method
-			 *
-			 */
+			iterator insert(const_iterator pos, const T& value);
+			iterator insert(
+				const_iterator pos,
+				size_type count,
+				const T& value
+			);
+			template <typename InputIterator>
+			iterator insert(
+				const_iterator pos,
+				InputIterator first,
+				typename ft::enable_if<
+					not ft::is_integral<InputIterator>::value,
+					InputIterator
+				>::type last
+			);
 
-			void push_back(const T& value)
-			{
-				if (m_Size == m_Capacity)
-				{
-					if (m_Capacity == 0)
-					{
-						this->reserve(1);
-					}
-					else
-					{
-						this->reserve(m_Capacity * 2);
-					}
-				}
-				m_Allocator.construct(&m_Data[m_Size], value);
-				++m_Size;
-			}
+			iterator erase(const_iterator pos);
+			iterator erase(iterator first, iterator last);
+
+			void push_back(const T& value);
+			void pop_back();
+
+			void resize(size_type count, T value = T());
+
+			void swap(vector& other);
 
 		private:
 			pointer m_Data;

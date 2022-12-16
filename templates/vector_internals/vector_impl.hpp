@@ -1,5 +1,6 @@
 #pragma once
 
+#include "type_traits"
 #include "vector.hpp"
 #include <cstddef>
 #include <iterator>
@@ -89,7 +90,7 @@ void ft::vector<T, Allocator>::assign(size_type count, const T& value)
 	this->clear();
 	this->reserve(count);
 	#pragma unroll
-	for (size_type i = 0; i < count; i++)
+	for (size_type i = 0; i < count; ++i)
 	{
 		this->push_back(value);
 	}
@@ -102,7 +103,7 @@ void ft::vector<T, Allocator>::assign(InputIterator first, InputIterator last)
 	this->clear();
 	this->reserve(std::distance(first, last));
 	#pragma unroll
-	for (InputIterator it = first; it != last; it++)
+	for (InputIterator it = first; it != last; ++it)
 	{
 		this->push_back(*it);
 	}
@@ -276,7 +277,7 @@ void ft::vector<T, Allocator>::reserve(size_type new_cap)
 
 		new_data = m_Allocator.allocate(new_cap);
 		#pragma unroll
-		for (size_type i = 0; i < m_Size; i++)
+		for (size_type i = 0; i < m_Size; ++i)
 		{
 			m_Allocator.construct(&new_data[i], m_Data[i]);
 			m_Allocator.destroy(&m_Data[i]);
@@ -292,4 +293,225 @@ typename ft::vector<T, Allocator>::size_type
 ft::vector<T, Allocator>::capacity() const
 {
 	return m_Capacity;
+}
+
+template <typename T, typename Allocator>
+void ft::vector<T, Allocator>::clear()
+{
+	#pragma unroll
+	for (size_type i = 0; i < m_Size; ++i)
+	{
+		m_Allocator.destroy(&m_Data[i]);
+	}
+	m_Size = 0;
+}
+
+template <typename T, typename Allocator>
+typename ft::vector<T, Allocator>::iterator
+ft::vector<T, Allocator>::insert(const_iterator pos, const T& value)
+{
+	size_type index = pos - this->begin();
+	size_type new_size = m_Size + 1;
+
+	if (new_size > m_Capacity)
+	{
+		size_type new_capacity = m_Capacity * 2;
+
+		if (new_capacity < new_size)
+		{
+			new_capacity = new_size;
+		}
+		this->reserve(new_capacity);
+	}
+	#pragma unroll
+	for (size_type i = m_Size; i > index; --i)
+	{
+		m_Allocator.construct(&m_Data[i], m_Data[i - 1]);
+		m_Allocator.destroy(&m_Data[i - 1]);
+	}
+	m_Allocator.construct(&m_Data[index], value);
+	m_Size = new_size;
+	return iterator(m_Data + index);
+}
+
+template <typename T, typename Allocator>
+typename ft::vector<T, Allocator>::iterator
+ft::vector<T, Allocator>::insert(
+	const_iterator pos,
+	size_type count,
+	const T& value
+)
+{
+	size_type index = pos - this->begin();
+	size_type new_size = m_Size + count;
+
+	if (new_size > m_Capacity)
+	{
+		size_type new_capacity = m_Capacity * 2;
+
+		if (new_capacity < new_size)
+		{
+			new_capacity = new_size;
+		}
+		this->reserve(new_capacity);
+	}
+	#pragma unroll
+	for (size_type i = m_Size; i > index; --i)
+	{
+		m_Allocator.construct(&m_Data[i + count - 1], m_Data[i - 1]);
+		m_Allocator.destroy(&m_Data[i - 1]);
+	}
+	#pragma unroll
+	for (size_type i = 0; i < count; ++i)
+	{
+		m_Allocator.construct(&m_Data[index + i], value);
+	}
+	m_Size = new_size;
+	return iterator(m_Data + index);
+}
+
+template <typename T, typename Allocator>
+template <typename InputIterator>
+typename ft::vector<T, Allocator>::iterator
+ft::vector<T, Allocator>::insert(
+	const_iterator pos,
+	InputIterator first,
+	typename ft::enable_if<
+		not ft::is_integral<InputIterator>::value,
+		InputIterator
+	>::type last
+)
+{
+	size_type index = pos - this->begin();
+	size_type count = std::distance(first, last);
+	size_type new_size = m_Size + count;
+
+	if (new_size > m_Capacity)
+	{
+		size_type new_capacity = m_Capacity * 2;
+
+		if (new_capacity < new_size)
+		{
+			new_capacity = new_size;
+		}
+		this->reserve(new_capacity);
+	}
+	#pragma unroll
+	for (size_type i = m_Size; i > index; --i)
+	{
+		m_Allocator.construct(&m_Data[i + count - 1], m_Data[i - 1]);
+		m_Allocator.destroy(&m_Data[i - 1]);
+	}
+	for (size_type i = 0; i < count; ++i)
+	{
+		m_Allocator.construct(&m_Data[index + i], *first);
+		++first;
+	}
+	m_Size = new_size;
+	return iterator(m_Data + index);
+}
+
+template <typename T, typename Allocator>
+typename ft::vector<T, Allocator>::iterator
+ft::vector<T, Allocator>::erase(const_iterator pos)
+{
+	size_type index = pos - this->begin();
+
+	m_Allocator.destroy(&m_Data[index]);
+	#pragma unroll
+	for (size_type i = index; i < m_Size - 1; ++i)
+	{
+		m_Allocator.construct(&m_Data[i], m_Data[i + 1]);
+		m_Allocator.destroy(&m_Data[i + 1]);
+	}
+	--m_Size;
+	return iterator(m_Data + index);
+}
+
+template <typename T, typename Allocator>
+typename ft::vector<T, Allocator>::iterator
+ft::vector<T, Allocator>::erase(iterator first, iterator last)
+{
+	size_type index = first - this->begin();
+	size_type count = last - first;
+
+	#pragma unroll
+	for (size_type i = index; i < index + count; ++i)
+	{
+		m_Allocator.destroy(&m_Data[i]);
+	}
+	#pragma unroll
+	for (size_type i = index; i < m_Size - count; ++i)
+	{
+		m_Allocator.construct(&m_Data[i], m_Data[i + count]);
+		m_Allocator.destroy(&m_Data[i + count]);
+	}
+	m_Size -= count;
+	return iterator(m_Data + index);
+}
+
+template <typename T, typename Allocator>
+void ft::vector<T, Allocator>::push_back(const T& value)
+{
+	if (m_Size == m_Capacity)
+	{
+		if (m_Capacity == 0)
+		{
+			this->reserve(1);
+		}
+		else // m_Capacity != 0
+		{
+			this->reserve(m_Capacity * 2);
+		}
+	}
+	m_Allocator.construct(&m_Data[m_Size], value);
+	++m_Size;
+}
+
+template <typename T, typename Allocator>
+void ft::vector<T, Allocator>::pop_back()
+{
+	m_Allocator.destroy(&m_Data[m_Size - 1]);
+	--m_Size;
+}
+
+template <typename T, typename Allocator>
+void ft::vector<T, Allocator>::resize(size_type count, T value)
+{
+	if (count > m_Size)
+	{
+		if (count > m_Capacity)
+		{
+			size_type new_capacity = m_Capacity * 2;
+
+			if (count > new_capacity)
+			{
+				new_capacity = count;
+			}
+			this->reserve(new_capacity);
+		}
+		#pragma unroll
+		for (size_type i = m_Size; i < count; ++i)
+		{
+			m_Allocator.construct(&m_Data[i], value);
+		}
+	}
+	else // count <= m_Size
+	{
+		#pragma unroll
+		for (size_type i = m_Size; i > count; --i)
+		{
+			m_Allocator.destroy(&m_Data[i - 1]);
+		}
+	}
+	m_Size = count;
+}
+
+template <typename T, typename Allocator>
+void ft::vector<T, Allocator>::swap(vector& other)
+{
+	std::swap(m_Data, other.m_Data);
+	std::swap(m_Size, other.m_Size);
+	std::swap(m_Capacity, other.m_Capacity);
+	std::swap(m_Allocator, other.m_Allocator);
 }

@@ -21,4 +21,6 @@ Diagnostics:
       "modernize-use-auto",
       "hicpp-use-auto",
       "fuchsia-default-arguments-declarations",
+      "altera-unroll-loops",
+      "altera-id-dependent-backward-branch",
     ]
