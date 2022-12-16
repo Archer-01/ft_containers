@@ -246,3 +246,50 @@ ft::vector<T, Allocator>::rend() const
 {
 	return const_reverse_iterator(this->begin());
 }
+
+template <typename T, typename Allocator>
+bool ft::vector<T, Allocator>::empty() const
+{
+	return m_Size == 0;
+}
+
+template <typename T, typename Allocator>
+typename ft::vector<T, Allocator>::size_type
+ft::vector<T, Allocator>::size() const
+{
+	return m_Size;
+}
+
+template <typename T, typename Allocator>
+typename ft::vector<T, Allocator>::size_type
+ft::vector<T, Allocator>::max_size() const
+{
+	return m_Allocator.max_size();
+}
+
+template <typename T, typename Allocator>
+void ft::vector<T, Allocator>::reserve(size_type new_cap)
+{
+	if (new_cap > m_Capacity)
+	{
+		pointer new_data;
+
+		new_data = m_Allocator.allocate(new_cap);
+		#pragma unroll
+		for (size_type i = 0; i < m_Size; i++)
+		{
+			m_Allocator.construct(&new_data[i], m_Data[i]);
+			m_Allocator.destroy(&m_Data[i]);
+		}
+		m_Allocator.deallocate(m_Data, m_Capacity);
+		m_Data = new_data;
+		m_Capacity = new_cap;
+	}
+}
+
+template <typename T, typename Allocator>
+typename ft::vector<T, Allocator>::size_type
+ft::vector<T, Allocator>::capacity() const
+{
+	return m_Capacity;
+}

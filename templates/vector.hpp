@@ -140,6 +140,23 @@ namespace ft
 			const_reverse_iterator rend() const;
 
 			/**
+			 * @defgroup Capacity methods
+			 *
+			 *	- Empty method
+			 *	- Size method
+			 *	- Max size method
+			 *	- Reserve method
+			 *	- Capacity method
+			 *
+			 */
+
+			bool empty() const;
+			size_type size() const;
+			size_type max_size() const;
+			void reserve(size_type new_cap);
+			size_type capacity() const;
+
+			/**
 			 * @defgroup Clear method
 			 *
 			 */
@@ -152,29 +169,6 @@ namespace ft
 					m_Allocator.destroy(&m_Data[i]);
 				}
 				m_Size = 0;
-			}
-
-			 /**
-			  * @brief Reserve method
-			  *
-			  */
-			void reserve(size_type new_cap)
-			{
-				if (new_cap > m_Capacity)
-				{
-					pointer new_data;
-
-					new_data = m_Allocator.allocate(new_cap);
-					#pragma unroll
-					for (size_type i = 0; i < m_Size; i++)
-					{
-						m_Allocator.construct(&new_data[i], m_Data[i]);
-						m_Allocator.destroy(&m_Data[i]);
-					}
-					m_Allocator.deallocate(m_Data, m_Capacity);
-					m_Data = new_data;
-					m_Capacity = new_cap;
-				}
 			}
 
 			/**
