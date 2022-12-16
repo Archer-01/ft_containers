@@ -2,6 +2,7 @@
 
 #include "algorithm.hpp"
 #include "type_traits"
+#include "type_traits_internals/is_integral.hpp"
 #include "vector.hpp"
 #include <cstddef>
 #include <iterator>
@@ -99,7 +100,13 @@ void ft::vector<T, Allocator>::assign(size_type count, const T& value)
 
 template <typename T, typename Allocator>
 template <typename InputIterator>
-void ft::vector<T, Allocator>::assign(InputIterator first, InputIterator last)
+void ft::vector<T, Allocator>::assign(
+	InputIterator first,
+	typename ft::enable_if<
+		not ft::is_integral<InputIterator>::value,
+		InputIterator
+	>::type last
+)
 {
 	this->clear();
 	this->reserve(std::distance(first, last));

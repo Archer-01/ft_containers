@@ -3,6 +3,7 @@
 #include "iterator.hpp"
 #include "stl_iterators.hpp"
 #include "type_traits.hpp"
+#include "type_traits_internals/enable_if.hpp"
 #include "type_traits_internals/is_integral.hpp"
 #include <memory>
 
@@ -88,7 +89,13 @@ namespace ft
 			void assign(size_type count, const T& value);
 
 			template <typename InputIterator>
-			void assign(InputIterator first, InputIterator last);
+			void assign(
+				InputIterator first,
+				typename ft::enable_if<
+					not ft::is_integral<InputIterator>::value,
+					InputIterator
+				>::type last
+			);
 
 			/**
 			 * @def Get allocator method
