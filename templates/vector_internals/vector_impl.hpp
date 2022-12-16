@@ -1,5 +1,6 @@
 #pragma once
 
+#include "algorithm.hpp"
 #include "type_traits"
 #include "vector.hpp"
 #include <cstddef>
@@ -514,4 +515,84 @@ void ft::vector<T, Allocator>::swap(vector& other)
 	std::swap(m_Size, other.m_Size);
 	std::swap(m_Capacity, other.m_Capacity);
 	std::swap(m_Allocator, other.m_Allocator);
+}
+
+template <typename T, typename Allocator>
+bool ft::operator==(
+	const ft::vector<T, Allocator>& lhs,
+	const ft::vector<T, Allocator>& rhs
+)
+{
+	if (lhs.size() != rhs.size())
+	{
+		return false;
+	}
+	#pragma unroll
+	for (size_t i = 0; i < lhs.size(); ++i)
+	{
+		if (lhs[i] != rhs[i])
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+template <typename T, typename Allocator>
+bool ft::operator!=(
+	const ft::vector<T, Allocator>& lhs,
+	const ft::vector<T, Allocator>& rhs
+)
+{
+	return not (lhs == rhs);
+}
+
+template <typename T, typename Allocator>
+bool ft::operator<(
+	const ft::vector<T, Allocator>& lhs,
+	const ft::vector<T, Allocator>& rhs
+)
+{
+	return ft::lexicographical_compare(
+		lhs.begin(),
+		lhs.end(),
+		rhs.begin(),
+		rhs.end()
+	);
+}
+
+template <typename T, typename Allocator>
+bool ft::operator<=(
+	const ft::vector<T, Allocator>& lhs,
+	const ft::vector<T, Allocator>& rhs
+)
+{
+	return (lhs < rhs) or (lhs == rhs);
+}
+
+template <typename T, typename Allocator>
+bool ft::operator>(
+	const ft::vector<T, Allocator>& lhs,
+	const ft::vector<T, Allocator>& rhs
+)
+{
+	return not (lhs <= rhs);
+}
+
+template <typename T, typename Allocator>
+bool ft::operator>=(
+	const ft::vector<T, Allocator>& lhs,
+	const ft::vector<T, Allocator>& rhs
+)
+{
+	return not (lhs < rhs);
+}
+
+template <typename T, typename Allocator>
+void ft::swap(
+	ft::vector<T, Allocator>& lhs,
+	ft::vector<T, Allocator>& rhs
+)
+{
+	lhs.swap(rhs);
 }

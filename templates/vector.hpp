@@ -13,6 +13,11 @@ namespace ft
 	class vector
 	{
 		public:
+			/**
+			 * @brief Typedefs
+			 *
+			 */
+
 			typedef T value_type;
 			typedef Allocator allocator_type;
 			typedef std::size_t size_type;
@@ -204,6 +209,65 @@ namespace ft
 			size_type m_Capacity;
 			allocator_type m_Allocator;
 	};
+
+	/**
+	 * @brief Vector relational operators (Non-member functions)
+	 *
+	 *	- Equal operator ==
+	 *	- Not equal operator !=
+	 *	- Less than operator <
+	 *	- Less than or equals operator <=
+	 *	- Greater than operator >
+	 *	- Greater than or equals operator >=
+	 *
+	 */
+
+	template <typename T, typename Allocator>
+	bool operator==(
+		const ft::vector<T, Allocator>& lhs,
+		const ft::vector<T, Allocator>& rhs
+	);
+
+	template <typename T, typename Allocator>
+	bool operator!=(
+		const ft::vector<T, Allocator>& lhs,
+		const ft::vector<T, Allocator>& rhs
+	);
+
+	template <typename T, typename Allocator>
+	bool operator<(
+		const ft::vector<T, Allocator>& lhs,
+		const ft::vector<T, Allocator>& rhs
+	);
+
+	template <typename T, typename Allocator>
+	bool operator<=(
+		const ft::vector<T, Allocator>& lhs,
+		const ft::vector<T, Allocator>& rhs
+	);
+
+	template <typename T, typename Allocator>
+	bool operator>(
+		const ft::vector<T, Allocator>& lhs,
+		const ft::vector<T, Allocator>& rhs
+	);
+
+	template <typename T, typename Allocator>
+	bool operator>=(
+		const ft::vector<T, Allocator>& lhs,
+		const ft::vector<T, Allocator>& rhs
+	);
+
+	/**
+	 * @brief Vector swap (Non-member function)
+	 *
+	 */
+
+	template <typename T, typename Allocator>
+	void swap(
+		ft::vector<T, Allocator>& lhs,
+		ft::vector<T, Allocator>& rhs
+	);
 
 }; // namespace ft
 
