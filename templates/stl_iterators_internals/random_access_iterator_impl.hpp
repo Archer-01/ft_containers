@@ -29,10 +29,7 @@ ft::random_access_iterator<T>& ft::random_access_iterator<T>::operator=(
 	const random_access_iterator<U> &rhs
 )
 {
-	if (this != &rhs)
-	{
-		m_Current = rhs.base();
-	}
+	m_Current = rhs.base();
 	return (*this);
 }
 

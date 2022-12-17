@@ -1,8 +1,7 @@
 #pragma once
 
 #include "algorithm.hpp"
-#include "type_traits"
-#include "type_traits_internals/is_integral.hpp"
+#include "type_traits.hpp"
 #include "vector.hpp"
 #include <cstddef>
 #include <iterator>

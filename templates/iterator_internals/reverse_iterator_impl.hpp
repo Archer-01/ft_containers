@@ -29,10 +29,7 @@ ft::reverse_iterator<Iterator>& ft::reverse_iterator<Iterator>::operator=(
 	const reverse_iterator<Iter>& rev_it
 )
 {
-	if (this != &rev_it)
-	{
-		this->current = rev_it.base();
-	}
+	this->current = rev_it.base();
 	return *this;
 }
 
@@ -201,5 +198,5 @@ typename ft::reverse_iterator<Iterator1>::difference_type ft::operator-(
 	const reverse_iterator<Iterator2>& rhs
 )
 {
-	return rhs.base() - lhs.base();
+	return -1 * (lhs.base() - rhs.base());
 }
