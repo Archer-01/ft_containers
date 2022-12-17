@@ -437,6 +437,7 @@ ft::vector<T, Allocator>::insert(
 	size_type index = pos - this->begin();
 	size_type count = std::distance(first, last);
 	size_type new_size = m_Size + count;
+	vector copy(first, last);
 
 	if (new_size > m_Capacity)
 	{
@@ -458,7 +459,7 @@ ft::vector<T, Allocator>::insert(
 	{
 		try
 		{
-			m_Allocator.construct(&m_Data[index + i], *first);
+			m_Allocator.construct(&m_Data[index + i], copy[i]);
 			++m_Size;
 		}
 		catch (...)
@@ -469,7 +470,6 @@ ft::vector<T, Allocator>::insert(
 			m_Capacity = 0;
 			throw;
 		}
-		++first;
 	}
 	return iterator(m_Data + index);
 }
