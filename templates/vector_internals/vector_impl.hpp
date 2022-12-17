@@ -70,8 +70,11 @@ ft::vector<T, Allocator>::vector(const vector& other)
 template <typename T, typename Allocator>
 ft::vector<T, Allocator>::~vector()
 {
-	this->clear();
-	m_Allocator.deallocate(m_Data, m_Capacity);
+	if (m_Data != NULL)
+	{
+		this->clear();
+		m_Allocator.deallocate(m_Data, m_Capacity);
+	}
 }
 
 template <typename T, typename Allocator>
@@ -336,7 +339,18 @@ ft::vector<T, Allocator>::insert(const_iterator pos, const T& value)
 		m_Allocator.construct(&m_Data[i], m_Data[i - 1]);
 		m_Allocator.destroy(&m_Data[i - 1]);
 	}
-	m_Allocator.construct(&m_Data[index], value);
+	try
+	{
+		m_Allocator.construct(&m_Data[index], value);
+	}
+	catch (...)
+	{
+		this->clear();
+		m_Allocator.deallocate(m_Data, m_Capacity);
+		m_Data = NULL;
+		m_Capacity = 0;
+		throw;
+	}
 	m_Size = new_size;
 	return iterator(m_Data + index);
 }
@@ -371,9 +385,20 @@ ft::vector<T, Allocator>::insert(
 	#pragma unroll
 	for (size_type i = 0; i < count; ++i)
 	{
-		m_Allocator.construct(&m_Data[index + i], value);
+		try
+		{
+			m_Allocator.construct(&m_Data[index + i], value);
+			++m_Size;
+		}
+		catch (...)
+		{
+			this->clear();
+			m_Allocator.deallocate(m_Data, m_Capacity);
+			m_Data = NULL;
+			m_Capacity = 0;
+			throw;
+		}
 	}
-	m_Size = new_size;
 	return iterator(m_Data + index);
 }
 
@@ -411,10 +436,21 @@ ft::vector<T, Allocator>::insert(
 	}
 	for (size_type i = 0; i < count; ++i)
 	{
-		m_Allocator.construct(&m_Data[index + i], *first);
+		try
+		{
+			m_Allocator.construct(&m_Data[index + i], *first);
+			++m_Size;
+		}
+		catch (...)
+		{
+			this->clear();
+			m_Allocator.deallocate(m_Data, m_Capacity);
+			m_Data = NULL;
+			m_Capacity = 0;
+			throw;
+		}
 		++first;
 	}
-	m_Size = new_size;
 	return iterator(m_Data + index);
 }
 
@@ -471,7 +507,18 @@ void ft::vector<T, Allocator>::push_back(const T& value)
 			this->reserve(m_Capacity * 2);
 		}
 	}
-	m_Allocator.construct(&m_Data[m_Size], value);
+	try
+	{
+		m_Allocator.construct(&m_Data[m_Size], value);
+	}
+	catch (...)
+	{
+		this->clear();
+		m_Allocator.deallocate(m_Data, m_Capacity);
+		m_Data = NULL;
+		m_Capacity = 0;
+		throw;
+	}
 	++m_Size;
 }
 
@@ -500,7 +547,19 @@ void ft::vector<T, Allocator>::resize(size_type count, T value)
 		#pragma unroll
 		for (size_type i = m_Size; i < count; ++i)
 		{
-			m_Allocator.construct(&m_Data[i], value);
+			try
+			{
+				m_Allocator.construct(&m_Data[i], value);
+				++m_Size;
+			}
+			catch (...)
+			{
+				this->clear();
+				m_Allocator.deallocate(m_Data, m_Capacity);
+				m_Data = NULL;
+				m_Capacity = 0;
+				throw;
+			}
 		}
 	}
 	else // count <= m_Size
@@ -510,8 +569,8 @@ void ft::vector<T, Allocator>::resize(size_type count, T value)
 		{
 			m_Allocator.destroy(&m_Data[i - 1]);
 		}
+		m_Size = count;
 	}
-	m_Size = count;
 }
 
 template <typename T, typename Allocator>
