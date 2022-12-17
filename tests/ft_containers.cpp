@@ -27,5 +27,9 @@ int main()
 		test_pair<ft::pair>();
 		test_ft_make_pair();
 	}
+	// Vector
+	{
+		test_vector<ft::vector>();
+	}
 	return 0;
 }

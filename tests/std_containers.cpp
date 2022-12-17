@@ -28,5 +28,9 @@ int main()
 		test_pair<std::pair>();
 		test_std_make_pair();
 	}
+	// Vector
+	{
+		test_vector<std::vector>();
+	}
 	return 0;
 }
