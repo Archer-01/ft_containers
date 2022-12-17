@@ -82,8 +82,28 @@ ft::vector<T, Allocator>& ft::vector<T, Allocator>::operator=(const vector& othe
 {
 	if (this != &other)
 	{
+		this->clear();
+		m_Allocator.deallocate(m_Data, m_Capacity);
 		m_Allocator = other.m_Allocator;
-		this->assign(other.begin(), other.end());
+		m_Capacity = other.m_Capacity;
+		m_Data = m_Allocator.allocate(m_Capacity);
+		#pragma unroll
+		for (size_type i = 0; i < other.m_Size; ++i)
+		{
+			try
+			{
+				m_Allocator.construct(m_Data + i, other.m_Data[i]);
+				++m_Size;
+			}
+			catch(...)
+			{
+				this->clear();
+				m_Allocator.deallocate(m_Data, m_Capacity);
+				m_Data = NULL;
+				m_Capacity = 0;
+				throw;
+			}
+		}
 	}
 	return *this;
 }
