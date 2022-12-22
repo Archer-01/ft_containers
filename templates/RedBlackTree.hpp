@@ -65,6 +65,13 @@ namespace ft
 			);
 
 			/**
+			 * @defgroup Destructor
+			 *
+			 */
+
+			~RedBlackTree();
+
+			/**
 			 * @defgroup Insert method
 			 *
 			 */
@@ -84,6 +91,7 @@ namespace ft
 				const Compare &comp
 			);
 			static void RecursivePrint(Node *root);
+			static void RecursiveDelete(Node *root, Allocator &alloc);
 	};
 
 }; // namespace ft

@@ -125,3 +125,22 @@ void ft::RedBlackTree<T, Compare, Allocator>::RecursivePrint(Node *root)
 	std::cout << root->data << " ";
 	RecursivePrint(root->right);
 }
+
+template <typename T, typename Compare, typename Allocator>
+ft::RedBlackTree<T, Compare, Allocator>::~RedBlackTree()
+{
+	RecursiveDelete(m_Root, m_Allocator);
+}
+
+template <typename T, typename Compare, typename Allocator>
+void ft::RedBlackTree<T, Compare, Allocator>::RecursiveDelete(Node *root, Allocator &alloc)
+{
+	if (root == NULL)
+	{
+		return;
+	}
+	RecursiveDelete(root->left, alloc);
+	RecursiveDelete(root->right, alloc);
+	alloc.destroy(&root->data);
+	delete root;
+}
