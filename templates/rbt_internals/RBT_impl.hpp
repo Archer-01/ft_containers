@@ -79,6 +79,7 @@ void ft::RedBlackTree<T, Compare, Allocator>::RecursiveInsert(
 )
 {
 	assert(root != NULL);
+	assert(node != NULL);
 
 	if (comp(node->data, root->data) == true)
 	{
@@ -194,4 +195,100 @@ ft::RedBlackTree<T, Compare, Allocator>::RedBlackTree(const RedBlackTree &other)
 	m_Allocator = other.m_Allocator;
 	m_Compare = other.m_Compare;
 	m_Root = this->copyTree(other.m_Root);
+}
+
+
+
+template <typename T, typename Compare, typename Allocator>
+void ft::RedBlackTree<T, Compare, Allocator>::leftRotate(Node *grandParent)
+{
+	assert(grandParent != NULL);
+	assert(grandParent->right != NULL);
+	assert(grandParent->parent != NULL);
+
+	Node *parent = NULL;
+	
+	parent = grandParent->right;
+	grandParent->right = parent->left;
+	if (parent->left != NULL) // Parent has a left sub-tree
+	{
+		parent->left->parent = grandParent;
+		parent->left->side = RIGHT;
+	}
+	if (grandParent->parent == NULL) // Grand parent is the root node
+	{
+		m_Root = parent;
+		m_Root->parent = NULL;
+	}
+	else // Grand parent is not the root node
+	{
+		parent->parent = grandParent->parent;
+		parent->side = grandParent->side;
+		if (parent->side == LEFT)
+		{
+			grandParent->parent->left = parent;
+		}
+		else
+		{
+			grandParent->parent->right = parent;
+		}
+	}
+	// Rotate the grand parent around its right child
+	parent->left = grandParent;
+	grandParent->parent = parent;
+	grandParent->side = LEFT;
+}
+
+template <typename T, typename Compare, typename Allocator>
+void ft::RedBlackTree<T, Compare, Allocator>::rightRotate(Node *grandParent)
+{
+	assert(grandParent != NULL);
+	assert(grandParent->left != NULL);
+	assert(grandParent->parent != NULL);
+
+	Node *parent = NULL;
+
+	parent = grandParent->left;
+	grandParent->left = parent->right;
+	if (parent->right != NULL) // Parent has a right sub-tree
+	{
+		parent->right->parent = grandParent;
+		parent->right->side = LEFT;
+	}
+	if (grandParent->parent == NULL) // Grand parent is the root node
+	{
+		m_Root = parent;
+		m_Root->parent = NULL;
+	}
+	else // Grand parent is not the root node
+	{
+		parent->parent = grandParent->parent;
+		parent->side = grandParent->side;
+		if (parent->side == LEFT)
+		{
+			grandParent->parent->left = parent;
+		}
+		else
+		{
+			grandParent->parent->right = parent;
+		}
+	}
+	// Rotate the grand parent around its left child
+	parent->right = grandParent;
+	grandParent->parent = parent;
+	grandParent->side = RIGHT;
+}
+
+template <typename T, typename Compare, typename Allocator>
+void ft::RedBlackTree<T, Compare, Allocator>::leftRightRotate(Node *grandParent)
+{
+	this->leftRotate(grandParent->left);
+	this->rightRotate(grandParent);
+}
+
+template <typename T, typename Compare, typename Allocator>
+void ft::RedBlackTree<T, Compare, Allocator>::rightLeftRotate(Node *grandParent)
+{
+	this->rightRotate(grandParent->right);
+	this->leftRotate(grandParent);
 }

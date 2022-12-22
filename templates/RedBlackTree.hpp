@@ -107,6 +107,11 @@ namespace ft
 			 */
 
 			Node *copyTree(Node *srcRoot);
+
+			void leftRotate(Node *grandParent);
+			void rightRotate(Node *grandParent);
+			void leftRightRotate(Node *grandParent);
+			void rightLeftRotate(Node *grandParent);
 	};
 
 }; // namespace ft
