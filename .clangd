@@ -23,4 +23,5 @@ Diagnostics:
       "fuchsia-default-arguments-declarations",
       "altera-unroll-loops",
       "altera-id-dependent-backward-branch",
+	  "google-readability-todo"
     ]
