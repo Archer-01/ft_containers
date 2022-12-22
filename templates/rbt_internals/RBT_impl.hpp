@@ -144,3 +144,54 @@ void ft::RedBlackTree<T, Compare, Allocator>::RecursiveDelete(Node *root, Alloca
 	alloc.destroy(&root->data);
 	delete root;
 }
+
+template <typename T, typename Compare, typename Allocator>
+typename ft::RedBlackTree<T, Compare, Allocator>&
+ft::RedBlackTree<T, Compare, Allocator>::operator=(const RedBlackTree &other)
+{
+	if (this != &other)
+	{
+		RecursiveDelete(m_Root, m_Allocator);
+		m_Size = 0;
+		m_Allocator = other.m_Allocator;
+		m_Compare = other.m_Compare;
+		m_Root = this->copyTree(other.m_Root);
+	}
+	return *this;
+}
+
+template <typename T, typename Compare, typename Allocator>
+typename ft::RedBlackTree<T, Compare, Allocator>::Node*
+ft::RedBlackTree<T, Compare, Allocator>::copyTree(Node *srcRoot)
+{
+	Node *node = NULL;
+
+	if (srcRoot == NULL)
+	{
+		return NULL;
+	}
+	node = new Node();
+	*node = *srcRoot;
+	node->left = copyTree(srcRoot->left);
+	if (node->left != NULL)
+	{
+		node->left->parent = node;
+		node->left->side = LEFT;
+	}
+	node->right = copyTree(srcRoot->right);
+	if (node->right != NULL)
+	{
+		node->right->parent = node;
+		node->right->side = RIGHT;
+	}
+	return node;
+}
+
+template <typename T, typename Compare, typename Allocator>
+ft::RedBlackTree<T, Compare, Allocator>::RedBlackTree(const RedBlackTree &other)
+{
+	m_Size = 0;
+	m_Allocator = other.m_Allocator;
+	m_Compare = other.m_Compare;
+	m_Root = this->copyTree(other.m_Root);
+}

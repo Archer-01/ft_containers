@@ -63,6 +63,7 @@ namespace ft
 				const Compare &comp = Compare(),
 				const Allocator &alloc = Allocator()
 			);
+			RedBlackTree(const RedBlackTree &other);
 
 			/**
 			 * @defgroup Destructor
@@ -70,6 +71,13 @@ namespace ft
 			 */
 
 			~RedBlackTree();
+
+			/**
+			 * @defgroup Assignment operator
+			 *
+			 */
+
+			RedBlackTree &operator=(const RedBlackTree &other);
 
 			/**
 			 * @defgroup Insert method
@@ -92,6 +100,13 @@ namespace ft
 			);
 			static void RecursivePrint(Node *root);
 			static void RecursiveDelete(Node *root, Allocator &alloc);
+
+			/**
+			 * @defgroup Private methods
+			 *
+			 */
+
+			Node *copyTree(Node *srcRoot);
 	};
 
 }; // namespace ft
