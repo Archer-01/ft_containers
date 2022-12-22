@@ -1,6 +1,7 @@
 #pragma once
 
 #include "type_traits.hpp"
+#include <cstddef>
 
 namespace ft
 {
@@ -31,6 +32,61 @@ namespace ft
 
 			struct Node;
 
+			/**
+			 * @defgroup Attributes
+			 *
+			 */
+
+			Node *m_Root;
+			size_t m_Size;
+			Allocator m_Allocator;
+			Compare m_Compare;
+
+		public:
+			/**
+			 * @defgroup Constructors
+			 *
+			 */
+
+			RedBlackTree();
+			explicit RedBlackTree(
+				const Compare &comp,
+				const Allocator &alloc = Allocator()
+			);
+			template <typename InputIterator>
+			RedBlackTree(
+				InputIterator first,
+				typename ft::enable_if<
+					not ft::is_integral<InputIterator>::value,
+					InputIterator
+				>::type last,
+				const Compare &comp = Compare(),
+				const Allocator &alloc = Allocator()
+			);
+
+			/**
+			 * @defgroup Insert method
+			 *
+			 */
+
+			void insert(T value);
+			void print() const;
+
+		private:
+			/**
+			 * @defgroup Static methods
+			 *
+			 */
+
+			static void RecursiveInsert(
+				Node *root,
+				Node *node,
+				const Compare &comp
+			);
+			static void RecursivePrint(Node *root);
+	};
+
 }; // namespace ft
 
 #include "rbt_internals/RBTNode.hpp"
+#include "rbt_internals/RBT_impl.hpp"
