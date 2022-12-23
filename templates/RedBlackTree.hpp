@@ -112,6 +112,13 @@ namespace ft
 			void rightRotate(Node *grandParent);
 			void leftRightRotate(Node *grandParent);
 			void rightLeftRotate(Node *grandParent);
+
+			void rotate(Node *problemNode);
+			void simpleRotationRecolor(Node *problemNode);
+			void doubleRotationRecolor(Node *problemNode);
+
+			const Node *aunt(const Node *node) const;
+			static Node *Sibling(Node *node);
 	};
 
 }; // namespace ft
