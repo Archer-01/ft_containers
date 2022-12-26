@@ -117,7 +117,9 @@ namespace ft
 			void simpleRotationRecolor(Node *problemNode);
 			void doubleRotationRecolor(Node *problemNode);
 
-			const Node *aunt(const Node *node) const;
+			void recolor(Node *problemNode);
+
+			void insertionFixup(Node *problemNode);
 	};
 
 }; // namespace ft

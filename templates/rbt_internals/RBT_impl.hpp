@@ -2,10 +2,8 @@
 
 #include "RedBlackTree.hpp"
 #include "test_algorithm.hpp"
-#include <iterator>
-
-// WARN: Remove me later
 #include <iostream>
+#include <iterator>
 
 template <typename T, typename Compare, typename Allocator>
 ft::RedBlackTree<T, Compare, Allocator>::RedBlackTree()
@@ -62,13 +60,12 @@ void ft::RedBlackTree<T, Compare, Allocator>::insert(T value)
 	{
 		m_Root = node;
 		m_Root->color = BLACK;
+		++m_Size;
+		return;
 	}
-	else
-	{
-		RecursiveInsert(m_Root, node, m_Compare);
-	}
+	RecursiveInsert(m_Root, node, m_Compare);
 	++m_Size;
-	// FIX: Add insertion fixup
+	this->insertionFixup(node);
 }
 
 template <typename T, typename Compare, typename Allocator>
@@ -202,7 +199,6 @@ void ft::RedBlackTree<T, Compare, Allocator>::leftRotate(Node *grandParent)
 {
 	assert(grandParent != NULL);
 	assert(grandParent->right != NULL);
-	assert(grandParent->parent != NULL);
 
 	Node *parent = NULL;
 	
@@ -242,7 +238,6 @@ void ft::RedBlackTree<T, Compare, Allocator>::rightRotate(Node *grandParent)
 {
 	assert(grandParent != NULL);
 	assert(grandParent->left != NULL);
-	assert(grandParent->parent != NULL);
 
 	Node *parent = NULL;
 
@@ -294,10 +289,6 @@ void ft::RedBlackTree<T, Compare, Allocator>::rightLeftRotate(Node *grandParent)
 template <typename T, typename Compare, typename Allocator>
 void ft::RedBlackTree<T, Compare, Allocator>::simpleRotationRecolor(Node *problemNode)
 {
-	assert(problemNode != NULL);
-	assert(problemNode->parent != NULL);
-	assert(problemNode->parent->parent != NULL);
-
 	problemNode->parent->color = BLACK;
 	problemNode->sibling()->color = RED;
 }
@@ -305,13 +296,9 @@ void ft::RedBlackTree<T, Compare, Allocator>::simpleRotationRecolor(Node *proble
 template <typename T, typename Compare, typename Allocator>
 void ft::RedBlackTree<T, Compare, Allocator>::doubleRotationRecolor(Node *problemNode)
 {
-	assert(problemNode != NULL);
-	assert(problemNode->parent != NULL);
-	assert(problemNode->parent->parent != NULL);
-
-	problemNode->parent->color = BLACK;
-	problemNode->parent->left->color = RED;
-	problemNode->parent->right->color = RED;
+	problemNode->color = BLACK;
+	problemNode->left->color = RED;
+	problemNode->right->color = RED;
 }
 
 template <typename T, typename Compare, typename Allocator>
@@ -319,47 +306,59 @@ void ft::RedBlackTree<T, Compare, Allocator>::rotate(Node *problemNode)
 {
 	assert(problemNode != NULL);
 	assert(problemNode->parent != NULL);
-	assert(problemNode->parent->parent != NULL);
+	assert(problemNode->grandParent() != NULL);
 
 	if (problemNode->side == LEFT and problemNode->parent->side == LEFT)
 	{
-		this->rightRotate(problemNode->parent->parent);
+		this->rightRotate(problemNode->grandParent());
 		simpleRotationRecolor(problemNode);
 	}
 	else if (problemNode->side == RIGHT and problemNode->parent->side == RIGHT)
 	{
-		this->leftRotate(problemNode->parent->parent);
+		this->leftRotate(problemNode->grandParent());
 		simpleRotationRecolor(problemNode);
 	}
 	else if (problemNode->side == LEFT and problemNode->parent->side == RIGHT)
 	{
-		this->rightLeftRotate(problemNode->parent->parent);
+		this->rightLeftRotate(problemNode->grandParent());
 		doubleRotationRecolor(problemNode);
 	}
 	else if (problemNode->side == RIGHT and problemNode->parent->side == LEFT)
 	{
-		this->leftRightRotate(problemNode->parent->parent);
+		this->leftRightRotate(problemNode->grandParent());
 		doubleRotationRecolor(problemNode);
 	}
 }
 
 template <typename T, typename Compare, typename Allocator>
-const typename ft::RedBlackTree<T, Compare, Allocator>::Node*
-ft::RedBlackTree<T, Compare, Allocator>::aunt(const Node *node) const
+void ft::RedBlackTree<T, Compare, Allocator>::recolor(Node *problemNode)
 {
-	assert(node != NULL);
-	assert(node->parent != NULL);
-	assert(node->parent->parent != NULL);
+	assert(problemNode != NULL);
+	assert(problemNode->parent != NULL);
+	assert(problemNode->grandParent() != NULL);
 
-	const Node *aunt = NULL;
+	problemNode->parent->color = BLACK;
+	problemNode->aunt()->color = BLACK;
+	problemNode->grandParent()->color = RED;
+}
 
-	if (node->parent->side == LEFT)
+template <typename T, typename Compare, typename Allocator>
+void ft::RedBlackTree<T, Compare, Allocator>::insertionFixup(Node *problemNode)
+{
+	while (problemNode != m_Root and problemNode->parent->color == RED)
 	{
-		aunt = node->parent->parent->right;
+		Node *aunt = problemNode->aunt();
+
+		if (aunt != NULL and aunt->color == RED)
+		{
+			this->recolor(problemNode);
+			problemNode = problemNode->grandParent();
+		}
+		else
+		{
+			this->rotate(problemNode);
+			break;
+		}
 	}
-	else
-	{
-		aunt = node->parent->parent->left;
-	}
-	return aunt;
+	m_Root->color = BLACK;
 }

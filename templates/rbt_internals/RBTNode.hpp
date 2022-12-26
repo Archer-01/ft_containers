@@ -63,4 +63,33 @@ struct ft::RedBlackTree<T, Compare, Allocator>::Node
 		}
 		return sibling;
 	}
+
+	Node *aunt()
+	{
+		assert(this != NULL);
+		assert(this->parent != NULL);
+		assert(this->parent->parent != NULL);
+
+		Node *aunt = NULL;
+
+		if (this->parent->side == LEFT)
+		{
+			aunt = this->parent->parent->right;
+		}
+		else // this->parent->side == RIGHT
+		{
+			aunt = this->parent->parent->left;
+		}
+		return aunt;
+	}
+
+	Node *grandParent()
+	{
+		assert(this != NULL);
+		assert(this->parent != NULL);
+		assert(this->parent->parent != NULL);
+
+		return this->parent->parent;
+	}
+
 };
