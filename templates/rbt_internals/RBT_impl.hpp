@@ -292,26 +292,6 @@ void ft::RedBlackTree<T, Compare, Allocator>::rightLeftRotate(Node *grandParent)
 }
 
 template <typename T, typename Compare, typename Allocator>
-typename ft::RedBlackTree<T, Compare, Allocator>::Node*
-ft::RedBlackTree<T, Compare, Allocator>::Sibling(Node *node)
-{
-	assert(node != NULL);
-	assert(node->parent != NULL);
-
-	Node *sibling = NULL;
-
-	if (node->side == LEFT)
-	{
-		sibling = node->parent->right;
-	}
-	else // node->side == RIGHT
-	{
-		sibling = node->parent->left;
-	}
-	return sibling;
-}
-
-template <typename T, typename Compare, typename Allocator>
 void ft::RedBlackTree<T, Compare, Allocator>::simpleRotationRecolor(Node *problemNode)
 {
 	assert(problemNode != NULL);
@@ -319,7 +299,7 @@ void ft::RedBlackTree<T, Compare, Allocator>::simpleRotationRecolor(Node *proble
 	assert(problemNode->parent->parent != NULL);
 
 	problemNode->parent->color = BLACK;
-	Sibling(problemNode)->color = RED;
+	problemNode->sibling()->color = RED;
 }
 
 template <typename T, typename Compare, typename Allocator>

@@ -40,4 +40,27 @@ struct ft::RedBlackTree<T, Compare, Allocator>::Node
 		this->color = RED;
 		this->side = LEFT;
 	}
+
+	/**
+	 * @def Sibling method
+	 *
+	 */
+
+	Node *sibling()
+	{
+		assert(this != NULL);
+		assert(this->parent != NULL);
+
+		Node *sibling = NULL;
+
+		if (this->side == LEFT)
+		{
+			sibling = this->parent->right;
+		}
+		else // this->side == RIGHT
+		{
+			sibling = this->parent->left;
+		}
+		return sibling;
+	}
 };

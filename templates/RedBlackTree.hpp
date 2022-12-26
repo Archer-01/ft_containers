@@ -118,7 +118,6 @@ namespace ft
 			void doubleRotationRecolor(Node *problemNode);
 
 			const Node *aunt(const Node *node) const;
-			static Node *Sibling(Node *node);
 	};
 
 }; // namespace ft
