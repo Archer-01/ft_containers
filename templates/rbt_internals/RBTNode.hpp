@@ -10,6 +10,7 @@ struct ft::RedBlackTree<T, Compare, Allocator>::Node
 	 * @defgroup Attributes
 	 *
 	 */
+
 	T data;
 	Node *left;
 	Node *right;
@@ -20,76 +21,30 @@ struct ft::RedBlackTree<T, Compare, Allocator>::Node
 	/**
 	 * @defgroup Constructors
 	 *
+	 * - Default Constructor
+	 * - Parameterized Constructor
 	 */
-	Node()
-	{
-		this->data = T();
-		this->left = NULL;
-		this->right = NULL;
-		this->parent = NULL;
-		this->color = RED;
-		this->side = LEFT;
-	}
 
-	Node(T data)
-	{
-		this->data = data;
-		this->left = NULL;
-		this->right = NULL;
-		this->parent = NULL;
-		this->color = RED;
-		this->side = LEFT;
-	}
+	Node();
+	Node(T data);
 
 	/**
-	 * @def Sibling method
+	 * @def Helper methods
+	 *
+	 * - Sibling
+	 * - Aunt
+	 * - Grandparent
+	 * - Replace with
+	 * - Swap colors
+	 * - Get successor
 	 *
 	 */
 
-	Node *sibling()
-	{
-		assert(this != NULL);
-		assert(this->parent != NULL);
-
-		Node *sibling = NULL;
-
-		if (this->side == LEFT)
-		{
-			sibling = this->parent->right;
-		}
-		else // this->side == RIGHT
-		{
-			sibling = this->parent->left;
-		}
-		return sibling;
-	}
-
-	Node *aunt()
-	{
-		assert(this != NULL);
-		assert(this->parent != NULL);
-		assert(this->parent->parent != NULL);
-
-		Node *aunt = NULL;
-
-		if (this->parent->side == LEFT)
-		{
-			aunt = this->parent->parent->right;
-		}
-		else // this->parent->side == RIGHT
-		{
-			aunt = this->parent->parent->left;
-		}
-		return aunt;
-	}
-
-	Node *grandParent()
-	{
-		assert(this != NULL);
-		assert(this->parent != NULL);
-		assert(this->parent->parent != NULL);
-
-		return this->parent->parent;
-	}
-
+	Node *sibling();
+	Node *aunt();
+	Node *grandParent();
+	void swapColorsWith(Node *otherNode);
+	Node *getSuccessor();
 };
+
+#include "RBTNode_impl.hpp"
