@@ -362,3 +362,123 @@ void ft::RedBlackTree<T, Compare, Allocator>::insertionFixup(Node *problemNode)
 	}
 	m_Root->color = BLACK;
 }
+
+template <typename T, typename Compare, typename Allocator>
+typename ft::RedBlackTree<T, Compare, Allocator>::Node*
+ft::RedBlackTree<T, Compare, Allocator>::findNode(T value)
+{
+	Node *current = m_Root;
+
+	while (current != NULL)
+	{
+		if (m_Compare(value, current->data))
+		{
+			current = current->left;
+		}
+		else if (m_Compare(current->data, value))
+		{
+			current = current->right;
+		}
+		else
+		{
+			return current;
+		}
+	}
+	return NULL;
+}
+
+template <typename T, typename Compare, typename Allocator>
+void ft::RedBlackTree<T, Compare, Allocator>::replace(
+	Node *target,
+	Node *replacement
+)
+{
+	assert(target != NULL);
+
+	if (replacement == NULL)
+	{
+		if (target->parent == NULL)
+		{
+			m_Root = NULL;
+		}
+		else if (target->side == LEFT)
+		{
+			target->parent->left = NULL;
+		}
+		else
+		{
+			target->parent->right = NULL;
+		}
+		return;
+	}
+
+	if (target->parent == NULL)
+	{
+		m_Root = replacement;
+		m_Root->parent = NULL;
+		return;
+	}
+
+	replacement->parent = target->parent;
+	if (target->side == LEFT)
+	{
+		target->parent->left = replacement;
+		replacement->side = LEFT;
+	}
+	else
+	{
+		target->parent->right = replacement;
+		replacement->side = RIGHT;
+	}
+}
+
+template <typename T, typename Compare, typename Allocator>
+void ft::RedBlackTree<T, Compare, Allocator>::erase(T value)
+{
+	Node *nodeToErase = this->findNode(value);
+
+	if (nodeToErase == NULL)
+	{
+		return;
+	}
+	if (nodeToErase->right == NULL)
+	{
+		this->replace(nodeToErase, nodeToErase->left);
+	}
+	else // The node to erase has a right sub-tree
+	{
+		Node *successor = nodeToErase->right;
+
+		if (successor->left == NULL)
+		{
+			this->replace(nodeToErase, successor);
+			nodeToErase->swapColorsWith(successor);
+			successor->left = nodeToErase->left;
+		}
+		else
+		{
+			Node *successorParent = NULL;
+
+			successor = nodeToErase->getSuccessor();
+			successorParent = successor->parent;
+
+			this->replace(nodeToErase, successor);
+			nodeToErase->swapColorsWith(successor);
+
+			successorParent->left = successor->right;
+			if (successorParent->left != NULL)
+			{
+				successorParent->left->parent = successorParent;
+			}
+
+			successor->left = nodeToErase->left;
+			successor->left->parent = successor;
+
+			successor->right = nodeToErase->right;
+			successor->right->parent = successor;
+		}
+	}
+	// BUG: build eraseFixup
+	m_Allocator.destroy(&nodeToErase->data);
+	delete nodeToErase;
+}

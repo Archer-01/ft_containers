@@ -80,11 +80,20 @@ namespace ft
 			RedBlackTree &operator=(const RedBlackTree &other);
 
 			/**
-			 * @defgroup Insert method
+			 * @defgroup Manipulation methods
+			 *
+			 * - Insert
+			 * - Erase
 			 *
 			 */
 
 			void insert(T value);
+			void erase(T value);
+
+			/**
+			 * @def Print method
+			 *
+			 */
 			void print() const;
 
 		private:
@@ -120,6 +129,9 @@ namespace ft
 			void recolor(Node *problemNode);
 
 			void insertionFixup(Node *problemNode);
+
+			Node *findNode(T value);
+			void replace(Node *target, Node *replacement);
 	};
 
 }; // namespace ft
