@@ -112,3 +112,31 @@ ft::RedBlackTree<T, Compare, Allocator>::Node::getSuccessor()
 	}
 	return successor;
 }
+
+template <typename T, typename Compare, typename Allocator>
+void ft::RedBlackTree<T, Compare, Allocator>::Node::linkChild(
+	Node *child,
+	NodeSide side
+)
+{
+	assert(this != NULL);
+
+	if (side == LEFT)
+	{
+		this->left = child;
+		if (child != NULL)
+		{
+			child->parent = this;
+			child->side = LEFT;
+		}
+	}
+	else // side == RIGHT
+	{
+		this->right = child;
+		if (child != NULL)
+		{
+			child->parent = this;
+			child->side = RIGHT;
+		}
+	}
+}

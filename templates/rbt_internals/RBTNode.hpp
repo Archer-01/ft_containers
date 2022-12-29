@@ -45,6 +45,7 @@ struct ft::RedBlackTree<T, Compare, Allocator>::Node
 	Node *grandParent();
 	void swapColorsWith(Node *otherNode);
 	Node *getSuccessor();
+	void linkChild(Node *child, NodeSide side);
 };
 
 #include "RBTNode_impl.hpp"
