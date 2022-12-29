@@ -471,6 +471,7 @@ template <typename T, typename Compare, typename Allocator>
 void ft::RedBlackTree<T, Compare, Allocator>::erase(T value)
 {
 	Node *nodeToErase = this->findNode(value);
+	Node *fixupNode = NULL;
 
 	if (nodeToErase == NULL)
 	{
@@ -479,6 +480,7 @@ void ft::RedBlackTree<T, Compare, Allocator>::erase(T value)
 	if (nodeToErase->right == NULL)
 	{
 		this->replace(nodeToErase, nodeToErase->left);
+		fixupNode = nodeToErase->parent;
 	}
 	else // The node to erase has a right sub-tree
 	{
@@ -488,7 +490,7 @@ void ft::RedBlackTree<T, Compare, Allocator>::erase(T value)
 		{
 			this->replace(nodeToErase, successor);
 			nodeToErase->swapColorsWith(successor);
-			successor->left = nodeToErase->left;
+			successor->linkChild(nodeToErase->left, LEFT);
 		}
 		else
 		{
@@ -500,20 +502,14 @@ void ft::RedBlackTree<T, Compare, Allocator>::erase(T value)
 			this->replace(nodeToErase, successor);
 			nodeToErase->swapColorsWith(successor);
 
-			successorParent->left = successor->right;
-			if (successorParent->left != NULL)
-			{
-				successorParent->left->parent = successorParent;
-			}
-
-			successor->left = nodeToErase->left;
-			successor->left->parent = successor;
-
-			successor->right = nodeToErase->right;
-			successor->right->parent = successor;
+			successorParent->linkChild(successor->right, LEFT);
+			successor->linkChild(nodeToErase->left, LEFT);
+			successor->linkChild(nodeToErase->right, RIGHT);
 		}
+		fixupNode = successor;
 	}
 	// BUG: build eraseFixup
 	m_Allocator.destroy(&nodeToErase->data);
 	delete nodeToErase;
+	--m_Size;
 }
