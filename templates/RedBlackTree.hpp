@@ -91,10 +91,11 @@ namespace ft
 			void erase(T value);
 
 			/**
-			 * @def Print method
+			 * @def Print methods
 			 *
 			 */
 			void print() const;
+			void prettyPrint() const;
 
 		private:
 			/**
@@ -109,6 +110,7 @@ namespace ft
 			);
 			static void RecursivePrint(Node *root);
 			static void RecursiveDelete(Node *root, Allocator &alloc);
+			static void PrettyPrint(Node *node, int indent);
 
 			/**
 			 * @defgroup Private methods

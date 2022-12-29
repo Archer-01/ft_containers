@@ -2,6 +2,7 @@
 
 #include "RedBlackTree.hpp"
 #include "test_algorithm.hpp"
+#include <iomanip>
 #include <iostream>
 #include <iterator>
 
@@ -113,6 +114,12 @@ void ft::RedBlackTree<T, Compare, Allocator>::print() const
 }
 
 template <typename T, typename Compare, typename Allocator>
+void ft::RedBlackTree<T, Compare, Allocator>::prettyPrint() const
+{
+	PrettyPrint(m_Root, 0);
+}
+
+template <typename T, typename Compare, typename Allocator>
 void ft::RedBlackTree<T, Compare, Allocator>::RecursivePrint(Node *root)
 {
 	if (root == NULL)
@@ -122,6 +129,34 @@ void ft::RedBlackTree<T, Compare, Allocator>::RecursivePrint(Node *root)
 	RecursivePrint(root->left);
 	std::cout << root->data << " ";
 	RecursivePrint(root->right);
+}
+
+template <typename T, typename Compare, typename Allocator>
+void ft::RedBlackTree<T, Compare, Allocator>::PrettyPrint(Node *node, int indent)
+{
+	if (node == NULL)
+	{
+		return;
+	}
+	if (node->right)
+	{
+		PrettyPrint(node->right, indent + 4);
+	}
+	if (indent != 0)
+	{
+		std::cout << std::setw(indent) << ' ';
+	}
+	if (node->right)
+	{
+		std::cout << " /\n" << std::setw(indent) << ' ';
+	}
+	std::cout << node->data << "\n ";
+	if (node->left)
+	{
+		std::cout << std::setw(indent) << ' ' << " \\\n";
+		PrettyPrint(node->left, indent + 4);
+	}
+	std::cout << std::endl;
 }
 
 template <typename T, typename Compare, typename Allocator>
