@@ -88,7 +88,6 @@ namespace ft
 			 */
 
 			void insert(T value);
-			void erase(T value);
 
 			/**
 			 * @def Print methods
@@ -124,7 +123,7 @@ namespace ft
 			void leftRightRotate(Node *grandParent);
 			void rightLeftRotate(Node *grandParent);
 
-			void rotate(Node *problemNode);
+			void insertionFixupRotate(Node *problemNode);
 			void simpleRotationRecolor(Node *problemNode);
 			void doubleRotationRecolor(Node *problemNode);
 

@@ -150,7 +150,8 @@ void ft::RedBlackTree<T, Compare, Allocator>::PrettyPrint(Node *node, int indent
 	{
 		std::cout << " /\n" << std::setw(indent) << ' ';
 	}
-	std::cout << node->data << "\n ";
+	std::cout << (node->color == RED ? "\033[1;31m" : "\033[1;34m");
+	std::cout << node->data << "\033[0m" << std::endl;
 	if (node->left)
 	{
 		std::cout << std::setw(indent) << ' ' << " \\\n";
@@ -325,7 +326,7 @@ template <typename T, typename Compare, typename Allocator>
 void ft::RedBlackTree<T, Compare, Allocator>::simpleRotationRecolor(Node *problemNode)
 {
 	problemNode->parent->color = BLACK;
-	problemNode->sibling()->color = RED;
+	problemNode->getSibling()->color = RED;
 }
 
 template <typename T, typename Compare, typename Allocator>
@@ -337,30 +338,30 @@ void ft::RedBlackTree<T, Compare, Allocator>::doubleRotationRecolor(Node *proble
 }
 
 template <typename T, typename Compare, typename Allocator>
-void ft::RedBlackTree<T, Compare, Allocator>::rotate(Node *problemNode)
+void ft::RedBlackTree<T, Compare, Allocator>::insertionFixupRotate(Node *problemNode)
 {
 	assert(problemNode != NULL);
 	assert(problemNode->parent != NULL);
-	assert(problemNode->grandParent() != NULL);
+	assert(problemNode->getGrandParent() != NULL);
 
 	if (problemNode->side == LEFT and problemNode->parent->side == LEFT)
 	{
-		this->rightRotate(problemNode->grandParent());
+		this->rightRotate(problemNode->getGrandParent());
 		simpleRotationRecolor(problemNode);
 	}
 	else if (problemNode->side == RIGHT and problemNode->parent->side == RIGHT)
 	{
-		this->leftRotate(problemNode->grandParent());
+		this->leftRotate(problemNode->getGrandParent());
 		simpleRotationRecolor(problemNode);
 	}
 	else if (problemNode->side == LEFT and problemNode->parent->side == RIGHT)
 	{
-		this->rightLeftRotate(problemNode->grandParent());
+		this->rightLeftRotate(problemNode->getGrandParent());
 		doubleRotationRecolor(problemNode);
 	}
 	else if (problemNode->side == RIGHT and problemNode->parent->side == LEFT)
 	{
-		this->leftRightRotate(problemNode->grandParent());
+		this->leftRightRotate(problemNode->getGrandParent());
 		doubleRotationRecolor(problemNode);
 	}
 }
@@ -370,11 +371,11 @@ void ft::RedBlackTree<T, Compare, Allocator>::recolor(Node *problemNode)
 {
 	assert(problemNode != NULL);
 	assert(problemNode->parent != NULL);
-	assert(problemNode->grandParent() != NULL);
+	assert(problemNode->getGrandParent() != NULL);
 
 	problemNode->parent->color = BLACK;
-	problemNode->aunt()->color = BLACK;
-	problemNode->grandParent()->color = RED;
+	problemNode->getAunt()->color = BLACK;
+	problemNode->getGrandParent()->color = RED;
 }
 
 template <typename T, typename Compare, typename Allocator>
@@ -382,16 +383,16 @@ void ft::RedBlackTree<T, Compare, Allocator>::insertionFixup(Node *problemNode)
 {
 	while (problemNode != m_Root and problemNode->parent->color == RED)
 	{
-		Node *aunt = problemNode->aunt();
+		Node *aunt = problemNode->getAunt();
 
-		if (aunt != NULL and aunt->color == RED)
+		if (Node::IsRed(aunt))
 		{
 			this->recolor(problemNode);
-			problemNode = problemNode->grandParent();
+			problemNode = problemNode->getGrandParent();
 		}
 		else
 		{
-			this->rotate(problemNode);
+			this->insertionFixupRotate(problemNode);
 			break;
 		}
 	}
@@ -465,51 +466,4 @@ void ft::RedBlackTree<T, Compare, Allocator>::replace(
 		target->parent->right = replacement;
 		replacement->side = RIGHT;
 	}
-}
-
-template <typename T, typename Compare, typename Allocator>
-void ft::RedBlackTree<T, Compare, Allocator>::erase(T value)
-{
-	Node *nodeToErase = this->findNode(value);
-	Node *fixupNode = NULL;
-
-	if (nodeToErase == NULL)
-	{
-		return;
-	}
-	if (nodeToErase->right == NULL)
-	{
-		this->replace(nodeToErase, nodeToErase->left);
-		fixupNode = nodeToErase->parent;
-	}
-	else // The node to erase has a right sub-tree
-	{
-		Node *successor = nodeToErase->right;
-
-		if (successor->left == NULL)
-		{
-			this->replace(nodeToErase, successor);
-			nodeToErase->swapColorsWith(successor);
-			successor->linkChild(nodeToErase->left, LEFT);
-		}
-		else
-		{
-			Node *successorParent = NULL;
-
-			successor = nodeToErase->getSuccessor();
-			successorParent = successor->parent;
-
-			this->replace(nodeToErase, successor);
-			nodeToErase->swapColorsWith(successor);
-
-			successorParent->linkChild(successor->right, LEFT);
-			successor->linkChild(nodeToErase->left, LEFT);
-			successor->linkChild(nodeToErase->right, RIGHT);
-		}
-		fixupNode = successor;
-	}
-	// BUG: build eraseFixup
-	m_Allocator.destroy(&nodeToErase->data);
-	delete nodeToErase;
-	--m_Size;
 }
