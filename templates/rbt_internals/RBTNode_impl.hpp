@@ -33,7 +33,7 @@ ft::RedBlackTree<T, Compare, Allocator>::Node::Node(T data)
 
 template <typename T, typename Compare, typename Allocator>
 typename ft::RedBlackTree<T, Compare, Allocator>::Node*
-ft::RedBlackTree<T, Compare, Allocator>::Node::getSibling()
+ft::RedBlackTree<T, Compare, Allocator>::Node::getSibling() const
 {
 	assert(this != NULL);
 	assert(this->parent != NULL);
@@ -53,7 +53,7 @@ ft::RedBlackTree<T, Compare, Allocator>::Node::getSibling()
 
 template <typename T, typename Compare, typename Allocator>
 typename ft::RedBlackTree<T, Compare, Allocator>::Node*
-ft::RedBlackTree<T, Compare, Allocator>::Node::getAunt()
+ft::RedBlackTree<T, Compare, Allocator>::Node::getAunt() const
 {
 	assert(this != NULL);
 	assert(this->parent != NULL);
@@ -74,7 +74,7 @@ ft::RedBlackTree<T, Compare, Allocator>::Node::getAunt()
 
 template <typename T, typename Compare, typename Allocator>
 typename ft::RedBlackTree<T, Compare, Allocator>::Node*
-ft::RedBlackTree<T, Compare, Allocator>::Node::getGrandParent()
+ft::RedBlackTree<T, Compare, Allocator>::Node::getGrandParent() const
 {
 	assert(this != NULL);
 	assert(this->parent != NULL);
@@ -99,7 +99,7 @@ void ft::RedBlackTree<T, Compare, Allocator>::Node::swapColorsWith(
 
 template <typename T, typename Compare, typename Allocator>
 typename ft::RedBlackTree<T, Compare, Allocator>::Node*
-ft::RedBlackTree<T, Compare, Allocator>::Node::getSuccessor()
+ft::RedBlackTree<T, Compare, Allocator>::Node::getSuccessor() const
 {
 	assert(this != NULL);
 	assert(this->right != NULL);

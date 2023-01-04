@@ -424,3 +424,89 @@ ft::RedBlackTree<T, Compare, Allocator>::find(const T &value)
 	}
 	return NULL;
 }
+
+template <typename T, typename Compare, typename Allocator>
+void ft::RedBlackTree<T, Compare, Allocator>::erase(const T &value)
+{
+	Node *nodeToErase = this->find(value);
+
+	if (nodeToErase == NULL)
+	{
+		return;
+	}
+	this->erase(nodeToErase);
+}
+
+/**
+ * @brief: Replace nodeToErase with replacement.
+ * @note: This method does not handle any child nodes
+ *
+ */
+template <typename T, typename Compare, typename Allocator>
+void ft::RedBlackTree<T, Compare, Allocator>::transplant(
+	const Node *nodeToErase,
+	Node *replacement
+)
+{
+	assert(nodeToErase != NULL);
+
+	if (nodeToErase->parent == NULL)
+	{
+		m_Root = replacement;
+	}
+	else if (nodeToErase->side == LEFT)
+	{
+		nodeToErase->parent->left = replacement;
+	}
+	else // nodeToErase->side == RIGHT
+	{
+		nodeToErase->parent->right = replacement;
+	}
+
+	if (replacement != NULL)
+	{
+		replacement->side = nodeToErase->side;
+		replacement->parent = nodeToErase->parent;
+	}
+}
+
+template <typename T, typename Compare, typename Allocator>
+void ft::RedBlackTree<T, Compare, Allocator>::erase(const Node *nodeToErase)
+{
+	assert(nodeToErase != NULL);
+
+	NodeColor removedColor = nodeToErase->color;
+	NodeSide fixupSide = nodeToErase->side;
+	Node *fixupNode = nodeToErase->parent;
+
+	if (nodeToErase->left == NULL)
+	{
+		this->transplant(nodeToErase, nodeToErase->right);
+	}
+	else if (nodeToErase->right == NULL)
+	{
+		this->transplant(nodeToErase, nodeToErase->left);
+	}
+	else // nodeToErase has both left and right sub-trees
+	{
+		Node *successor = nodeToErase->getSuccessor();
+
+		fixupNode = successor->parent;
+		fixupSide = RIGHT;
+		removedColor = successor->color;
+		if (successor->parent != nodeToErase)
+		{
+			fixupSide = LEFT;
+			this->transplant(successor, successor->right);
+			successor->linkChild(nodeToErase->right, RIGHT);
+		}
+		this->transplant(nodeToErase, successor);
+		successor->linkChild(nodeToErase->left, LEFT);
+		successor->color = nodeToErase->color;
+	}
+	if (removedColor == BLACK)
+	{
+		// TODO: add fixup here
+		std::cout << "erase fixup is loading..." << std::endl;
+	}
+}

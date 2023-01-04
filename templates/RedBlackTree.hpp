@@ -84,11 +84,13 @@ namespace ft
 			 *
 			 * - Insert
 			 * - Find
+			 * - Erase
 			 *
 			 */
 
 			void insert(const T &value);
 			Node *find(const T &value);
+			void erase(const T &value);
 
 			/**
 			 * @def Print methods
@@ -100,6 +102,11 @@ namespace ft
 		private:
 			/**
 			 * @defgroup Static methods
+			 *
+			 * - Recursive insert
+			 * - Recursive print
+			 * - Recursive delete
+			 * - Recursive pretty print
 			 *
 			 */
 
@@ -115,22 +122,36 @@ namespace ft
 			/**
 			 * @defgroup Private methods
 			 *
+			 * - Copy tree
+			 *
+			 * - Left rotate
+			 * - Right rotate
+			 * - Left right rotate
+			 * - Right left rotate
+			 * - Insert fixup rotate
+			 * - Simple rotation recolor
+			 * - Double rotation recolor
+			 * - Insert fixup recolor
+			 *
+			 * - Erase (Node pointer overload)
+			 * - Transplant
+			 *
 			 */
 
 			Node *copyTree(Node *srcRoot);
 
+			void insertionFixup(Node *problemNode);
 			void leftRotate(Node *grandParent);
 			void rightRotate(Node *grandParent);
 			void leftRightRotate(Node *grandParent);
 			void rightLeftRotate(Node *grandParent);
-
 			void insertionFixupRotate(Node *problemNode);
 			void simpleRotationRecolor(Node *problemNode);
 			void doubleRotationRecolor(Node *problemNode);
-
 			void recolor(Node *problemNode);
 
-			void insertionFixup(Node *problemNode);
+			void erase(const Node *nodeToErase);
+			void transplant(const Node *nodeToErase, Node *replacement);
 	};
 
 }; // namespace ft

@@ -42,11 +42,11 @@ struct ft::RedBlackTree<T, Compare, Allocator>::Node
 	 *
 	 */
 
-	Node *getSibling();
-	Node *getAunt();
-	Node *getGrandParent();
+	Node *getSibling() const;
+	Node *getAunt() const;
+	Node *getGrandParent() const;
 	void swapColorsWith(Node *otherNode);
-	Node *getSuccessor();
+	Node *getSuccessor() const;
 	void linkChild(Node *child, NodeSide side);
 	static bool IsBlack(const Node *node);
 	static bool IsRed(const Node *node);
