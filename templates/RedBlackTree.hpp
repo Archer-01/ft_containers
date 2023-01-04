@@ -152,6 +152,7 @@ namespace ft
 
 			void erase(const Node *nodeToErase);
 			void transplant(const Node *nodeToErase, Node *replacement);
+			void eraseFixup(Node *fixupNode, NodeSide fixupSide);
 	};
 
 }; // namespace ft

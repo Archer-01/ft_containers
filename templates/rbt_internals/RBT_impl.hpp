@@ -491,12 +491,13 @@ void ft::RedBlackTree<T, Compare, Allocator>::erase(const Node *nodeToErase)
 	{
 		Node *successor = nodeToErase->getSuccessor();
 
-		fixupNode = successor->parent;
+		fixupNode = successor;
 		fixupSide = RIGHT;
 		removedColor = successor->color;
 		if (successor->parent != nodeToErase)
 		{
 			fixupSide = LEFT;
+			fixupNode = successor->parent;
 			this->transplant(successor, successor->right);
 			successor->linkChild(nodeToErase->right, RIGHT);
 		}
@@ -506,7 +507,60 @@ void ft::RedBlackTree<T, Compare, Allocator>::erase(const Node *nodeToErase)
 	}
 	if (removedColor == BLACK)
 	{
-		// TODO: add fixup here
-		std::cout << "erase fixup is loading..." << std::endl;
+		eraseFixup(fixupNode, fixupSide);
+	}
+}
+
+template <typename T, typename Compare, typename Allocator>
+void ft::RedBlackTree<T, Compare, Allocator>::eraseFixup(
+	Node *fixupNode,
+	NodeSide fixupSide
+)
+{
+	Node *extraBlack = fixupNode->getChild(fixupSide);
+	Node *sibling = NULL;
+	Node *parent = NULL;
+
+	while (
+		extraBlack != NULL
+		and extraBlack != m_Root
+		and Node::IsBlack(extraBlack)
+	)
+	{
+		parent = extraBlack->parent;
+		sibling = parent->getSiblingChild(fixupSide);
+
+		if (Node::IsRed(sibling))
+		{
+			sibling->color = BLACK;
+			parent->color = RED;
+			(fixupSide == LEFT) ? leftRotate(parent) : rightRotate(parent);
+			sibling = parent->getSiblingChild(fixupSide);
+		}
+
+		if (Node::IsBlack(sibling->left) and Node::IsBlack(sibling->right))
+		{
+			sibling->color = RED;
+			extraBlack = parent;
+		}
+		else
+		{
+			if (Node::IsBlack(sibling->getSiblingChild(fixupSide)))
+			{
+				sibling->getChild(fixupSide)->color = BLACK;
+				sibling->color = RED;
+				(fixupSide == LEFT) ? rightRotate(sibling) : leftRotate(sibling);
+				sibling = extraBlack->parent->getSiblingChild(fixupSide);
+			}
+			sibling->color = parent->color;
+			extraBlack->getGrandParent()->color = BLACK;
+			sibling->getSiblingChild(fixupSide)->color = BLACK;
+			(fixupSide == LEFT) ? leftRotate(parent) : rightRotate(parent);
+			extraBlack = m_Root;
+		}
+	}
+	if (extraBlack != NULL)
+	{
+		extraBlack->color = BLACK;
 	}
 }
