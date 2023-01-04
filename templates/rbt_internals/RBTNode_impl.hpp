@@ -156,3 +156,31 @@ bool ft::RedBlackTree<T, Compare, Allocator>::Node::IsRed(
 {
 	return node != NULL and node->color == RED;
 }
+
+template <typename T, typename Compare, typename Allocator>
+typename ft::RedBlackTree<T, Compare, Allocator>::Node*
+ft::RedBlackTree<T, Compare, Allocator>::Node::getChild(NodeSide side) const
+{
+	assert(this != NULL);
+
+	if (side == LEFT)
+	{
+		return this->left;
+	}
+	return this->right;
+}
+
+template <typename T, typename Compare, typename Allocator>
+typename ft::RedBlackTree<T, Compare, Allocator>::Node*
+ft::RedBlackTree<T, Compare, Allocator>::Node::getSiblingChild(
+	NodeSide side
+) const
+{
+	assert(this != NULL);
+
+	if (side == LEFT)
+	{
+		return this->right;
+	}
+	return this->left;
+}

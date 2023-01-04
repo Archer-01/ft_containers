@@ -39,6 +39,8 @@ struct ft::RedBlackTree<T, Compare, Allocator>::Node
 	 * - Get successor
 	 * - Is black
 	 * - Is red
+	 * - Get child
+	 * - Get sibling child
 	 *
 	 */
 
@@ -50,6 +52,8 @@ struct ft::RedBlackTree<T, Compare, Allocator>::Node
 	void linkChild(Node *child, NodeSide side);
 	static bool IsBlack(const Node *node);
 	static bool IsRed(const Node *node);
+	Node *getChild(NodeSide side) const;
+	Node *getSiblingChild(NodeSide side) const;
 };
 
 #include "RBTNode_impl.hpp"
