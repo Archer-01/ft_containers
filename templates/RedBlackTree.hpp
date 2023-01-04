@@ -83,11 +83,12 @@ namespace ft
 			 * @defgroup Manipulation methods
 			 *
 			 * - Insert
-			 * - Erase
+			 * - Find
 			 *
 			 */
 
-			void insert(T value);
+			void insert(const T &value);
+			Node *find(const T &value);
 
 			/**
 			 * @def Print methods
@@ -109,7 +110,7 @@ namespace ft
 			);
 			static void RecursivePrint(Node *root);
 			static void RecursiveDelete(Node *root, Allocator &alloc);
-			static void PrettyPrint(Node *node, int indent);
+			static void RecursivePrettyPrint(Node *node, int indent);
 
 			/**
 			 * @defgroup Private methods
@@ -130,9 +131,6 @@ namespace ft
 			void recolor(Node *problemNode);
 
 			void insertionFixup(Node *problemNode);
-
-			Node *findNode(T value);
-			void replace(Node *target, Node *replacement);
 	};
 
 }; // namespace ft

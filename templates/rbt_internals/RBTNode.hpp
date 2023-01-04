@@ -37,15 +37,19 @@ struct ft::RedBlackTree<T, Compare, Allocator>::Node
 	 * - Replace with
 	 * - Swap colors
 	 * - Get successor
+	 * - Is black
+	 * - Is red
 	 *
 	 */
 
-	Node *sibling();
-	Node *aunt();
-	Node *grandParent();
+	Node *getSibling();
+	Node *getAunt();
+	Node *getGrandParent();
 	void swapColorsWith(Node *otherNode);
 	Node *getSuccessor();
 	void linkChild(Node *child, NodeSide side);
+	static bool IsBlack(const Node *node);
+	static bool IsRed(const Node *node);
 };
 
 #include "RBTNode_impl.hpp"

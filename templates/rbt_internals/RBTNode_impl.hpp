@@ -33,7 +33,7 @@ ft::RedBlackTree<T, Compare, Allocator>::Node::Node(T data)
 
 template <typename T, typename Compare, typename Allocator>
 typename ft::RedBlackTree<T, Compare, Allocator>::Node*
-ft::RedBlackTree<T, Compare, Allocator>::Node::sibling()
+ft::RedBlackTree<T, Compare, Allocator>::Node::getSibling()
 {
 	assert(this != NULL);
 	assert(this->parent != NULL);
@@ -53,7 +53,7 @@ ft::RedBlackTree<T, Compare, Allocator>::Node::sibling()
 
 template <typename T, typename Compare, typename Allocator>
 typename ft::RedBlackTree<T, Compare, Allocator>::Node*
-ft::RedBlackTree<T, Compare, Allocator>::Node::aunt()
+ft::RedBlackTree<T, Compare, Allocator>::Node::getAunt()
 {
 	assert(this != NULL);
 	assert(this->parent != NULL);
@@ -74,7 +74,7 @@ ft::RedBlackTree<T, Compare, Allocator>::Node::aunt()
 
 template <typename T, typename Compare, typename Allocator>
 typename ft::RedBlackTree<T, Compare, Allocator>::Node*
-ft::RedBlackTree<T, Compare, Allocator>::Node::grandParent()
+ft::RedBlackTree<T, Compare, Allocator>::Node::getGrandParent()
 {
 	assert(this != NULL);
 	assert(this->parent != NULL);
@@ -139,4 +139,20 @@ void ft::RedBlackTree<T, Compare, Allocator>::Node::linkChild(
 			child->side = RIGHT;
 		}
 	}
+}
+
+template <typename T, typename Compare, typename Allocator>
+bool ft::RedBlackTree<T, Compare, Allocator>::Node::IsBlack(
+	const Node *node
+)
+{
+	return node == NULL or node->color == BLACK;
+}
+
+template <typename T, typename Compare, typename Allocator>
+bool ft::RedBlackTree<T, Compare, Allocator>::Node::IsRed(
+	const Node *node
+)
+{
+	return node != NULL and node->color == RED;
 }

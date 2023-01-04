@@ -1,7 +1,6 @@
 #pragma once
 
 #include "RedBlackTree.hpp"
-#include "test_algorithm.hpp"
 #include <iomanip>
 #include <iostream>
 #include <iterator>
@@ -51,113 +50,12 @@ ft::RedBlackTree<T, Compare, Allocator>::RedBlackTree(
 }
 
 template <typename T, typename Compare, typename Allocator>
-void ft::RedBlackTree<T, Compare, Allocator>::insert(T value)
+ft::RedBlackTree<T, Compare, Allocator>::RedBlackTree(const RedBlackTree &other)
 {
-	Node *node = NULL;
-
-	node = new Node();
-	m_Allocator.construct(&node->data, value);
-	if (m_Root == NULL)
-	{
-		m_Root = node;
-		m_Root->color = BLACK;
-		++m_Size;
-		return;
-	}
-	RecursiveInsert(m_Root, node, m_Compare);
-	++m_Size;
-	this->insertionFixup(node);
-}
-
-template <typename T, typename Compare, typename Allocator>
-void ft::RedBlackTree<T, Compare, Allocator>::RecursiveInsert(
-	Node *root,
-	Node *node,
-	const Compare &comp
-)
-{
-	assert(root != NULL);
-	assert(node != NULL);
-
-	if (comp(node->data, root->data) == true)
-	{
-		if (root->left == NULL)
-		{
-			root->left = node;
-			node->parent = root;
-			node->side = LEFT;
-		}
-		else
-		{
-			RecursiveInsert(root->left, node, comp);
-		}
-	}
-	else
-	{
-		if (root->right == NULL)
-		{
-			root->right = node;
-			node->parent = root;
-			node->side = RIGHT;
-		}
-		else
-		{
-			RecursiveInsert(root->right, node, comp);
-		}
-	}
-}
-
-template <typename T, typename Compare, typename Allocator>
-void ft::RedBlackTree<T, Compare, Allocator>::print() const
-{
-	RecursivePrint(m_Root);
-}
-
-template <typename T, typename Compare, typename Allocator>
-void ft::RedBlackTree<T, Compare, Allocator>::prettyPrint() const
-{
-	PrettyPrint(m_Root, 0);
-}
-
-template <typename T, typename Compare, typename Allocator>
-void ft::RedBlackTree<T, Compare, Allocator>::RecursivePrint(Node *root)
-{
-	if (root == NULL)
-	{
-		return;
-	}
-	RecursivePrint(root->left);
-	std::cout << root->data << " ";
-	RecursivePrint(root->right);
-}
-
-template <typename T, typename Compare, typename Allocator>
-void ft::RedBlackTree<T, Compare, Allocator>::PrettyPrint(Node *node, int indent)
-{
-	if (node == NULL)
-	{
-		return;
-	}
-	if (node->right)
-	{
-		PrettyPrint(node->right, indent + 4);
-	}
-	if (indent != 0)
-	{
-		std::cout << std::setw(indent) << ' ';
-	}
-	if (node->right)
-	{
-		std::cout << " /\n" << std::setw(indent) << ' ';
-	}
-	std::cout << (node->color == RED ? "\033[1;31m" : "\033[1;34m");
-	std::cout << node->data << "\033[0m" << std::endl;
-	if (node->left)
-	{
-		std::cout << std::setw(indent) << ' ' << " \\\n";
-		PrettyPrint(node->left, indent + 4);
-	}
-	std::cout << std::endl;
+	m_Size = 0;
+	m_Allocator = other.m_Allocator;
+	m_Compare = other.m_Compare;
+	m_Root = this->copyTree(other.m_Root);
 }
 
 template <typename T, typename Compare, typename Allocator>
@@ -222,12 +120,116 @@ ft::RedBlackTree<T, Compare, Allocator>::copyTree(Node *srcRoot)
 }
 
 template <typename T, typename Compare, typename Allocator>
-ft::RedBlackTree<T, Compare, Allocator>::RedBlackTree(const RedBlackTree &other)
+void ft::RedBlackTree<T, Compare, Allocator>::insert(const T &value)
 {
-	m_Size = 0;
-	m_Allocator = other.m_Allocator;
-	m_Compare = other.m_Compare;
-	m_Root = this->copyTree(other.m_Root);
+	Node *node = NULL;
+
+	node = new Node();
+	m_Allocator.construct(&node->data, value);
+	if (m_Root == NULL)
+	{
+		m_Root = node;
+		m_Root->color = BLACK;
+		++m_Size;
+		return;
+	}
+	RecursiveInsert(m_Root, node, m_Compare);
+	++m_Size;
+	this->insertionFixup(node);
+}
+
+template <typename T, typename Compare, typename Allocator>
+void ft::RedBlackTree<T, Compare, Allocator>::RecursiveInsert(
+	Node *root,
+	Node *node,
+	const Compare &comp
+)
+{
+	assert(root != NULL);
+	assert(node != NULL);
+
+	if (comp(node->data, root->data))
+	{
+		if (root->left == NULL)
+		{
+			root->left = node;
+			node->parent = root;
+			node->side = LEFT;
+		}
+		else
+		{
+			RecursiveInsert(root->left, node, comp);
+		}
+	}
+	else
+	{
+		if (root->right == NULL)
+		{
+			root->right = node;
+			node->parent = root;
+			node->side = RIGHT;
+		}
+		else
+		{
+			RecursiveInsert(root->right, node, comp);
+		}
+	}
+}
+
+template <typename T, typename Compare, typename Allocator>
+void ft::RedBlackTree<T, Compare, Allocator>::print() const
+{
+	RecursivePrint(m_Root);
+}
+
+template <typename T, typename Compare, typename Allocator>
+void ft::RedBlackTree<T, Compare, Allocator>::RecursivePrint(Node *root)
+{
+	if (root == NULL)
+	{
+		return;
+	}
+	RecursivePrint(root->left);
+	std::cout << root->data << " ";
+	RecursivePrint(root->right);
+}
+
+template <typename T, typename Compare, typename Allocator>
+void ft::RedBlackTree<T, Compare, Allocator>::prettyPrint() const
+{
+	RecursivePrettyPrint(m_Root, 0);
+}
+
+template <typename T, typename Compare, typename Allocator>
+void ft::RedBlackTree<T, Compare, Allocator>::RecursivePrettyPrint(
+	Node *node,
+	int indent
+)
+{
+	if (node == NULL)
+	{
+		return;
+	}
+	if (node->right)
+	{
+		RecursivePrettyPrint(node->right, indent + 4);
+	}
+	if (indent != 0)
+	{
+		std::cout << std::setw(indent) << ' ';
+	}
+	if (node->right)
+	{
+		std::cout << " /\n" << std::setw(indent) << ' ';
+	}
+	std::cout << (node->color == RED ? "\033[1;31m" : "\033[1;34m");
+	std::cout << node->data << "\033[0m" << std::endl;
+	if (node->left)
+	{
+		std::cout << std::setw(indent) << ' ' << " \\\n";
+		RecursivePrettyPrint(node->left, indent + 4);
+	}
+	std::cout << std::endl;
 }
 
 template <typename T, typename Compare, typename Allocator>
@@ -401,7 +403,7 @@ void ft::RedBlackTree<T, Compare, Allocator>::insertionFixup(Node *problemNode)
 
 template <typename T, typename Compare, typename Allocator>
 typename ft::RedBlackTree<T, Compare, Allocator>::Node*
-ft::RedBlackTree<T, Compare, Allocator>::findNode(T value)
+ft::RedBlackTree<T, Compare, Allocator>::find(const T &value)
 {
 	Node *current = m_Root;
 
@@ -421,49 +423,4 @@ ft::RedBlackTree<T, Compare, Allocator>::findNode(T value)
 		}
 	}
 	return NULL;
-}
-
-template <typename T, typename Compare, typename Allocator>
-void ft::RedBlackTree<T, Compare, Allocator>::replace(
-	Node *target,
-	Node *replacement
-)
-{
-	assert(target != NULL);
-
-	if (replacement == NULL)
-	{
-		if (target->parent == NULL)
-		{
-			m_Root = NULL;
-		}
-		else if (target->side == LEFT)
-		{
-			target->parent->left = NULL;
-		}
-		else
-		{
-			target->parent->right = NULL;
-		}
-		return;
-	}
-
-	if (target->parent == NULL)
-	{
-		m_Root = replacement;
-		m_Root->parent = NULL;
-		return;
-	}
-
-	replacement->parent = target->parent;
-	if (target->side == LEFT)
-	{
-		target->parent->left = replacement;
-		replacement->side = LEFT;
-	}
-	else
-	{
-		target->parent->right = replacement;
-		replacement->side = RIGHT;
-	}
 }
