@@ -521,13 +521,9 @@ void ft::RedBlackTree<T, Compare, Allocator>::eraseFixup(
 	Node *sibling = NULL;
 	Node *parent = NULL;
 
-	while (
-		extraBlack != NULL
-		and extraBlack != m_Root
-		and Node::IsBlack(extraBlack)
-	)
+	while (extraBlack != m_Root and Node::IsBlack(extraBlack))
 	{
-		parent = extraBlack->parent;
+		parent = (extraBlack == NULL) ? fixupNode : extraBlack->parent;
 		sibling = parent->getSiblingChild(fixupSide);
 
 		if (Node::IsRed(sibling))
@@ -553,14 +549,11 @@ void ft::RedBlackTree<T, Compare, Allocator>::eraseFixup(
 				sibling = extraBlack->parent->getSiblingChild(fixupSide);
 			}
 			sibling->color = parent->color;
-			extraBlack->getGrandParent()->color = BLACK;
+			parent->color = BLACK;
 			sibling->getSiblingChild(fixupSide)->color = BLACK;
 			(fixupSide == LEFT) ? leftRotate(parent) : rightRotate(parent);
 			extraBlack = m_Root;
 		}
 	}
-	if (extraBlack != NULL)
-	{
-		extraBlack->color = BLACK;
-	}
+	extraBlack->color = BLACK;
 }

@@ -135,6 +135,7 @@ namespace ft
 			 *
 			 * - Erase (Node pointer overload)
 			 * - Transplant
+			 * - Erase fixup
 			 *
 			 */
 
