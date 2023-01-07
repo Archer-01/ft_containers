@@ -1,12 +1,13 @@
 #pragma once
 
 #include "RedBlackTree.hpp"
+#include <iterator>
 
 template <typename T, typename Compare, typename Allocator>
 template <typename NodeType, typename U>
 class ft::RedBlackTree<T, Compare, Allocator>::Iterator
 {
-	private:
+	public:
 		/**
 		 * @defgroup Typedefs
 		 *
@@ -16,11 +17,14 @@ class ft::RedBlackTree<T, Compare, Allocator>::Iterator
 		 *
 		 */
 
-		typedef U* pointer;
+		typedef std::ptrdiff_t difference_type;
 		typedef U value_type;
+		typedef U* pointer;
 		typedef U& reference;
 		typedef NodeType* node_pointer;
+		typedef std::bidirectional_iterator_tag iterator_category;
 
+	private:
 		/**
 		 * @defgroup Attributes
 		 *
