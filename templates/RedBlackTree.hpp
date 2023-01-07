@@ -103,7 +103,9 @@ namespace ft
 			 */
 
 			ft::pair<iterator, bool> insert(const T &value);
+			ft::pair<iterator, bool> insertAt(iterator position, const T &value);
 			Node *find(const T &value);
+			Node *findAt(iterator position, const T &value);
 			void erase(const T &value);
 
 			/**

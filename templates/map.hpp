@@ -65,10 +65,7 @@ namespace ft
 			template <typename InputIterator>
 			map(
 				InputIterator first,
-				typename ft::enable_if<
-					not ft::is_integral<InputIterator>::value,
-					InputIterator
-				>::type last,
+				InputIterator last,
 				const Compare &comp = Compare(),
 				const Allocator &alloc = Allocator()
 			);
@@ -126,6 +123,17 @@ namespace ft
 			bool empty() const;
 			size_type size() const;
 			size_type max_size() const;
+
+			/**
+			 * @defgroup Modifiers
+			 *
+			 */
+
+			void clear();
+			ft::pair<iterator, bool> insert(const value_type &value);
+			iterator insert(iterator pos, const value_type &value);
+			template <typename InputIterator>
+			void insert(InputIterator first, InputIterator last);
 
 		private:
 			tree_type m_Tree;

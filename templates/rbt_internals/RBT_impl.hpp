@@ -30,7 +30,7 @@ ft::RedBlackTree<T, Compare, Allocator>::RedBlackTree(
 ) : m_Compare(comp)
 {
 	m_Root = NULL;
-	m_Size = std::distance(first, last);
+	m_Size = 0;
 	m_Allocator = alloc;
 	while (first != last)
 	{
@@ -50,7 +50,12 @@ ft::RedBlackTree<T, Compare, Allocator>::RedBlackTree(const RedBlackTree &other)
 template <typename T, typename Compare, typename Allocator>
 ft::RedBlackTree<T, Compare, Allocator>::~RedBlackTree()
 {
-	RecursiveDelete(m_Root, m_Allocator);
+	if (m_Size != 0)
+	{
+		RecursiveDelete(m_Root, m_Allocator);
+		m_Root = NULL;
+		m_Size = 0;
+	}
 }
 
 template <typename T, typename Compare, typename Allocator>
@@ -607,4 +612,28 @@ template <typename T, typename Compare, typename Allocator>
 size_t ft::RedBlackTree<T, Compare, Allocator>::get_size() const
 {
 	return m_Size;
+}
+
+template <typename T, typename Compare, typename Allocator>
+ft::pair<typename ft::RedBlackTree<T, Compare, Allocator>::iterator, bool>
+ft::RedBlackTree<T, Compare, Allocator>::insertAt(iterator position, const T &value)
+{
+	if (position == this->end())
+	{
+		return this->insert(value);
+	}
+
+	Node *root = position.getCurrent();
+
+	if (m_Compare(value, *position))
+	{
+		return this->insertAt(
+			iterator(m_Root, root->left),
+			value
+		);
+	}
+	return this->insertAt(
+		iterator(m_Root, root->right),
+		value
+	);
 }

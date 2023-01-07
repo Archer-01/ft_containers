@@ -22,10 +22,7 @@ template <typename Key, typename T, typename Compare, typename Allocator>
 template <typename InputIterator>
 ft::map<Key, T, Compare, Allocator>::map(
 	InputIterator first,
-	typename ft::enable_if<
-		not ft::is_integral<InputIterator>::value,
-		InputIterator
-	>::type last,
+	InputIterator last,
 	const key_compare &comp,
 	const allocator_type &alloc
 ) : m_Tree(tree_type(first, last, value_compare(comp), alloc))
@@ -185,4 +182,35 @@ typename ft::map<Key, T, Compare, Allocator>::size_type
 ft::map<Key, T, Compare, Allocator>::max_size() const
 {
 	return m_Tree.get_allocator().max_size();
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+void ft::map<Key, T, Compare, Allocator>::clear()
+{
+	m_Tree.~tree_type();
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+ft::pair<typename ft::map<Key, T, Compare, Allocator>::iterator, bool>
+ft::map<Key, T, Compare, Allocator>::insert(const value_type &val)
+{
+	return m_Tree.insert(val);
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+typename ft::map<Key, T, Compare, Allocator>::iterator
+ft::map<Key, T, Compare, Allocator>::insert(iterator pos, const value_type &val)
+{
+	return m_Tree.insertAt(pos, val).first;
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+template <typename InputIterator>
+void ft::map<Key, T, Compare, Allocator>::insert(InputIterator first, InputIterator last)
+{
+	while (first != last)
+	{
+		m_Tree.insert(*first);
+		++first;
+	}
 }
