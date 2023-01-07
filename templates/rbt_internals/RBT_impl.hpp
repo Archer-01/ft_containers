@@ -65,7 +65,10 @@ ft::RedBlackTree<T, Compare, Allocator>::~RedBlackTree()
 }
 
 template <typename T, typename Compare, typename Allocator>
-void ft::RedBlackTree<T, Compare, Allocator>::RecursiveDelete(Node *root, Allocator &alloc)
+void ft::RedBlackTree<T, Compare, Allocator>::RecursiveDelete(
+	Node *root,
+	Allocator &alloc
+)
 {
 	if (root == NULL)
 	{

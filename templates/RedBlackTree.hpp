@@ -32,6 +32,9 @@ namespace ft
 
 			struct Node;
 
+			template <typename NodeType, typename U>
+			class Iterator;
+
 			/**
 			 * @defgroup Attributes
 			 *
@@ -158,5 +161,6 @@ namespace ft
 
 }; // namespace ft
 
+#include "rbt_internals/RBTIterator.hpp"
 #include "rbt_internals/RBTNode.hpp"
 #include "rbt_internals/RBT_impl.hpp"

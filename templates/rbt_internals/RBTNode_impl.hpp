@@ -26,11 +26,6 @@ ft::RedBlackTree<T, Compare, Allocator>::Node::Node(T data)
 	this->side = LEFT;
 }
 
-/**
- * @def Sibling method
- *
- */
-
 template <typename T, typename Compare, typename Allocator>
 typename ft::RedBlackTree<T, Compare, Allocator>::Node*
 ft::RedBlackTree<T, Compare, Allocator>::Node::getSibling() const
