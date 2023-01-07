@@ -2,6 +2,7 @@
 
 #include "type_traits.hpp"
 #include "iterator.hpp"
+#include "utility.hpp"
 #include <cstddef>
 
 namespace ft
@@ -31,8 +32,10 @@ namespace ft
 				RIGHT
 			};
 
+		public:
 			struct Node;
 
+		private:
 			template <typename NodeType, typename U>
 			class Iterator;
 
@@ -47,6 +50,14 @@ namespace ft
 			Compare m_Compare;
 
 		public:
+			/**
+			 * @defgroup Typedefs
+			 *
+			 */
+
+			typedef Iterator<Node, T> iterator;
+			typedef Iterator<const Node, const T> const_iterator;
+
 			/**
 			 * @defgroup Constructors
 			 *
@@ -91,7 +102,7 @@ namespace ft
 			 *
 			 */
 
-			void insert(const T &value);
+			ft::pair<iterator, bool> insert(const T &value);
 			Node *find(const T &value);
 			void erase(const T &value);
 
@@ -101,6 +112,15 @@ namespace ft
 			 */
 			void print() const;
 			void prettyPrint() const;
+
+			/**
+			 * @defgroup Getters
+			 *
+			 */
+
+			Allocator get_allocator() const;
+			Node *get_root() const;
+			Compare get_compare() const;
 
 		private:
 			/**
@@ -157,15 +177,6 @@ namespace ft
 			void erase(const Node *nodeToErase);
 			void transplant(const Node *nodeToErase, Node *replacement);
 			void eraseFixup(Node *fixupNode, NodeSide fixupSide);
-
-		public:
-			/**
-			 * @defgroup Typedefs
-			 *
-			 */
-
-			typedef Iterator<Node, T> iterator;
-			typedef Iterator<const Node, const T> const_iterator;
 	};
 
 }; // namespace ft

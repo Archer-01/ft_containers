@@ -110,10 +110,15 @@ ft::RedBlackTree<T, Compare, Allocator>::copyTree(Node *srcRoot)
 }
 
 template <typename T, typename Compare, typename Allocator>
-void ft::RedBlackTree<T, Compare, Allocator>::insert(const T &value)
+ft::pair<typename ft::RedBlackTree<T, Compare, Allocator>::iterator, bool>
+ft::RedBlackTree<T, Compare, Allocator>::insert(const T& value)
 {
-	Node *node = NULL;
+	Node *node = this->find(value);
 
+	if (node != NULL)
+	{
+		return ft::make_pair(iterator(m_Root, node), false);
+	}
 	node = new Node();
 	m_Allocator.construct(&node->data, value);
 	if (m_Root == NULL)
@@ -121,11 +126,12 @@ void ft::RedBlackTree<T, Compare, Allocator>::insert(const T &value)
 		m_Root = node;
 		m_Root->color = BLACK;
 		++m_Size;
-		return;
+		return ft::make_pair(iterator(m_Root, node), true);
 	}
 	RecursiveInsert(m_Root, node, m_Compare);
 	++m_Size;
 	this->insertionFixup(node);
+	return ft::make_pair(iterator(m_Root, node), true);
 }
 
 template <typename T, typename Compare, typename Allocator>
@@ -546,4 +552,23 @@ void ft::RedBlackTree<T, Compare, Allocator>::eraseFixup(
 		}
 	}
 	extraBlack->color = BLACK;
+}
+
+ template <typename T, typename Compare, typename Allocator>
+ Allocator ft::RedBlackTree<T, Compare, Allocator>::get_allocator() const
+ {
+ 	return m_Allocator;
+ }
+
+template <typename T, typename Compare, typename Allocator>
+typename ft::RedBlackTree<T, Compare, Allocator>::Node*
+ft::RedBlackTree<T, Compare, Allocator>::get_root() const
+{
+	return m_Root;
+}
+
+template <typename T, typename Compare, typename Allocator>
+Compare ft::RedBlackTree<T, Compare, Allocator>::get_compare() const
+{
+	return m_Compare;
 }
