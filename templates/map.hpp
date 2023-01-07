@@ -41,8 +41,8 @@ namespace ft
 			typedef const value_type& const_reference;
 			typedef typename Allocator::pointer pointer;
 			typedef typename Allocator::const_pointer const_pointer;
-			typedef typename RedBlackTree<value_type, pair<Key ,T>, allocator_type>::iterator iterator;
-			typedef typename RedBlackTree<value_type, pair<Key, T>, allocator_type>::const_iterator const_iterator;
+			typedef typename RedBlackTree<value_type, value_compare, allocator_type>::iterator iterator;
+			typedef typename RedBlackTree<value_type, value_compare, allocator_type>::const_iterator const_iterator;
 			typedef ft::reverse_iterator<iterator> reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
 
@@ -102,6 +102,21 @@ namespace ft
 
 			T& at(const Key &key);
 			T& operator[](const Key &key);
+
+			/**
+			 * @defgroup Iterators
+			 *
+			 */
+
+			iterator begin();
+			const_iterator begin() const;
+			iterator end();
+			const_iterator end() const;
+
+			reverse_iterator rbegin();
+			const_reverse_iterator rbegin() const;
+			reverse_iterator rend();
+			const_reverse_iterator rend() const;
 
 		private:
 			tree_type m_Tree;

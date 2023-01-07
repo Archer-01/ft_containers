@@ -572,3 +572,31 @@ Compare ft::RedBlackTree<T, Compare, Allocator>::get_compare() const
 {
 	return m_Compare;
 }
+
+template <typename T, typename Compare, typename Allocator>
+typename ft::RedBlackTree<T, Compare, Allocator>::iterator
+ft::RedBlackTree<T, Compare, Allocator>::begin()
+{
+	return iterator(m_Root, m_Root);
+}
+
+template <typename T, typename Compare, typename Allocator>
+typename ft::RedBlackTree<T, Compare, Allocator>::const_iterator
+ft::RedBlackTree<T, Compare, Allocator>::begin() const
+{
+	return const_iterator(m_Root, m_Root);
+}
+
+template <typename T, typename Compare, typename Allocator>
+typename ft::RedBlackTree<T, Compare, Allocator>::iterator
+ft::RedBlackTree<T, Compare, Allocator>::end()
+{
+	return iterator(m_Root, NULL);
+}
+
+template <typename T, typename Compare, typename Allocator>
+typename ft::RedBlackTree<T, Compare, Allocator>::const_iterator
+ft::RedBlackTree<T, Compare, Allocator>::end() const
+{
+	return const_iterator(m_Root, NULL);
+}

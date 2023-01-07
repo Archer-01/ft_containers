@@ -110,3 +110,59 @@ T& ft::map<Key, T, Compare, Allocator>::operator[](const Key &key)
 	}
 	return m_Tree.insert(value_type(key, T())).first->second;
 }
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+typename ft::map<Key, T, Compare, Allocator>::iterator
+ft::map<Key, T, Compare, Allocator>::begin()
+{
+	return m_Tree.begin();
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+typename ft::map<Key, T, Compare, Allocator>::const_iterator
+ft::map<Key, T, Compare, Allocator>::begin() const
+{
+	return m_Tree.begin();
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+typename ft::map<Key, T, Compare, Allocator>::iterator
+ft::map<Key, T, Compare, Allocator>::end()
+{
+	return m_Tree.end();
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+typename ft::map<Key, T, Compare, Allocator>::const_iterator
+ft::map<Key, T, Compare, Allocator>::end() const
+{
+	return m_Tree.end();
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+typename ft::map<Key, T, Compare, Allocator>::reverse_iterator
+ft::map<Key, T, Compare, Allocator>::rbegin()
+{
+	return ft::reverse_iterator<iterator>(this->end());
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+typename ft::map<Key, T, Compare, Allocator>::const_reverse_iterator
+ft::map<Key, T, Compare, Allocator>::rbegin() const
+{
+	return ft::reverse_iterator<const_iterator>(this->end());
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+typename ft::map<Key, T, Compare, Allocator>::reverse_iterator
+ft::map<Key, T, Compare, Allocator>::rend()
+{
+	return ft::reverse_iterator<iterator>(this->begin());
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+typename ft::map<Key, T, Compare, Allocator>::const_reverse_iterator
+ft::map<Key, T, Compare, Allocator>::rend() const
+{
+	return ft::reverse_iterator<const_iterator>(this->begin());
+}

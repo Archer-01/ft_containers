@@ -122,6 +122,16 @@ namespace ft
 			Node *get_root() const;
 			Compare get_compare() const;
 
+			/**
+			 * @defgroup Iterators
+			 *
+			 */
+
+			iterator begin();
+			const_iterator begin() const;
+			iterator end();
+			const_iterator end() const;
+
 		private:
 			/**
 			 * @defgroup Static methods
