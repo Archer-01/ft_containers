@@ -55,3 +55,58 @@ ft::map<Key, T, Compare, Allocator>::operator=(const map &other)
 	}
 	return *this;
 }
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+typename ft::map<Key, T, Compare, Allocator>::allocator_type
+ft::map<Key, T, Compare, Allocator>::get_allocator() const
+{
+	return m_Tree.get_allocator();
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+T& ft::map<Key, T, Compare, Allocator>::at(const Key &key)
+{
+	typename tree_type::Node *root = m_Tree.get_root();
+	Compare comp;
+
+	while (root != NULL)
+	{
+		if (comp(key, root->data.first))
+		{
+			root = root->left;
+		}
+		else if (comp(root->data.first, key))
+		{
+			root = root->right;
+		}
+		else // key == node->value.first
+		{
+			return root->data.second;
+		}
+	}
+	throw std::out_of_range("map::at: key not found");
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+T& ft::map<Key, T, Compare, Allocator>::operator[](const Key &key)
+{
+	typename tree_type::Node *root = m_Tree.get_root();
+	Compare comp;
+
+	while (root != NULL)
+	{
+		if (comp(key, root->data.first))
+		{
+			root = root->left;
+		}
+		else if (comp(root->data.first, key))
+		{
+			root = root->right;
+		}
+		else // key == node->value.first
+		{
+			return root->data.second;
+		}
+	}
+	return m_Tree.insert(value_type(key, T())).first->second;
+}

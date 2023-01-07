@@ -5,6 +5,7 @@
 #include "utility.hpp"
 #include <functional>
 #include <memory>
+#include <stdexcept>
 
 namespace ft
 {
@@ -86,6 +87,21 @@ namespace ft
 			 */
 
 			map &operator=(const map &other);
+
+			/**
+			 * @def Get allocator
+			 *
+			 */
+
+			allocator_type get_allocator() const;
+
+			/**
+			 * @defgroup Element access
+			 *
+			 */
+
+			T& at(const Key &key);
+			T& operator[](const Key &key);
 
 		private:
 			tree_type m_Tree;
