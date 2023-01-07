@@ -118,6 +118,15 @@ namespace ft
 			reverse_iterator rend();
 			const_reverse_iterator rend() const;
 
+			/**
+			 * @defgroup Capacity
+			 *
+			 */
+
+			bool empty() const;
+			size_type size() const;
+			size_type max_size() const;
+
 		private:
 			tree_type m_Tree;
 	};

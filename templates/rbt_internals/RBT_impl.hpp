@@ -1,6 +1,7 @@
 #pragma once
 
 #include "RedBlackTree.hpp"
+#include <algorithm>
 #include <iomanip>
 #include <iostream>
 #include <iterator>
@@ -29,7 +30,7 @@ ft::RedBlackTree<T, Compare, Allocator>::RedBlackTree(
 ) : m_Compare(comp)
 {
 	m_Root = NULL;
-	m_Size = 0;
+	m_Size = std::distance(first, last);
 	m_Allocator = alloc;
 	while (first != last)
 	{
@@ -41,7 +42,7 @@ ft::RedBlackTree<T, Compare, Allocator>::RedBlackTree(
 template <typename T, typename Compare, typename Allocator>
 ft::RedBlackTree<T, Compare, Allocator>::RedBlackTree(const RedBlackTree &other) : m_Compare(other.m_Compare)
 {
-	m_Size = 0;
+	m_Size = other.m_Size;
 	m_Allocator = other.m_Allocator;
 	m_Root = this->copyTree(other.m_Root);
 }
@@ -75,7 +76,7 @@ ft::RedBlackTree<T, Compare, Allocator>::operator=(const RedBlackTree &other)
 	if (this != &other)
 	{
 		RecursiveDelete(m_Root, m_Allocator);
-		m_Size = 0;
+		m_Size = other.m_Size;
 		m_Allocator = other.m_Allocator;
 		m_Compare = other.m_Compare;
 		m_Root = this->copyTree(other.m_Root);
@@ -431,6 +432,7 @@ void ft::RedBlackTree<T, Compare, Allocator>::erase(const T &value)
 		return;
 	}
 	this->erase(nodeToErase);
+	--m_Size;
 }
 
 /**
@@ -599,4 +601,10 @@ typename ft::RedBlackTree<T, Compare, Allocator>::const_iterator
 ft::RedBlackTree<T, Compare, Allocator>::end() const
 {
 	return const_iterator(m_Root, NULL);
+}
+
+template <typename T, typename Compare, typename Allocator>
+size_t ft::RedBlackTree<T, Compare, Allocator>::get_size() const
+{
+	return m_Size;
 }

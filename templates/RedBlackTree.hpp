@@ -121,6 +121,7 @@ namespace ft
 			Allocator get_allocator() const;
 			Node *get_root() const;
 			Compare get_compare() const;
+			size_t get_size() const;
 
 			/**
 			 * @defgroup Iterators

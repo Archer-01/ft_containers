@@ -166,3 +166,23 @@ ft::map<Key, T, Compare, Allocator>::rend() const
 {
 	return ft::reverse_iterator<const_iterator>(this->begin());
 }
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+bool ft::map<Key, T, Compare, Allocator>::empty() const
+{
+	return m_Tree.get_size() == 0;
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+typename ft::map<Key, T, Compare, Allocator>::size_type
+ft::map<Key, T, Compare, Allocator>::size() const
+{
+	return m_Tree.get_size();
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+typename ft::map<Key, T, Compare, Allocator>::size_type
+ft::map<Key, T, Compare, Allocator>::max_size() const
+{
+	return m_Tree.get_allocator().max_size();
+}
