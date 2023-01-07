@@ -6,24 +6,14 @@
 #include <iterator>
 
 template <typename T, typename Compare, typename Allocator>
-ft::RedBlackTree<T, Compare, Allocator>::RedBlackTree()
-{
-	m_Root = NULL;
-	m_Size = 0;
-	m_Allocator = Allocator();
-	m_Compare = Compare();
-}
-
-template <typename T, typename Compare, typename Allocator>
 ft::RedBlackTree<T, Compare, Allocator>::RedBlackTree(
 	const Compare &comp,
 	const Allocator &alloc
-)
+) : m_Compare(comp)
 {
 	m_Root = NULL;
 	m_Size = 0;
 	m_Allocator = alloc;
-	m_Compare = comp;
 }
 
 template <typename T, typename Compare, typename Allocator>
@@ -36,12 +26,11 @@ ft::RedBlackTree<T, Compare, Allocator>::RedBlackTree(
 	>::type last,
 	const Compare &comp,
 	const Allocator &alloc
-)
+) : m_Compare(comp)
 {
 	m_Root = NULL;
 	m_Size = 0;
 	m_Allocator = alloc;
-	m_Compare = comp;
 	while (first != last)
 	{
 		this->insert(*first);
@@ -50,11 +39,10 @@ ft::RedBlackTree<T, Compare, Allocator>::RedBlackTree(
 }
 
 template <typename T, typename Compare, typename Allocator>
-ft::RedBlackTree<T, Compare, Allocator>::RedBlackTree(const RedBlackTree &other)
+ft::RedBlackTree<T, Compare, Allocator>::RedBlackTree(const RedBlackTree &other) : m_Compare(other.m_Compare)
 {
 	m_Size = 0;
 	m_Allocator = other.m_Allocator;
-	m_Compare = other.m_Compare;
 	m_Root = this->copyTree(other.m_Root);
 }
 
@@ -105,8 +93,7 @@ ft::RedBlackTree<T, Compare, Allocator>::copyTree(Node *srcRoot)
 	{
 		return NULL;
 	}
-	node = new Node();
-	*node = *srcRoot;
+	node = new Node(*srcRoot);
 	node->left = copyTree(srcRoot->left);
 	if (node->left != NULL)
 	{

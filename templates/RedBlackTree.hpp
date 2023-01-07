@@ -1,6 +1,7 @@
 #pragma once
 
 #include "type_traits.hpp"
+#include "iterator.hpp"
 #include <cstddef>
 
 namespace ft
@@ -51,8 +52,7 @@ namespace ft
 			 *
 			 */
 
-			RedBlackTree();
-			explicit RedBlackTree(
+			RedBlackTree(
 				const Compare &comp,
 				const Allocator &alloc = Allocator()
 			);
@@ -157,6 +157,15 @@ namespace ft
 			void erase(const Node *nodeToErase);
 			void transplant(const Node *nodeToErase, Node *replacement);
 			void eraseFixup(Node *fixupNode, NodeSide fixupSide);
+
+		public:
+			/**
+			 * @defgroup Typedefs
+			 *
+			 */
+
+			typedef Iterator<Node, T> iterator;
+			typedef Iterator<const Node, const T> const_iterator;
 	};
 
 }; // namespace ft

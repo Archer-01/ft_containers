@@ -5,9 +5,8 @@
 #include <memory>
 
 template <typename T, typename Compare, typename Allocator>
-ft::RedBlackTree<T, Compare, Allocator>::Node::Node()
+ft::RedBlackTree<T, Compare, Allocator>::Node::Node() : data(T())
 {
-	this->data = T();
 	this->left = NULL;
 	this->right = NULL;
 	this->parent = NULL;
@@ -16,9 +15,8 @@ ft::RedBlackTree<T, Compare, Allocator>::Node::Node()
 }
 
 template <typename T, typename Compare, typename Allocator>
-ft::RedBlackTree<T, Compare, Allocator>::Node::Node(T data)
+ft::RedBlackTree<T, Compare, Allocator>::Node::Node(T data) : data(data)
 {
-	this->data = data;
 	this->left = NULL;
 	this->right = NULL;
 	this->parent = NULL;

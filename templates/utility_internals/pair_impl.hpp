@@ -3,25 +3,22 @@
 #include "pair.hpp"
 
 template <typename T1, typename T2>
-ft::pair<T1, T2>::pair()
+ft::pair<T1, T2>::pair() : first(first_type()), second(second_type())
 {
-	this->first = first_type();
-	this->second = second_type();
+	// Empty body
 }
 
 template <typename T1, typename T2>
-ft::pair<T1, T2>::pair(const T1& first, const T2& second)
+ft::pair<T1, T2>::pair(const T1& first, const T2& second) : first(first), second(second)
 {
-	this->first = first;
-	this->second = second;
+	// Empty body
 }
 
 template <typename T1, typename T2>
 template <typename U1, typename U2>
-ft::pair<T1, T2>::pair(const pair<U1, U2>& rhs)
+ft::pair<T1, T2>::pair(const pair<U1, U2>& rhs) : first(rhs.first), second(rhs.second)
 {
-	this->first = rhs.first;
-	this->second = rhs.second;
+	// Empty body
 }
 
 template <typename T1, typename T2>
