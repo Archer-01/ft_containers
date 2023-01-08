@@ -428,9 +428,9 @@ ft::RedBlackTree<T, Compare, Allocator>::find(const T &value)
 }
 
 template <typename T, typename Compare, typename Allocator>
-void ft::RedBlackTree<T, Compare, Allocator>::erase(const T &value)
+void ft::RedBlackTree<T, Compare, Allocator>::erase(iterator position)
 {
-	Node *nodeToErase = this->find(value);
+	Node *nodeToErase = position.getCurrent();
 
 	if (nodeToErase == NULL)
 	{
@@ -474,21 +474,34 @@ void ft::RedBlackTree<T, Compare, Allocator>::transplant(
 }
 
 template <typename T, typename Compare, typename Allocator>
-void ft::RedBlackTree<T, Compare, Allocator>::erase(const Node *nodeToErase)
+void ft::RedBlackTree<T, Compare, Allocator>::erase(Node *nodeToErase)
 {
 	assert(nodeToErase != NULL);
 
 	NodeColor removedColor = nodeToErase->color;
 	NodeSide fixupSide = nodeToErase->side;
 	Node *fixupNode = nodeToErase->parent;
+	bool rootWillBeRemoved = false;
 
+	if (nodeToErase == m_Root)
+	{
+		rootWillBeRemoved = true;
+	}
 	if (nodeToErase->left == NULL)
 	{
 		this->transplant(nodeToErase, nodeToErase->right);
+		if (rootWillBeRemoved)
+		{
+			fixupNode = m_Root;
+		}
 	}
 	else if (nodeToErase->right == NULL)
 	{
 		this->transplant(nodeToErase, nodeToErase->left);
+		if (rootWillBeRemoved)
+		{
+			fixupNode = m_Root;
+		}
 	}
 	else // nodeToErase has both left and right sub-trees
 	{
@@ -508,6 +521,17 @@ void ft::RedBlackTree<T, Compare, Allocator>::erase(const Node *nodeToErase)
 		successor->linkChild(nodeToErase->left, LEFT);
 		successor->color = nodeToErase->color;
 	}
+	m_Allocator.destroy(&nodeToErase->data);
+	delete nodeToErase;
+	if (m_Root == NULL)
+	{
+		return;
+	}
+	if (fixupNode == m_Root)
+	{
+		m_Root->color = BLACK;
+		return;
+	}
 	if (removedColor == BLACK)
 	{
 		eraseFixup(fixupNode, fixupSide);
@@ -517,8 +541,7 @@ void ft::RedBlackTree<T, Compare, Allocator>::erase(const Node *nodeToErase)
 template <typename T, typename Compare, typename Allocator>
 void ft::RedBlackTree<T, Compare, Allocator>::eraseFixup(
 	Node *fixupNode,
-	NodeSide fixupSide
-)
+	NodeSide fixupSide)
 {
 	Node *extraBlack = fixupNode->getChild(fixupSide);
 	Node *sibling = NULL;
@@ -527,6 +550,7 @@ void ft::RedBlackTree<T, Compare, Allocator>::eraseFixup(
 	while (extraBlack != m_Root and Node::IsBlack(extraBlack))
 	{
 		parent = (extraBlack == NULL) ? fixupNode : extraBlack->parent;
+		fixupSide = (extraBlack == NULL) ? fixupSide : extraBlack->side;
 		sibling = parent->getSiblingChild(fixupSide);
 
 		if (Node::IsRed(sibling))
@@ -549,7 +573,7 @@ void ft::RedBlackTree<T, Compare, Allocator>::eraseFixup(
 				sibling->getChild(fixupSide)->color = BLACK;
 				sibling->color = RED;
 				(fixupSide == LEFT) ? rightRotate(sibling) : leftRotate(sibling);
-				sibling = extraBlack->parent->getSiblingChild(fixupSide);
+				sibling = parent->getSiblingChild(fixupSide);
 			}
 			sibling->color = parent->color;
 			parent->color = BLACK;

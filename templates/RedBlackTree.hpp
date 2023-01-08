@@ -106,7 +106,7 @@ namespace ft
 			ft::pair<iterator, bool> insertAt(iterator position, const T &value);
 			Node *find(const T &value);
 			Node *findAt(iterator position, const T &value);
-			void erase(const T &value);
+			void erase(iterator position);
 
 			/**
 			 * @def Print methods
@@ -187,7 +187,7 @@ namespace ft
 			void doubleRotationRecolor(Node *problemNode);
 			void recolor(Node *problemNode);
 
-			void erase(const Node *nodeToErase);
+			void erase(Node *nodeToErase);
 			void transplant(const Node *nodeToErase, Node *replacement);
 			void eraseFixup(Node *fixupNode, NodeSide fixupSide);
 	};
