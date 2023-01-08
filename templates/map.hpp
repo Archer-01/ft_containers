@@ -135,6 +135,10 @@ namespace ft
 			template <typename InputIterator>
 			void insert(InputIterator first, InputIterator last);
 
+			void erase(iterator pos);
+			void erase(iterator first, iterator last);
+			size_type erase(const Key &key);
+
 		private:
 			tree_type m_Tree;
 	};

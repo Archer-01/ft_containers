@@ -214,3 +214,45 @@ void ft::map<Key, T, Compare, Allocator>::insert(InputIterator first, InputItera
 		++first;
 	}
 }
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+void ft::map<Key, T, Compare, Allocator>::erase(iterator pos)
+{
+	m_Tree.erase(pos);
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+void ft::map<Key, T, Compare, Allocator>::erase(iterator first, iterator last)
+{
+	while (first != last)
+	{
+		m_Tree.erase(first);
+		++first;
+	}
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+typename ft::map<Key, T, Compare, Allocator>::size_type
+ft::map<Key, T, Compare, Allocator>::erase(const Key &key)
+{
+	typename tree_type::Node *root = m_Tree.getRoot();
+	typename tree_type::Node *node = root;
+
+	while (node != NULL)
+	{
+		if (comp(key, node->data.first))
+		{
+			node = node->left;
+		}
+		else if (comp(node->data.first, key))
+		{
+			node = node->right;
+		}
+		else // key == node->data.first
+		{
+			m_Tree.erase(iterator(root, node));
+			return 1;
+		}
+	}
+	return 0;
+}
