@@ -142,6 +142,16 @@ namespace ft
 
 			void swap(map &other);
 
+			/**
+			 * @defgroup Lookup
+			 *
+			 */
+
+			size_type count(const Key &key) const;
+
+			iterator find(const Key &key);
+			const_iterator find(const Key &key) const;
+
 		private:
 			tree_type m_Tree;
 	};

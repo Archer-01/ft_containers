@@ -63,23 +63,11 @@ ft::map<Key, T, Compare, Allocator>::get_allocator() const
 template <typename Key, typename T, typename Compare, typename Allocator>
 T& ft::map<Key, T, Compare, Allocator>::at(const Key &key)
 {
-	typename tree_type::Node *root = m_Tree.get_root();
-	Compare comp;
+	const_iterator iter = this->find(key);
 
-	while (root != NULL)
+	if (iter != this->end())
 	{
-		if (comp(key, root->data.first))
-		{
-			root = root->left;
-		}
-		else if (comp(root->data.first, key))
-		{
-			root = root->right;
-		}
-		else // key == node->value.first
-		{
-			return root->data.second;
-		}
+		return iter->second;
 	}
 	throw std::out_of_range("map::at: key not found");
 }
@@ -87,23 +75,11 @@ T& ft::map<Key, T, Compare, Allocator>::at(const Key &key)
 template <typename Key, typename T, typename Compare, typename Allocator>
 T& ft::map<Key, T, Compare, Allocator>::operator[](const Key &key)
 {
-	typename tree_type::Node *root = m_Tree.get_root();
-	Compare comp;
+	const_iterator iter = this->find(key);
 
-	while (root != NULL)
+	if (iter != this->end())
 	{
-		if (comp(key, root->data.first))
-		{
-			root = root->left;
-		}
-		else if (comp(root->data.first, key))
-		{
-			root = root->right;
-		}
-		else // key == node->value.first
-		{
-			return root->data.second;
-		}
+		return iter->second;
 	}
 	return m_Tree.insert(value_type(key, T())).first->second;
 }
@@ -237,7 +213,34 @@ template <typename Key, typename T, typename Compare, typename Allocator>
 typename ft::map<Key, T, Compare, Allocator>::size_type
 ft::map<Key, T, Compare, Allocator>::erase(const Key &key)
 {
-	typename tree_type::Node *root = m_Tree.get_root();
+	iterator iter = this->find(key);
+
+	if (iter != this->end())
+	{
+		this->erase(iter);
+		return 1;
+	}
+	return 0;
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+void ft::map<Key, T, Compare, Allocator>::swap(map &other)
+{
+	std::swap(this->m_Tree, other.m_Tree);
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+typename ft::map<Key, T, Compare, Allocator>::size_type
+ft::map<Key, T, Compare, Allocator>::count(const Key &key) const
+{
+	return (this->find(key) != this->end()) ? 1 : 0;
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+typename ft::map<Key, T, Compare, Allocator>::iterator
+ft::map<Key, T, Compare , Allocator>::find(const Key &key)
+{
+	typename tree_type::Node *root = this->m_Tree.get_root();
 	typename tree_type::Node *node = root;
 	Compare comp;
 
@@ -253,15 +256,34 @@ ft::map<Key, T, Compare, Allocator>::erase(const Key &key)
 		}
 		else // key == node->data.first
 		{
-			m_Tree.erase(iterator(root, node));
-			return 1;
+			return iterator(root, node);
 		}
 	}
-	return 0;
+	return this->end();
 }
 
 template <typename Key, typename T, typename Compare, typename Allocator>
-void ft::map<Key, T, Compare, Allocator>::swap(map &other)
+typename ft::map<Key, T, Compare, Allocator>::const_iterator
+ft::map<Key, T, Compare, Allocator>::find(const Key &key) const
 {
-	std::swap(this->m_Tree, other.m_Tree);
+	typename tree_type::Node *root = this->m_Tree.get_root();
+	typename tree_type::Node *node = root;
+	Compare comp;
+
+	while (node != NULL)
+	{
+		if (comp(key, node->data.first))
+		{
+			node = node->left;
+		}
+		else if (comp(node->data.first, key))
+		{
+			node = node->right;
+		}
+		else // key == node->data.first
+		{
+			return const_iterator(root, node);
+		}
+	}
+	return this->end();
 }
