@@ -383,3 +383,66 @@ ft::map<Key, T, Compare, Allocator>::value_comp() const
 {
 	return value_compare(Compare());
 }
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+bool ft::operator==(
+	const ft::map<Key, T, Compare, Allocator> &lhs,
+	const ft::map<Key, T, Compare, Allocator> &rhs
+)
+{
+	return (
+		lhs.size() == rhs.size()
+		and ft::equal(lhs.begin(), lhs.end(), rhs.begin())
+	);
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+bool ft::operator!=(
+	const ft::map<Key, T, Compare, Allocator> &lhs,
+	const ft::map<Key, T, Compare, Allocator> &rhs
+)
+{
+	return not lhs == rhs;
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+bool ft::operator<(
+	const ft::map<Key, T, Compare, Allocator> &lhs,
+	const ft::map<Key, T, Compare, Allocator> &rhs
+)
+{
+	return ft::lexicographical_compare(
+		lhs.begin(),
+		lhs.end(),
+		rhs.begin(),
+		rhs.end(),
+		lhs.value_comp()
+	);
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+bool operator<=(
+	const ft::map<Key, T, Compare, Allocator> &lhs,
+	const ft::map<Key, T, Compare, Allocator> &rhs
+)
+{
+	return lhs < rhs or lhs == rhs;
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+bool operator>(
+	const ft::map<Key, T, Compare, Allocator> &lhs,
+	const ft::map<Key, T, Compare, Allocator> &rhs
+)
+{
+	return not lhs <= rhs;
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+bool operator>=(
+	const ft::map<Key, T, Compare, Allocator> &lhs,
+	const ft::map<Key, T, Compare, Allocator> &rhs
+)
+{
+	return not lhs < rhs;
+}

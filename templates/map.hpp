@@ -1,5 +1,6 @@
 #pragma once
 
+#include "algorithm.hpp"
 #include "RedBlackTree.hpp"
 #include "type_traits.hpp"
 #include "utility.hpp"
@@ -174,6 +175,48 @@ namespace ft
 		private:
 			tree_type m_Tree;
 	};
+
+	/**
+	 * @defgroup Relationnal operators (Non-member functions)
+	 *
+	 */
+
+	template <typename Key, typename T, typename Compare, typename Allocator>
+	bool operator==(
+		const map<Key, T, Compare, Allocator> &lhs,
+		const map<Key, T, Compare, Allocator> &rhs
+	);
+
+	template <typename Key, typename T, typename Compare, typename Allocator>
+	bool operator!=(
+		const map<Key, T, Compare, Allocator> &lhs,
+		const map<Key, T, Compare, Allocator> &rhs
+	);
+
+	template <typename Key, typename T, typename Compare, typename Allocator>
+	bool operator<(
+		const map<Key, T, Compare, Allocator> &lhs,
+		const map<Key, T, Compare, Allocator> &rhs
+	);
+
+	template <typename Key, typename T, typename Compare, typename Allocator>
+	bool operator<=(
+		const map<Key, T, Compare, Allocator> &lhs,
+		const map<Key, T, Compare, Allocator> &rhs
+	);
+
+	template <typename Key, typename T, typename Compare, typename Allocator>
+	bool operator>(
+		const map<Key, T, Compare, Allocator> &lhs,
+		const map<Key, T, Compare, Allocator> &rhs
+	);
+
+	template <typename Key, typename T, typename Compare, typename Allocator>
+	bool operator>=(
+		const map<Key, T, Compare, Allocator> &lhs,
+		const map<Key, T, Compare, Allocator> &rhs
+	);
+
 }; // namespace ft
 
 #include "map_internals/map_impl.hpp"
