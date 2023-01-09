@@ -163,6 +163,14 @@ namespace ft
 				const Key &key
 			) const;
 
+			/**
+			 * @defgroup Observers
+			 *
+			 */
+
+			key_compare key_comp() const;
+			value_compare value_comp() const;
+
 		private:
 			tree_type m_Tree;
 	};
