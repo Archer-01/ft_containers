@@ -446,3 +446,12 @@ bool operator>=(
 {
 	return not lhs < rhs;
 }
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+void ft::swap(
+	ft::map<Key, T, Compare, Allocator> &lhs,
+	ft::map<Key, T, Compare, Allocator> &rhs
+)
+{
+	lhs.swap(rhs);
+}
