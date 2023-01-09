@@ -343,3 +343,29 @@ ft::map<Key, T, Compare, Allocator>::upper_bound(const Key &key) const
 	}
 	return iter;
 }
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+ft::pair<
+	typename ft::map<Key, T, Compare, Allocator>::iterator,
+	typename ft::map<Key, T, Compare, Allocator>::iterator
+>
+ft::map<Key, T, Compare, Allocator>::equal_range(const Key &key)
+{
+	return ft::make_pair(
+		this->lower_bound(key),
+		this->upper_bound(key)
+	);
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+ft::pair<
+	typename ft::map<Key, T, Compare, Allocator>::const_iterator,
+	typename ft::map<Key, T, Compare, Allocator>::const_iterator
+>
+ft::map<Key, T, Compare, Allocator>::equal_range(const Key &key) const
+{
+	return ft::make_pair(
+		this->lower_bound(key),
+		this->upper_bound(key)
+	);
+}

@@ -158,6 +158,11 @@ namespace ft
 			iterator upper_bound(const Key &key);
 			const_iterator upper_bound(const Key &key) const;
 
+			ft::pair<iterator, iterator> equal_range(const Key &key);
+			ft::pair<const_iterator, const_iterator> equal_range(
+				const Key &key
+			) const;
+
 		private:
 			tree_type m_Tree;
 	};
