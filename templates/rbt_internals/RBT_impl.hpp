@@ -438,6 +438,8 @@ void ft::RedBlackTree<T, Compare, Allocator>::erase(iterator position)
 	}
 	this->erase(nodeToErase);
 	--m_Size;
+	m_Allocator.destroy(&nodeToErase->data);
+	delete nodeToErase;
 }
 
 /**
@@ -521,8 +523,6 @@ void ft::RedBlackTree<T, Compare, Allocator>::erase(Node *nodeToErase)
 		successor->linkChild(nodeToErase->left, LEFT);
 		successor->color = nodeToErase->color;
 	}
-	m_Allocator.destroy(&nodeToErase->data);
-	delete nodeToErase;
 	if (m_Root == NULL)
 	{
 		return;

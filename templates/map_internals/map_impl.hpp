@@ -226,8 +226,10 @@ void ft::map<Key, T, Compare, Allocator>::erase(iterator first, iterator last)
 {
 	while (first != last)
 	{
-		m_Tree.erase(first);
+		iterator tmp = first;
+
 		++first;
+		m_Tree.erase(tmp);
 	}
 }
 
@@ -235,8 +237,9 @@ template <typename Key, typename T, typename Compare, typename Allocator>
 typename ft::map<Key, T, Compare, Allocator>::size_type
 ft::map<Key, T, Compare, Allocator>::erase(const Key &key)
 {
-	typename tree_type::Node *root = m_Tree.getRoot();
+	typename tree_type::Node *root = m_Tree.get_root();
 	typename tree_type::Node *node = root;
+	Compare comp;
 
 	while (node != NULL)
 	{
