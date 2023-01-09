@@ -259,3 +259,9 @@ ft::map<Key, T, Compare, Allocator>::erase(const Key &key)
 	}
 	return 0;
 }
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+void ft::map<Key, T, Compare, Allocator>::swap(map &other)
+{
+	std::swap(this->m_Tree, other.m_Tree);
+}

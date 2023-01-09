@@ -3,6 +3,7 @@
 #include "RedBlackTree.hpp"
 #include "type_traits.hpp"
 #include "utility.hpp"
+#include <algorithm>
 #include <functional>
 #include <memory>
 #include <stdexcept>
@@ -138,6 +139,8 @@ namespace ft
 			void erase(iterator pos);
 			void erase(iterator first, iterator last);
 			size_type erase(const Key &key);
+
+			void swap(map &other);
 
 		private:
 			tree_type m_Tree;
