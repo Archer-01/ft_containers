@@ -152,6 +152,12 @@ namespace ft
 			iterator find(const Key &key);
 			const_iterator find(const Key &key) const;
 
+			iterator lower_bound(const Key &key);
+			const_iterator lower_bound(const Key &key) const;
+
+			iterator upper_bound(const Key &key);
+			const_iterator upper_bound(const Key &key) const;
+
 		private:
 			tree_type m_Tree;
 	};

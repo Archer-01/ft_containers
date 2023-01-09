@@ -287,3 +287,59 @@ ft::map<Key, T, Compare, Allocator>::find(const Key &key) const
 	}
 	return this->end();
 }
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+typename ft::map<Key, T, Compare, Allocator>::iterator
+ft::map<Key, T, Compare, Allocator>::lower_bound(const Key &key)
+{
+	iterator iter = this->begin();
+	Compare comp;
+
+	while (iter != this->end() and comp(iter->first, key))
+	{
+		++iter;
+	}
+	return iter;
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+typename ft::map<Key, T, Compare, Allocator>::const_iterator
+ft::map<Key, T, Compare, Allocator>::lower_bound(const Key &key) const
+{
+	const_iterator iter = this->begin();
+	Compare comp;
+
+	while (iter != this->end() and comp(iter->first, key))
+	{
+		++iter;
+	}
+	return iter;
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+typename ft::map<Key, T, Compare, Allocator>::iterator
+ft::map<Key, T, Compare, Allocator>::upper_bound(const Key &key)
+{
+	iterator iter = this->begin();
+	Compare comp;
+
+	while (iter != this->end() and not comp(key, iter->first))
+	{
+		++iter;
+	}
+	return iter;
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+typename ft::map<Key, T, Compare, Allocator>::const_iterator
+ft::map<Key, T, Compare, Allocator>::upper_bound(const Key &key) const
+{
+	const_iterator iter = this->begin();
+	Compare comp;
+
+	while (iter != this->end() and not comp(key, iter->first))
+	{
+		++iter;
+	}
+	return iter;
+}
