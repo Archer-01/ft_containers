@@ -18,9 +18,7 @@ ft::RedBlackTree<T, Compare, Allocator>::RedBlackTree(
 	InputIterator last,
 	const value_compare &comp,
 	const allocator_type &alloc
-// HACK: Notice me
-/* ) : root(NULL), compare(comp), allocator(alloc) */
-) : RedBlackTree(comp, alloc)
+) : root(NULL), compare(comp), allocator(alloc)
 {
 	#pragma unroll
 	while (first != last)
