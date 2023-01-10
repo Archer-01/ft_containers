@@ -29,6 +29,13 @@ struct ft::Node
 	 *
 	 */
 	Node(value_type value);
+	Node(const Node &rhs);
+
+	/**
+	 * @def Assignment operator
+	 *
+	 */
+	Node &operator=(const Node &rhs);
 };
 
 #include "red_black_tree_internals/Node_impl.hpp"
