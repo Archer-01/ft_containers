@@ -42,6 +42,22 @@ ft::RedBlackTree<T, Compare, Allocator>::~RedBlackTree()
 }
 
 template <typename T, typename Compare, typename Allocator>
+ft::RedBlackTree<T, Compare, Allocator>
+&ft::RedBlackTree<T, Compare, Allocator>::operator=(
+	const RedBlackTree &rhs
+)
+{
+	if (this != &rhs)
+	{
+		this->clear(this->root);
+		this->copyTree(rhs.root);
+		this->compare = rhs.compare;
+		this->allocator = rhs.allocator;
+	}
+	return *this;
+}
+
+template <typename T, typename Compare, typename Allocator>
 void ft::RedBlackTree<T, Compare, Allocator>::clear(node_type *root)
 {
 	if (root == NULL)
@@ -88,11 +104,12 @@ void ft::RedBlackTree<T, Compare, Allocator>::insert(const value_type &value)
 }
 
 template <typename T, typename Compare, typename Allocator>
-void ft::RedBlackTree<T, Compare, Allocator>::copyTree(node_type *srcRoot)
+typename ft::RedBlackTree<T, Compare, Allocator>::node_type*
+ft::RedBlackTree<T, Compare, Allocator>::copyTree(node_type *srcRoot)
 {
 	if (srcRoot == NULL)
 	{
-		return;
+		return NULL;
 	}
 
 	node_type *node = new node_type(*srcRoot);

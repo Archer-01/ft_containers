@@ -53,6 +53,12 @@ class ft::RedBlackTree
 		~RedBlackTree();
 
 		/**
+		 * @def Assignment operator
+		 *
+		 */
+		RedBlackTree &operator=(const RedBlackTree &rhs);
+
+		/**
 		 * @def Member functions
 		 *
 		 */
@@ -64,7 +70,7 @@ class ft::RedBlackTree
 		 * @def Private methods
 		 *
 		 */
-		void copyTree(node_type *srcRoot);
+		node_type *copyTree(node_type *srcRoot);
 };
 
 #include "red_black_tree_internals/RedBlackTree_impl.hpp"
