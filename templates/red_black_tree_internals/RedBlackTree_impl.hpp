@@ -31,6 +31,13 @@ ft::RedBlackTree<T, Compare, Allocator>::RedBlackTree(
 }
 
 template <typename T, typename Compare, typename Allocator>
+ft::RedBlackTree<T, Compare, Allocator>::RedBlackTree(const RedBlackTree &rhs)
+	: root(NULL), compare(rhs.compare), allocator(rhs.allocator)
+{
+	this->copyTree(rhs.root);
+}
+
+template <typename T, typename Compare, typename Allocator>
 ft::RedBlackTree<T, Compare, Allocator>::~RedBlackTree()
 {
 	this->clear(this->root);
@@ -80,4 +87,29 @@ void ft::RedBlackTree<T, Compare, Allocator>::insert(const value_type &value)
 		}
 	}
 	// TODO: insertFixup(node);
+}
+
+template <typename T, typename Compare, typename Allocator>
+void ft::RedBlackTree<T, Compare, Allocator>::copyTree(node_type *srcRoot)
+{
+	if (srcRoot == NULL)
+	{
+		return;
+	}
+
+	node_type *node = new node_type(*srcRoot);
+
+	node->left = copyTree(srcRoot->left);
+	if (node->left != NULL)
+	{
+		node->left->parent = node;
+		node->left->side = LEFT;
+	}
+	node->right = copyTree(srcRoot->right);
+	if (node->right != NULL)
+	{
+		node->right->parent = node;
+		node->right->side = RIGHT;
+	}
+	return node;
 }

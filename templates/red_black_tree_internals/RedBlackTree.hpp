@@ -44,6 +44,8 @@ class ft::RedBlackTree
 			const allocator_type &alloc
 		);
 
+		RedBlackTree(const RedBlackTree &rhs);
+
 		/**
 		 * @def Destructor
 		 *
@@ -56,6 +58,13 @@ class ft::RedBlackTree
 		 */
 		void clear(node_type *root);
 		void insert(const value_type &value);
+
+	private:
+		/**
+		 * @def Private methods
+		 *
+		 */
+		void copyTree(node_type *srcRoot);
 };
 
 #include "red_black_tree_internals/RedBlackTree_impl.hpp"
