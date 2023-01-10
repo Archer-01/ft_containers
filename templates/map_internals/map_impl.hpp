@@ -63,7 +63,7 @@ ft::map<Key, T, Compare, Allocator>::get_allocator() const
 template <typename Key, typename T, typename Compare, typename Allocator>
 T& ft::map<Key, T, Compare, Allocator>::at(const Key &key)
 {
-	const_iterator iter = this->find(key);
+	iterator iter = this->find(key);
 
 	if (iter != this->end())
 	{
@@ -75,8 +75,8 @@ T& ft::map<Key, T, Compare, Allocator>::at(const Key &key)
 template <typename Key, typename T, typename Compare, typename Allocator>
 T& ft::map<Key, T, Compare, Allocator>::operator[](const Key &key)
 {
-	const_iterator iter = this->find(key);
-
+	iterator iter = this->find(key);
+	
 	if (iter != this->end())
 	{
 		return iter->second;
@@ -256,11 +256,16 @@ ft::map<Key, T, Compare , Allocator>::find(const Key &key)
 		}
 		else // key == node->data.first
 		{
-			return iterator(root, node);
+			iterator iter;
+
+			iter.setRoot(root);
+			iter.setCurrent(node);
+			return iter;
 		}
 	}
 	return this->end();
 }
+
 
 template <typename Key, typename T, typename Compare, typename Allocator>
 typename ft::map<Key, T, Compare, Allocator>::const_iterator
@@ -282,7 +287,11 @@ ft::map<Key, T, Compare, Allocator>::find(const Key &key) const
 		}
 		else // key == node->data.first
 		{
-			return const_iterator(root, node);
+			const_iterator iter;
+
+			iter.setRoot(root);
+			iter.setCurrent(node);
+			return iter;
 		}
 	}
 	return this->end();
@@ -402,7 +411,7 @@ bool ft::operator!=(
 	const ft::map<Key, T, Compare, Allocator> &rhs
 )
 {
-	return not lhs == rhs;
+	return not(lhs == rhs);
 }
 
 template <typename Key, typename T, typename Compare, typename Allocator>
@@ -421,7 +430,7 @@ bool ft::operator<(
 }
 
 template <typename Key, typename T, typename Compare, typename Allocator>
-bool operator<=(
+bool ft::operator<=(
 	const ft::map<Key, T, Compare, Allocator> &lhs,
 	const ft::map<Key, T, Compare, Allocator> &rhs
 )
@@ -430,21 +439,21 @@ bool operator<=(
 }
 
 template <typename Key, typename T, typename Compare, typename Allocator>
-bool operator>(
+bool ft::operator>(
 	const ft::map<Key, T, Compare, Allocator> &lhs,
 	const ft::map<Key, T, Compare, Allocator> &rhs
 )
 {
-	return not lhs <= rhs;
+	return not(lhs <= rhs);
 }
 
 template <typename Key, typename T, typename Compare, typename Allocator>
-bool operator>=(
+bool ft::operator>=(
 	const ft::map<Key, T, Compare, Allocator> &lhs,
 	const ft::map<Key, T, Compare, Allocator> &rhs
 )
 {
-	return not lhs < rhs;
+	return not(lhs < rhs);
 }
 
 template <typename Key, typename T, typename Compare, typename Allocator>

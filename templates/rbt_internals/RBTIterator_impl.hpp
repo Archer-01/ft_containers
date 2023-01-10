@@ -82,6 +82,25 @@ ft::RedBlackTree<T, Compare, Allocator>::Iterator<NodeType, U>::getRoot() const
 
 template <typename T, typename Compare, typename Allocator>
 template <typename NodeType, typename U>
+void ft::RedBlackTree<T, Compare, Allocator>::Iterator<NodeType, U>::setCurrent(
+	node_pointer current
+)
+{
+	m_Current = current;
+}
+
+template <typename T, typename Compare, typename Allocator>
+template <typename NodeType, typename U>
+void ft::RedBlackTree<T, Compare, Allocator>::Iterator<NodeType, U>::setRoot(
+	node_pointer root
+)
+{
+	assert(root != NULL);
+	m_Root = root;
+}
+
+template <typename T, typename Compare, typename Allocator>
+template <typename NodeType, typename U>
 template <typename OtherNodeType, typename V>
 typename ft::RedBlackTree<T, Compare, Allocator>::template Iterator<NodeType, U>&
 ft::RedBlackTree<T, Compare, Allocator>::Iterator<NodeType, U>::operator=(

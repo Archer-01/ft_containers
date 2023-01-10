@@ -1,6 +1,7 @@
 #pragma once
 
 #include "RedBlackTree.hpp"
+#include <cassert>
 #include <iterator>
 
 template <typename T, typename Compare, typename Allocator>
@@ -63,15 +64,19 @@ class ft::RedBlackTree<T, Compare, Allocator>::Iterator
 		Iterator(const Iterator<OtherNodeType, V> &rhs);
 
 		/**
-		 * @defgroup Getters
+		 * @defgroup Getters & Setters
 		 *
 		 * - Get current node
 		 * - Get root node
+		 * - Set current node
+		 * - Set root node
 		 *
 		 */
 
 		node_pointer getCurrent() const;
 		node_pointer getRoot() const;
+		void setCurrent(node_pointer current);
+		void setRoot(node_pointer root);
 
 		/**
 		 * @defgroup Operators
