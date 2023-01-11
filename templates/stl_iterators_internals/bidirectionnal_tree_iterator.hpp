@@ -1,8 +1,9 @@
 #pragma once
 
 #include "stl_iterators.hpp"
+#include "red_black_tree.hpp"
 
-template <typename Node, typename T>
+template <typename NodeType, typename T>
 class ft::bidirectionnal_tree_iterator
 	: public std::iterator<std::bidirectional_iterator_tag, T>
 {
@@ -11,7 +12,7 @@ class ft::bidirectionnal_tree_iterator
 		 * @def Private typedefs
 		 *
 		 */
-		typedef Node* node_pointer;
+		typedef NodeType* node_pointer;
 
 	public:
 		/**
@@ -31,18 +32,18 @@ class ft::bidirectionnal_tree_iterator
 		bidirectionnal_tree_iterator();
 		bidirectionnal_tree_iterator(node_pointer node, node_pointer root);
 
-		template <typename OtherNode, typename U>
+		template <typename OtherNodeType, typename U>
 		bidirectionnal_tree_iterator(
-			const bidirectionnal_tree_iterator<OtherNode, U> &rhs
+			const bidirectionnal_tree_iterator<OtherNodeType, U> &rhs
 		);
 
 		/**
 		 * @def Assignment operator
 		 *
 		 */
-		template <typename OtherNode, typename U>
+		template <typename OtherNodeType, typename U>
 		bidirectionnal_tree_iterator &operator=(
-			const bidirectionnal_tree_iterator<OtherNode, U> &rhs
+			const bidirectionnal_tree_iterator<OtherNodeType, U> &rhs
 		);
 
 		/**
@@ -69,6 +70,15 @@ class ft::bidirectionnal_tree_iterator
 		template <typename OtherNode, typename U>
 		bool operator!=(const bidirectionnal_tree_iterator<OtherNode, U> &rhs) const;
 
+		/**
+		 * @def Increment & Decrement operators
+		 *
+		 */
+		bidirectionnal_tree_iterator &operator++();
+		bidirectionnal_tree_iterator operator++(int);
+		bidirectionnal_tree_iterator &operator--();
+		bidirectionnal_tree_iterator operator--(int);
+
 	private:
 		/**
 		 * @def Attributes
@@ -76,6 +86,13 @@ class ft::bidirectionnal_tree_iterator
 		 */
 		node_pointer current;
 		node_pointer root;
+
+		/**
+		 * @def Private methods
+		 *
+		 */
+		node_pointer leftmostNode(node_pointer node) const;
+		node_pointer rightmostNode(node_pointer node) const;
 };
 
 #include "bidirectionnal_tree_iterator_impl.hpp"

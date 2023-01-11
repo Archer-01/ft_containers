@@ -9,7 +9,7 @@ namespace ft
 	template<typename T>
 	class random_access_iterator;
 
-	template<typename Node, typename T>
+	template<typename NodeType, typename T>
 	class bidirectionnal_tree_iterator;
 
 }; // namespace ft
