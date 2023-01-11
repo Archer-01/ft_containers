@@ -58,6 +58,27 @@ ft::RedBlackTree<T, Compare, Allocator>
 }
 
 template <typename T, typename Compare, typename Allocator>
+typename ft::RedBlackTree<T, Compare, Allocator>::node_type*
+ft::RedBlackTree<T, Compare, Allocator>::getRoot() const
+{
+	return this->root;
+}
+
+template <typename T, typename Compare, typename Allocator>
+typename ft::RedBlackTree<T, Compare, Allocator>::allocator_type
+ft::RedBlackTree<T, Compare, Allocator>::getAllocator() const
+{
+	return this->allocator;
+}
+
+template <typename T, typename Compare, typename Allocator>
+typename ft::RedBlackTree<T, Compare, Allocator>::value_compare
+ft::RedBlackTree<T, Compare, Allocator>::getCompare() const
+{
+	return this->compare;
+}
+
+template <typename T, typename Compare, typename Allocator>
 void ft::RedBlackTree<T, Compare, Allocator>::clear(node_type *root)
 {
 	if (root == NULL)

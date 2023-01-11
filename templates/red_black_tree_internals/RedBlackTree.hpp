@@ -59,6 +59,14 @@ class ft::RedBlackTree
 		RedBlackTree &operator=(const RedBlackTree &rhs);
 
 		/**
+		 * @def Getters
+		 *
+		 */
+		node_type *getRoot() const;
+		allocator_type getAllocator() const;
+		value_compare getCompare() const;
+
+		/**
 		 * @def Member functions
 		 *
 		 */
