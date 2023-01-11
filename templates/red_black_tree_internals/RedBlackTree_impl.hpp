@@ -3,7 +3,7 @@
 #include "RedBlackTree.hpp"
 
 template <typename T, typename Compare, typename Allocator>
-ft::RedBlackTree<T, Compare, Allocator>::RedBlackTree() : root(NULL), compare(), allocator() {}
+ft::RedBlackTree<T, Compare, Allocator>::RedBlackTree() : root(NULL) {}
 
 template <typename T, typename Compare, typename Allocator>
 ft::RedBlackTree<T, Compare, Allocator>::RedBlackTree(
@@ -32,7 +32,7 @@ template <typename T, typename Compare, typename Allocator>
 ft::RedBlackTree<T, Compare, Allocator>::RedBlackTree(const RedBlackTree &rhs)
 	: root(NULL), compare(rhs.compare), allocator(rhs.allocator)
 {
-	this->copyTree(rhs.root);
+	this->root = this->copyTree(rhs.root);
 }
 
 template <typename T, typename Compare, typename Allocator>
@@ -50,7 +50,7 @@ ft::RedBlackTree<T, Compare, Allocator>
 	if (this != &rhs)
 	{
 		this->clear(this->root);
-		this->copyTree(rhs.root);
+		this->root = this->copyTree(rhs.root);
 		this->compare = rhs.compare;
 		this->allocator = rhs.allocator;
 	}
@@ -87,7 +87,6 @@ void ft::RedBlackTree<T, Compare, Allocator>::clear(node_type *root)
 	}
 	this->clear(root->left);
 	this->clear(root->right);
-	this->allocator.destroy(&root->value);
 	delete root;
 }
 
