@@ -1,6 +1,8 @@
 #pragma once
 
 #include "red_black_tree.hpp"
+#include "stl_iterators.hpp"
+#include "stl_iterators_internals/bidirectionnal_tree_iterator.hpp"
 #include <iomanip>
 #include <iostream>
 
@@ -16,6 +18,8 @@ class ft::RedBlackTree
 		typedef Node<T, Allocator> node_type;
 		typedef Compare value_compare;
 		typedef Allocator allocator_type;
+		typedef ft::bidirectionnal_tree_iterator<node_type, T> iterator;
+		typedef ft::bidirectionnal_tree_iterator<const node_type, const T> const_iterator;
 
 	private:
 		/**
@@ -80,6 +84,15 @@ class ft::RedBlackTree
 		 *
 		 */
 		void print() const;
+
+		/**
+		 * @def Iterators
+		 *
+		 */
+		iterator begin();
+		const_iterator begin() const;
+		iterator end();
+		const_iterator end() const;
 
 	private:
 		/**

@@ -340,3 +340,43 @@ void ft::RedBlackTree<T, Compare, Allocator>::print() const
 {
 	Print(this->root, 0);
 }
+
+template <typename T, typename Compare, typename Allocator>
+typename ft::RedBlackTree<T, Compare, Allocator>::iterator
+ft::RedBlackTree<T, Compare, Allocator>::begin()
+{
+	node_type *min = this->root;
+
+	while (min != NULL and min->left != NULL)
+	{
+		min = min->left;
+	}
+	return iterator(min, this->root);
+}
+
+template <typename T, typename Compare, typename Allocator>
+typename ft::RedBlackTree<T, Compare, Allocator>::const_iterator
+ft::RedBlackTree<T, Compare, Allocator>::begin() const
+{
+	node_type *min = this->root;
+
+	while (min != NULL and min->left != NULL)
+	{
+		min = min->left;
+	}
+	return const_iterator(min, this->root);
+}
+
+template <typename T, typename Compare, typename Allocator>
+typename ft::RedBlackTree<T, Compare, Allocator>::iterator
+ft::RedBlackTree<T, Compare, Allocator>::end()
+{
+	return iterator(NULL, this->root);
+}
+
+template <typename T, typename Compare, typename Allocator>
+typename ft::RedBlackTree<T, Compare, Allocator>::const_iterator
+ft::RedBlackTree<T, Compare, Allocator>::end() const
+{
+	return const_iterator(NULL, this->root);
+}
