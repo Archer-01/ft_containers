@@ -124,7 +124,11 @@ template <typename NodeType, typename T>
 ft::bidirectionnal_tree_iterator<NodeType, T>&
 ft::bidirectionnal_tree_iterator<NodeType, T>::operator--()
 {
-	if (this->current != NULL and this->current->left != NULL)
+	if (this->current == NULL)
+	{
+		this->current = this->rightmostNode(this->root);
+	}
+	else if (this->current->left != NULL)
 	{
 		this->current = this->rightmostNode(this->current->left);
 	}
@@ -134,8 +138,7 @@ ft::bidirectionnal_tree_iterator<NodeType, T>::operator--()
 		{
 			this->current = this->current->parent;
 		}
-		this->current = (this->current != NULL) ?
-						this->current->parent : this->rightmostNode(this->root);
+		this->current = this->current->parent;
 	}
 	return *this;
 }
