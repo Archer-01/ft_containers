@@ -91,17 +91,25 @@ void ft::RedBlackTree<T, Compare, Allocator>::clear(node_type *root)
 }
 
 template <typename T, typename Compare, typename Allocator>
-void ft::RedBlackTree<T, Compare, Allocator>::insert(const value_type &value)
+ft::pair<typename ft::RedBlackTree<T, Compare, Allocator>::iterator, bool>
+ft::RedBlackTree<T, Compare, Allocator>::insert(const value_type &value)
 {
-	node_type *node = this->root;
+	node_type *node = this->find(value);
+
+	if (node != NULL)
+	{
+		return ft::make_pair(iterator(node, this->root), false);
+	}
+
 	node_type *newNode = new node_type(value);
 
-	if (node == NULL)
+	if (this->root == NULL)
 	{
 		this->root = newNode;
 		this->root->color = BLACK;
-		return;
+		return ft::make_pair(iterator(this->root, this->root), true);
 	}
+	node = this->root;
 	while (node != NULL)
 	{
 		if (this->compare(value, node->value))
@@ -128,6 +136,7 @@ void ft::RedBlackTree<T, Compare, Allocator>::insert(const value_type &value)
 		}
 	}
 	this->insertFixup(newNode);
+	return ft::make_pair(iterator(newNode, this->root), true);
 }
 
 template <typename T, typename Compare, typename Allocator>
@@ -157,7 +166,7 @@ ft::RedBlackTree<T, Compare, Allocator>::copyTree(node_type *srcRoot)
 }
 
 template <typename T, typename Compare, typename Allocator>
-void ft::RedBlackTree<T, Compare, Allocator>::insertFixup(node_type *problemNode)
+void ft::RedBlackTree<T, Compare, Allocator>::insertFixup(node_type *problemNode)	
 {
 	assert(problemNode != NULL and problemNode->color == RED);
 
@@ -379,4 +388,28 @@ typename ft::RedBlackTree<T, Compare, Allocator>::const_iterator
 ft::RedBlackTree<T, Compare, Allocator>::end() const
 {
 	return const_iterator(NULL, this->root);
+}
+
+template <typename T, typename Compare, typename Allocator>
+typename ft::RedBlackTree<T, Compare, Allocator>::node_type*
+ft::RedBlackTree<T, Compare, Allocator>::find(const value_type &value) const
+{
+	node_type *node = this->root;
+
+	while (node != NULL)
+	{
+		if (this->compare(value, node->value))
+		{
+			node = node->left;
+		}
+		else if (this->compare(node->value, value))
+		{
+			node = node->right;
+		}
+		else // found the value
+		{
+			return node;
+		}
+	}
+	return NULL;
 }

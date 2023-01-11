@@ -2,7 +2,7 @@
 
 #include "red_black_tree.hpp"
 #include "stl_iterators.hpp"
-#include "stl_iterators_internals/bidirectionnal_tree_iterator.hpp"
+#include "utility.hpp"
 #include <iomanip>
 #include <iostream>
 
@@ -77,7 +77,10 @@ class ft::RedBlackTree
 		 *
 		 */
 		void clear(node_type *root);
-		void insert(const value_type &value);
+		node_type *find(const value_type &val) const;
+		ft::pair<iterator, bool> insert(const value_type &value);
+
+		// TODO: build a erase function
 
 		/**
 		 * @def Print method
