@@ -35,7 +35,7 @@ class ft::map<Key, T, Compare, Allocator>::value_compare
 		 * @def Operators
 		 *
 		 */
-		bool operator()(const value_type &lhs, const value_type &rhs)
+		bool operator()(const value_type &lhs, const value_type &rhs) const
 		{
 			return comp(lhs.first, rhs.first);
 		}

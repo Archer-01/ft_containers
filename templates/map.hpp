@@ -5,6 +5,7 @@
 #include "stl_iterators.hpp"
 #include <functional>
 #include <memory>
+#include <stdexcept>
 
 namespace ft
 {
@@ -16,19 +17,19 @@ namespace ft
 	>
 	class map
 	{
+		public:
+			/**
+			 * @def Member classes
+			 *
+			 */
+			class value_compare;
+
 		private:
 			/**
 			 * @def Private typedefs
 			 *
 			 */
 			typedef Node<ft::pair<const Key, T>, Allocator> node_type;
-			typedef ft::RedBlackTree<ft::pair<const Key, T>, Compare, Allocator> tree_type;
-
-			/**
-			 * @def Attributes
-			 *
-			 */
-			tree_type tree;
 
 		public:
 			/**
@@ -50,12 +51,6 @@ namespace ft
 			typedef ft::bidirectionnal_tree_iterator<const node_type, const value_type> const_iterator;
 			typedef ft::reverse_iterator<iterator> reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
-
-			/**
-			 * @def Member classes
-			 *
-			 */
-			class value_compare;
 
 			/**
 			 * @def Constructors
@@ -95,9 +90,32 @@ namespace ft
 			 *
 			 */
 			allocator_type get_allocator() const;
+
+			/**
+			 * @def Element access
+			 *
+			 */
+			T &at(const Key &key);
+			const T &at(const Key &key) const;
+
+			T& operator[](const Key &key);
+
+		private:
+			/**
+			 * @def Private typedefs
+			 *
+			 */
+			typedef ft::RedBlackTree<value_type, value_compare, allocator_type> tree_type;
+
+			/**
+			 * @def Attributes
+			 *
+			 */
+			tree_type tree;
+
 	};
 
 }; // namespace ft
 
-#include "map_internals/value_compare.hpp"
 #include "map_internals/map_impl.hpp"
+#include "map_internals/value_compare.hpp"
