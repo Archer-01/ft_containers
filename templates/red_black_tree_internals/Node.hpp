@@ -36,6 +36,12 @@ struct ft::Node
 	 *
 	 */
 	Node &operator=(const Node &rhs);
+
+	/**
+	 * @def Destructor
+	 *
+	 */
+	~Node();
 };
 
 #include "red_black_tree_internals/Node_impl.hpp"

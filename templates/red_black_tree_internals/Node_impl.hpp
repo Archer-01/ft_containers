@@ -42,3 +42,11 @@ ft::Node<T, Allocator> &ft::Node<T, Allocator>::operator=(
 	}
 	return *this;
 }
+
+template <typename T, typename Allocator>
+ft::Node<T, Allocator>::~Node()
+{
+	allocator_type allocator;
+
+	allocator.destroy(&this->value);
+}
