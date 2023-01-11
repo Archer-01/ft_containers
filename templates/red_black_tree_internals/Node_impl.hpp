@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Node.hpp"
+#include <cassert>
 
 template <typename T, typename Allocator>
 ft::Node<T, Allocator>::Node(value_type value) : value(value), color(RED), side(LEFT)
@@ -54,7 +55,7 @@ ft::Node<T, Allocator>::~Node()
 template <typename T, typename Allocator>
 ft::Node<T, Allocator> *ft::Node<T, Allocator>::getGrandParent() const
 {
-	assert(this != NULL and this->parent != NULL);
+	assert(this->parent != NULL);
 
 	return this->parent->parent;
 }
@@ -62,8 +63,6 @@ ft::Node<T, Allocator> *ft::Node<T, Allocator>::getGrandParent() const
 template <typename T, typename Allocator>
 ft::Node<T, Allocator> *ft::Node<T, Allocator>::getAunt() const
 {
-	assert(this != NULL);
-
 	Node *grandParent = this->getGrandParent();
 
 	if (this->parent->side == LEFT)
