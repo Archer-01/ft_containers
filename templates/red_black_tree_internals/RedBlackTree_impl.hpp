@@ -413,3 +413,144 @@ ft::RedBlackTree<T, Compare, Allocator>::find(const value_type &value) const
 	}
 	return NULL;
 }
+
+template <typename T, typename Compare, typename Allocator>
+void ft::RedBlackTree<T, Compare, Allocator>::erase(const value_type &value)
+{
+	node_type *node = this->find(value);
+
+	if (node == NULL)
+	{
+		return;
+	}
+	this->erase(node);
+	delete node;
+}
+
+template <typename T, typename Compare, typename Allocator>
+void ft::RedBlackTree<T, Compare, Allocator>::erase(node_type *nodeToErase)
+{	
+	assert(nodeToErase != NULL);
+
+	NodeColor removedColor = nodeToErase->color;
+	NodeSide fixupSide = nodeToErase->side;
+	node_type *fixupNode = nodeToErase->parent;
+
+	if (nodeToErase->left == NULL)
+	{
+		this->transplant(nodeToErase, nodeToErase->right);
+	}
+	else if (nodeToErase->right == NULL)
+	{
+		this->transplant(nodeToErase, nodeToErase->left);
+	}
+	else // nodeToErase has both left and right sub-trees
+	{
+		node_type *successor = nodeToErase->getSuccessor();
+
+		fixupNode = successor;
+		fixupSide = RIGHT;
+		removedColor = successor->color;
+		if (successor->parent != nodeToErase)
+		{
+			fixupSide = LEFT;
+			fixupNode = successor->parent;
+			this->transplant(successor, successor->right);
+			successor->linkChild(nodeToErase->right, RIGHT);
+		}
+		this->transplant(nodeToErase, successor);
+		successor->linkChild(nodeToErase->left, LEFT);
+		successor->color = nodeToErase->color;
+	}
+
+	if (fixupNode == NULL or fixupNode == this->root)
+	{
+		if (fixupNode == this->root)
+		{
+			fixupNode->color = BLACK;
+		}
+		return;
+	}
+
+	if (removedColor == BLACK)
+	{
+		this->eraseFixup(fixupNode, fixupSide);
+	}
+}
+
+template <typename T, typename Compare, typename Allocator>
+void ft::RedBlackTree<T, Compare, Allocator>::transplant(
+	const node_type *nodeToErase,
+	node_type *replacement
+)
+{
+	assert(nodeToErase != NULL);
+
+	if (nodeToErase->parent == NULL)
+	{
+		this->root = replacement;
+		this->root->parent = NULL;
+	}
+	else if (nodeToErase->side == LEFT)
+	{
+		nodeToErase->parent->left = replacement;
+	}
+	else // nodeToErase is a right child
+	{
+		nodeToErase->parent->right = replacement;
+	}
+
+	if (replacement != NULL)
+	{
+		replacement->parent = nodeToErase->parent;
+		replacement->side = nodeToErase->side;
+	}
+}
+
+template <typename T, typename Compare, typename Allocator>
+void ft::RedBlackTree<T, Compare, Allocator>::eraseFixup(
+	node_type *fixupNode,
+	NodeSide fixupSide
+)
+{
+	node_type *extraBlack = fixupNode->getChild(fixupSide);
+
+	while (extraBlack != this->root and node_type::IsBlack(extraBlack))
+	{
+		node_type *parent = (extraBlack == NULL) ? fixupNode : extraBlack->parent;
+		node_type *sibling = NULL;
+
+		fixupSide = (extraBlack == NULL) ? fixupSide : extraBlack->side;
+		sibling = parent->getOtherChild(fixupSide);
+
+		if (node_type::IsRed(sibling))
+		{
+			sibling->color = BLACK;
+			parent->color = RED;
+			(fixupSide == LEFT) ? leftRotation(parent) : rightRotation(parent);
+			sibling = parent->getOtherChild(fixupSide);
+		}
+
+		if (node_type::IsBlack(sibling->left) and node_type::IsBlack(sibling->right))
+		{
+			sibling->color = RED;
+			extraBlack = parent;
+		}
+		else
+		{
+			if (node_type::IsBlack(sibling->getOtherChild(fixupSide)))
+			{
+				sibling->getChild(fixupSide)->color = BLACK;
+				sibling->color = RED;
+				(fixupSide == LEFT) ? rightRotation(sibling) : leftRotation(sibling);
+				sibling = parent->getOtherChild(fixupSide);
+			}
+			sibling->color = parent->color;
+			parent->color = BLACK;
+			sibling->getOtherChild(fixupSide)->color = BLACK;
+			(fixupSide == LEFT) ? leftRotation(parent) : rightRotation(parent);
+			extraBlack = this->root;
+		}
+	}
+	extraBlack->color = BLACK;
+}

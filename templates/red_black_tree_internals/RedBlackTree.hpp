@@ -79,8 +79,7 @@ class ft::RedBlackTree
 		void clear(node_type *root);
 		node_type *find(const value_type &val) const;
 		ft::pair<iterator, bool> insert(const value_type &value);
-
-		// TODO: build a erase function
+		void erase(const value_type &value);
 
 		/**
 		 * @def Print method
@@ -111,6 +110,10 @@ class ft::RedBlackTree
 		void rightRotation(node_type *grandParent);
 
 		static void Print(node_type *node, int indent);
+
+		void transplant(const node_type *nodeToErase, node_type *replacement);
+		void eraseFixup(node_type *fixupNode, NodeSide fixupSide);
+		void erase(node_type *node);
 };
 
 #include "red_black_tree_internals/RedBlackTree_impl.hpp"

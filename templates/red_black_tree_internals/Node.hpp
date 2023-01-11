@@ -49,9 +49,14 @@ struct ft::Node
 	 */
 	Node *getGrandParent() const;
 	Node *getAunt() const;
+	Node *getSuccessor() const;
+	Node *getChild(NodeSide side) const;
+	Node *getOtherChild(NodeSide side) const;
 
 	static bool IsRed(const Node *node);
 	static bool IsBlack(const Node *node);
+
+	void linkChild(Node *child, NodeSide side);
 };
 
 #include "red_black_tree_internals/Node_impl.hpp"

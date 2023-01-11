@@ -73,6 +73,38 @@ ft::Node<T, Allocator> *ft::Node<T, Allocator>::getAunt() const
 }
 
 template <typename T, typename Allocator>
+ft::Node<T, Allocator> *ft::Node<T, Allocator>::getSuccessor() const
+{
+	Node *successor = this->right;
+
+	while (successor->left != NULL)
+	{
+		successor = successor->left;
+	}
+	return successor;
+}
+
+template <typename T, typename Allocator>
+ft::Node<T, Allocator> *ft::Node<T, Allocator>::getChild(NodeSide side) const
+{
+	if (side == LEFT)
+	{
+		return this->left;
+	}
+	return this->right;
+}
+
+template <typename T, typename Allocator>
+ft::Node<T, Allocator> *ft::Node<T, Allocator>::getOtherChild(NodeSide side) const
+{
+	if (side == LEFT)
+	{
+		return this->right;
+	}
+	return this->left;
+}
+
+template <typename T, typename Allocator>
 bool ft::Node<T, Allocator>::IsRed(const Node *node)
 {
 	return node != NULL and node->color == RED;
@@ -82,4 +114,23 @@ template <typename T, typename Allocator>
 bool ft::Node<T, Allocator>::IsBlack(const Node *node)
 {
 	return node == NULL or node->color == BLACK;
+}
+
+template <typename T, typename Allocator>
+void ft::Node<T, Allocator>::linkChild(Node *child, NodeSide side)
+{
+	if (side == LEFT)
+	{
+		this->left = child;
+	}
+	else // side == RIGHT
+	{
+		this->right = child;
+	}
+
+	if (child != NULL)
+	{
+		child->parent = this;
+		child->side = side;
+	}
 }
