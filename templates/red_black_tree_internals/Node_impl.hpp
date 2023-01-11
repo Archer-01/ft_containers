@@ -4,7 +4,7 @@
 #include <cassert>
 
 template <typename T, typename Allocator>
-ft::Node<T, Allocator>::Node(value_type value) : value(value), color(RED), side(LEFT)
+ft::Node<T, Allocator>::Node(value_type value) : color(RED), side(LEFT)
 {
 	allocator_type allocator;
 
