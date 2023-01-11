@@ -1,6 +1,8 @@
 #pragma once
 
 #include "red_black_tree.hpp"
+#include <iomanip>
+#include <iostream>
 
 template <typename T, typename Compare, typename Allocator>
 class ft::RedBlackTree
@@ -73,12 +75,26 @@ class ft::RedBlackTree
 		void clear(node_type *root);
 		void insert(const value_type &value);
 
+		/**
+		 * @def Print method
+		 *
+		 */
+		void print() const;
+
 	private:
 		/**
-		 * @def Private methods
+		 * @def Private helper methods
 		 *
 		 */
 		node_type *copyTree(node_type *srcRoot);
+
+		void insertFixup(node_type *problemNode);
+		void colorFlip(node_type *problemNode);
+		void rotation(node_type *problemNode);
+		void leftRotation(node_type *grandParent);
+		void rightRotation(node_type *grandParent);
+
+		static void Print(node_type *node, int indent);
 };
 
 #include "red_black_tree_internals/RedBlackTree_impl.hpp"
