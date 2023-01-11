@@ -42,6 +42,16 @@ struct ft::Node
 	 *
 	 */
 	~Node();
+
+	/**
+	 * @def Methods
+	 *
+	 */
+	Node *getGrandParent() const;
+	Node *getAunt() const;
+
+	static bool IsRed(const Node *node);
+	static bool IsBlack(const Node *node);
 };
 
 #include "red_black_tree_internals/Node_impl.hpp"

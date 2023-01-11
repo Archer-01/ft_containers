@@ -50,3 +50,37 @@ ft::Node<T, Allocator>::~Node()
 
 	allocator.destroy(&this->value);
 }
+
+template <typename T, typename Allocator>
+ft::Node<T, Allocator> *ft::Node<T, Allocator>::getGrandParent() const
+{
+	assert(this != NULL and this->parent != NULL);
+
+	return this->parent->parent;
+}
+
+template <typename T, typename Allocator>
+ft::Node<T, Allocator> *ft::Node<T, Allocator>::getAunt() const
+{
+	assert(this != NULL);
+
+	Node *grandParent = this->getGrandParent();
+
+	if (this->parent->side == LEFT)
+	{
+		return grandParent->right;
+	}
+	return grandParent->left;
+}
+
+template <typename T, typename Allocator>
+bool ft::Node<T, Allocator>::IsRed(const Node *node)
+{
+	return node != NULL and node->color == RED;
+}
+
+template <typename T, typename Allocator>
+bool ft::Node<T, Allocator>::IsBlack(const Node *node)
+{
+	return node == NULL or node->color == BLACK;
+}
