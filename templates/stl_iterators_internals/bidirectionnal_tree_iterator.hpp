@@ -52,6 +52,23 @@ class ft::bidirectionnal_tree_iterator
 		node_pointer getCurrent() const;
 		node_pointer getRoot() const;
 
+		/**
+		 * @def Access operators
+		 *
+		 */
+		reference operator*() const;
+		pointer operator->() const;
+
+		/**
+		 * @def Relational operators
+		 *
+		 */
+		template <typename OtherNode, typename U>
+		bool operator==(const bidirectionnal_tree_iterator<OtherNode, U> &rhs) const;
+
+		template <typename OtherNode, typename U>
+		bool operator!=(const bidirectionnal_tree_iterator<OtherNode, U> &rhs) const;
+
 	private:
 		/**
 		 * @def Attributes

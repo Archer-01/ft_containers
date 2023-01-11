@@ -42,3 +42,35 @@ ft::bidirectionnal_tree_iterator<Node, T>::getRoot() const
 {
 	return this->root;
 }
+
+template <typename Node, typename T>
+typename ft::bidirectionnal_tree_iterator<Node, T>::reference
+ft::bidirectionnal_tree_iterator<Node, T>::operator*() const
+{
+	return this->current->value;
+}
+
+template <typename Node, typename T>
+typename ft::bidirectionnal_tree_iterator<Node, T>::pointer
+ft::bidirectionnal_tree_iterator<Node, T>::operator->() const
+{
+	return &this->current->value;
+}
+
+template <typename Node, typename T>
+template <typename OtherNode, typename U>
+bool ft::bidirectionnal_tree_iterator<Node, T>::operator==(
+	const bidirectionnal_tree_iterator<OtherNode, U> &rhs
+) const
+{
+	return this->root == rhs.getRoot() and this->current == rhs.getCurrent();
+}
+
+template <typename Node, typename T>
+template <typename OtherNode, typename U>
+bool ft::bidirectionnal_tree_iterator<Node, T>::operator!=(
+	const bidirectionnal_tree_iterator<OtherNode, U> &rhs
+) const
+{
+	return not (*this == rhs);
+}
