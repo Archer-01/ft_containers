@@ -222,6 +222,12 @@ namespace ft
 		const ft::map<Key, T, Compare, Allocator> &rhs
 	);
 
+	template <typename Key, typename T, typename Compare, typename Allocator>
+	void swap(
+		const ft::map<Key, T, Compare, Allocator> &lhs,
+		const ft::map<Key, T, Compare, Allocator> &rhs
+	);
+
 }; // namespace ft
 
 #include "map_internals/map_impl.hpp"
