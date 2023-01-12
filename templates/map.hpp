@@ -3,6 +3,7 @@
 #include "red_black_tree.hpp"
 #include "iterator.hpp"
 #include "stl_iterators.hpp"
+#include <algorithm>
 #include <functional>
 #include <memory>
 #include <stdexcept>
@@ -137,6 +138,8 @@ namespace ft
 			void erase(iterator position);
 			void erase(iterator first, iterator last);
 			size_type erase(const key_type &key);
+
+			void swap(map &other);
 
 		private:
 			/**

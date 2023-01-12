@@ -1,7 +1,6 @@
 #pragma once
 
 #include "map.hpp"
-#include <stdexcept>
 
 template <typename Key, typename T, typename Compare, typename Allocator>
 ft::map<Key, T, Compare, Allocator>::map() : _tree(value_compare(Compare()), Allocator()), _size(0) {}
@@ -315,4 +314,11 @@ ft::map<Key, T, Compare, Allocator>::erase(const Key &key)
 	this->_tree.erase(node);
 	--this->_size;
 	return 1;
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+void ft::map<Key, T, Compare, Allocator>::swap(map &other)
+{
+	std::swap(this->_tree, other._tree);
+	std::swap(this->_size, other._size);
 }
