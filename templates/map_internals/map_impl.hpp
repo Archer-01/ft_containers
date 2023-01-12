@@ -3,13 +3,13 @@
 #include "map.hpp"
 
 template <typename Key, typename T, typename Compare, typename Allocator>
-ft::map<Key, T, Compare, Allocator>::map() : tree(Allocator(), value_compare(Compare())) {}
+ft::map<Key, T, Compare, Allocator>::map() : _tree(Allocator(), value_compare(Compare())), _size(0) {}
 
 template <typename Key, typename T, typename Compare, typename Allocator>
 ft::map<Key, T, Compare, Allocator>::map(
 	const Compare &comp,
 	const Allocator &alloc
-) : tree(value_compare(comp), alloc) {}
+) : _tree(value_compare(comp), alloc), _size(0) {}
 
 template <typename Key, typename T, typename Compare, typename Allocator>
 template <typename InputIterator>
@@ -18,10 +18,18 @@ ft::map<Key, T, Compare, Allocator>::map(
 	InputIterator last,
 	const Compare &comp,
 	const Allocator &alloc
-) : tree(first, last, value_compare(comp), alloc) {}
+) : _tree(value_compare(comp), alloc), _size(0)
+{
+	while (first != last)
+	{
+		// TODO: Change this to map::insert (Make sure size is updated properly)
+		this->_tree.insert(*first);
+		++first;
+	}
+}
 
 template <typename Key, typename T, typename Compare, typename Allocator>
-ft::map<Key, T, Compare, Allocator>::map(const map &other) : tree(other.tree) {}
+ft::map<Key, T, Compare, Allocator>::map(const map &other) : _tree(other.tree), _size(other.size) {}
 
 template <typename Key, typename T, typename Compare, typename Allocator>
 ft::map<Key, T, Compare, Allocator>::~map() { (void) this; }
@@ -32,7 +40,8 @@ ft::map<Key, T, Compare, Allocator>::operator=(const map &other)
 {
 	if (this != &other)
 	{
-		this->tree = other.tree;
+		this->_tree = other._tree;
+		this->_size = other._size;
 	}
 	return *this;
 }
@@ -41,13 +50,13 @@ template <typename Key, typename T, typename Compare, typename Allocator>
 typename ft::map<Key, T, Compare, Allocator>::allocator_type
 ft::map<Key, T, Compare, Allocator>::get_allocator() const
 {
-	return this->tree.getAllocator();
+	return this->_tree.getAllocator();
 }
 
 template <typename Key, typename T, typename Compare, typename Allocator>
 T &ft::map<Key, T, Compare, Allocator>::at(const Key &key)
 {
-	node_type *node = this->tree.getRoot();
+	node_type *node = this->_tree.getRoot();
 	key_compare comp;
 
 	while (node != NULL)
@@ -71,7 +80,7 @@ T &ft::map<Key, T, Compare, Allocator>::at(const Key &key)
 template <typename Key, typename T, typename Compare, typename Allocator>
 const T &ft::map<Key, T, Compare, Allocator>::at(const Key &key) const
 {
-	node_type *node = this->tree.getRoot();
+	node_type *node = this->_tree.getRoot();
 	key_compare comp;
 
 	while (node != NULL)
@@ -95,7 +104,7 @@ const T &ft::map<Key, T, Compare, Allocator>::at(const Key &key) const
 template <typename Key, typename T, typename Compare, typename Allocator>
 T &ft::map<Key, T, Compare, Allocator>::operator[](const Key &key)
 {
-	node_type *node = this->tree.getRoot();
+	node_type *node = this->_tree.getRoot();
 	key_compare comp;
 
 	while (node != NULL)
@@ -113,7 +122,8 @@ T &ft::map<Key, T, Compare, Allocator>::operator[](const Key &key)
 			return node->value.second;
 		}
 	}
-	return this->tree.insert(
+	// TODO: Change this to map::insert (Make sure to update the size properly)
+	return this->_tree.insert(
 		value_type(key, T())
 	).first->second;
 }
@@ -122,54 +132,74 @@ template <typename Key, typename T, typename Compare, typename Allocator>
 typename ft::map<Key, T, Compare, Allocator>::iterator
 ft::map<Key, T, Compare, Allocator>::begin()
 {
-	return this->tree.begin();
+	return this->_tree.begin();
 }
 
 template <typename Key, typename T, typename Compare, typename Allocator>
 typename ft::map<Key, T, Compare, Allocator>::const_iterator
 ft::map<Key, T, Compare, Allocator>::begin() const
 {
-	return this->tree.begin();
+	return this->_tree.begin();
 }
 
 template <typename Key, typename T, typename Compare, typename Allocator>
 typename ft::map<Key, T, Compare, Allocator>::iterator
 ft::map<Key, T, Compare, Allocator>::end()
 {
-	return this->tree.end();
+	return this->_tree.end();
 }
 
 template <typename Key, typename T, typename Compare, typename Allocator>
 typename ft::map<Key, T, Compare, Allocator>::const_iterator
 ft::map<Key, T, Compare, Allocator>::end() const
 {
-	return this->tree.end();
+	return this->_tree.end();
 }
 
 template <typename Key, typename T, typename Compare, typename Allocator>
 typename ft::map<Key, T, Compare, Allocator>::reverse_iterator
 ft::map<Key, T, Compare, Allocator>::rbegin()
 {
-	return reverse_iterator(this->tree.end());
+	return reverse_iterator(this->_tree.end());
 }
 
 template <typename Key, typename T, typename Compare, typename Allocator>
 typename ft::map<Key, T, Compare, Allocator>::const_reverse_iterator
 ft::map<Key, T, Compare, Allocator>::rbegin() const
 {
-	return const_reverse_iterator(this->tree.end());
+	return const_reverse_iterator(this->_tree.end());
 }
 
 template <typename Key, typename T, typename Compare, typename Allocator>
 typename ft::map<Key, T, Compare, Allocator>::reverse_iterator
 ft::map<Key, T, Compare, Allocator>::rend()
 {
-	return reverse_iterator(this->tree.begin());
+	return reverse_iterator(this->_tree.begin());
 }
 
 template <typename Key, typename T, typename Compare, typename Allocator>
 typename ft::map<Key, T, Compare, Allocator>::const_reverse_iterator
 ft::map<Key, T, Compare, Allocator>::rend() const
 {
-	return const_reverse_iterator(this->tree.begin());
+	return const_reverse_iterator(this->_tree.begin());
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+bool ft::map<Key, T, Compare, Allocator>::empty() const
+{
+	return this->_size == 0;
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+typename ft::map<Key, T, Compare, Allocator>::size_type 
+ft::map<Key, T, Compare, Allocator>::size() const
+{
+	return this->_size;
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+typename ft::map<Key, T, Compare, Allocator>::size_type
+ft::map<Key, T, Compare, Allocator>::max_size() const
+{
+	return this->_tree.getAllocator().max_size();
 }
