@@ -24,7 +24,7 @@ template <typename Key, typename T, typename Compare, typename Allocator>
 ft::map<Key, T, Compare, Allocator>::map(const map &other) : tree(other.tree) {}
 
 template <typename Key, typename T, typename Compare, typename Allocator>
-ft::map<Key, T, Compare, Allocator>::~map() {}
+ft::map<Key, T, Compare, Allocator>::~map() { (void) this; }
 
 template <typename Key, typename T, typename Compare, typename Allocator>
 ft::map<Key, T, Compare, Allocator>&
@@ -116,4 +116,60 @@ T &ft::map<Key, T, Compare, Allocator>::operator[](const Key &key)
 	return this->tree.insert(
 		value_type(key, T())
 	).first->second;
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+typename ft::map<Key, T, Compare, Allocator>::iterator
+ft::map<Key, T, Compare, Allocator>::begin()
+{
+	return this->tree.begin();
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+typename ft::map<Key, T, Compare, Allocator>::const_iterator
+ft::map<Key, T, Compare, Allocator>::begin() const
+{
+	return this->tree.begin();
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+typename ft::map<Key, T, Compare, Allocator>::iterator
+ft::map<Key, T, Compare, Allocator>::end()
+{
+	return this->tree.end();
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+typename ft::map<Key, T, Compare, Allocator>::const_iterator
+ft::map<Key, T, Compare, Allocator>::end() const
+{
+	return this->tree.end();
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+typename ft::map<Key, T, Compare, Allocator>::reverse_iterator
+ft::map<Key, T, Compare, Allocator>::rbegin()
+{
+	return reverse_iterator(this->tree.end());
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+typename ft::map<Key, T, Compare, Allocator>::const_reverse_iterator
+ft::map<Key, T, Compare, Allocator>::rbegin() const
+{
+	return const_reverse_iterator(this->tree.end());
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+typename ft::map<Key, T, Compare, Allocator>::reverse_iterator
+ft::map<Key, T, Compare, Allocator>::rend()
+{
+	return reverse_iterator(this->tree.begin());
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+typename ft::map<Key, T, Compare, Allocator>::const_reverse_iterator
+ft::map<Key, T, Compare, Allocator>::rend() const
+{
+	return const_reverse_iterator(this->tree.begin());
 }
