@@ -1,9 +1,10 @@
 #pragma once
 
 #include "map.hpp"
+#include <stdexcept>
 
 template <typename Key, typename T, typename Compare, typename Allocator>
-ft::map<Key, T, Compare, Allocator>::map() : _tree(Allocator(), value_compare(Compare())), _size(0) {}
+ft::map<Key, T, Compare, Allocator>::map() : _tree(value_compare(Compare()), Allocator()), _size(0) {}
 
 template <typename Key, typename T, typename Compare, typename Allocator>
 ft::map<Key, T, Compare, Allocator>::map(
@@ -234,8 +235,14 @@ ft::map<Key, T, Compare, Allocator>::insert(
 	const value_type &value
 )
 {
-	++this->_size;
-	return this->_tree.insertAt(position, value);
+	ft::pair<iterator, bool> result;
+
+	result = this->_tree.insertAt(position, value);
+	if (result.second == true)
+	{
+		++this->_size;
+	}
+	return result.first;
 }
 
 template <typename Key, typename T, typename Compare, typename Allocator>
@@ -251,4 +258,61 @@ void ft::map<Key, T, Compare, Allocator>::insert(
 		this->insert(*first);
 		++first;
 	}
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+void ft::map<Key, T, Compare, Allocator>::erase(iterator position)
+{
+	try
+	{
+		this->at(position->first);
+		this->_tree.erase(position.getCurrent());
+		--this->_size;
+	}
+	catch (const std::out_of_range &exception) {}
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+void ft::map<Key, T, Compare, Allocator>::erase(iterator first, iterator last)
+{
+	#pragma unroll
+	while (first != last)
+	{
+		iterator tmp = first;
+
+		++first;
+		this->erase(tmp);
+	}
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+typename ft::map<Key, T, Compare, Allocator>::size_type
+ft::map<Key, T, Compare, Allocator>::erase(const Key &key)
+{
+	node_type *node = this->_tree.getRoot();
+	key_compare comp;
+
+	while (node != NULL)
+	{
+		if (comp(key, node->value.first))
+		{
+			node = node->left;
+		}
+		else if (comp(node->value.first, key))
+		{
+			node = node->right;
+		}
+		else // Found the key
+		{
+			break;
+		}
+	}
+
+	if (node == NULL)
+	{
+		return 0;
+	}
+	this->_tree.erase(node);
+	--this->_size;
+	return 1;
 }

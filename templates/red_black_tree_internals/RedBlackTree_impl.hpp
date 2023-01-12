@@ -147,7 +147,7 @@ ft::RedBlackTree<T, Compare, Allocator>::insert(const value_type &value)
 }
 
 template <typename T, typename Compare, typename Allocator>
-typename ft::RedBlackTree<T, Compare, Allocator>::iterator
+ft::pair<typename ft::RedBlackTree<T, Compare, Allocator>::iterator, bool>
 ft::RedBlackTree<T, Compare, Allocator>::insertAt(
 	iterator position,
 	const value_type &value
@@ -155,7 +155,7 @@ ft::RedBlackTree<T, Compare, Allocator>::insertAt(
 {
 	if (position == this->end())
 	{
-		return this->insert(value).first;
+		return this->insert(value);
 	}
 
 	node_type *root = position.getCurrent();
@@ -463,12 +463,12 @@ void ft::RedBlackTree<T, Compare, Allocator>::erase(const value_type &value)
 
 template <typename T, typename Compare, typename Allocator>
 void ft::RedBlackTree<T, Compare, Allocator>::erase(node_type *nodeToErase)
-{	
+{
 	assert(nodeToErase != NULL);
 
 	NodeColor removedColor = nodeToErase->color;
 	NodeSide fixupSide = nodeToErase->side;
-	node_type *fixupNode = nodeToErase->parent;
+	node_type *fixupNode = (nodeToErase->parent != NULL) ? nodeToErase->parent : this->root;
 
 	if (nodeToErase->left == NULL)
 	{
@@ -523,7 +523,10 @@ void ft::RedBlackTree<T, Compare, Allocator>::transplant(
 	if (nodeToErase->parent == NULL)
 	{
 		this->root = replacement;
-		this->root->parent = NULL;
+		if (replacement != NULL)
+		{
+			replacement->parent = NULL;
+		}
 	}
 	else if (nodeToErase->side == LEFT)
 	{
@@ -586,5 +589,5 @@ void ft::RedBlackTree<T, Compare, Allocator>::eraseFixup(
 			extraBlack = this->root;
 		}
 	}
-	extraBlack->color = BLACK;
+	(extraBlack != NULL) ? extraBlack->color = BLACK : 0;
 }

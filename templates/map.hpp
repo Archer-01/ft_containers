@@ -134,6 +134,10 @@ namespace ft
 			template <typename InputIterator>
 			void insert(InputIterator first, InputIterator last);
 
+			void erase(iterator position);
+			void erase(iterator first, iterator last);
+			size_type erase(const key_type &key);
+
 		private:
 			/**
 			 * @def Private typedefs
