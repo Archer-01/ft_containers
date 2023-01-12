@@ -322,3 +322,192 @@ void ft::map<Key, T, Compare, Allocator>::swap(map &other)
 	std::swap(this->_tree, other._tree);
 	std::swap(this->_size, other._size);
 }
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+typename ft::map<Key, T, Compare, Allocator>::size_type
+ft::map<Key, T, Compare, Allocator>::count(const Key &key) const
+{
+	try
+	{
+		this->at(key);
+		return 1;
+	}
+	catch (const std::out_of_range &exception)
+	{
+		return 0;
+	}
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+typename ft::map<Key, T, Compare, Allocator>::iterator
+ft::map<Key, T, Compare, Allocator>::find(const Key &key)
+{
+	node_type *root = this->_tree.getRoot();
+	node_type *node = root;
+	key_compare comp;
+
+	while (node != NULL)
+	{
+		if (comp(key, node->value.first))
+		{
+			node = node->left;
+		}
+		else if (comp(node->value.first, key))
+		{
+			node = node->right;
+		}
+		else // Found the key
+		{
+			return iterator(node, root);
+		}
+	}
+	return this->end();
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+typename ft::map<Key, T, Compare, Allocator>::const_iterator
+ft::map<Key, T, Compare, Allocator>::find(const Key &key) const
+{
+	node_type *root = this->_tree.getRoot();
+	node_type *node = root;
+	key_compare comp;
+
+	while (node != NULL)
+	{
+		if (comp(key, node->value.first))
+		{
+			node = node->left;
+		}
+		else if (comp(node->value.first, key))
+		{
+			node = node->right;
+		}
+		else // Found the key
+		{
+			return const_iterator(node, root);
+		}
+	}
+	return this->end();
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+typename ft::map<Key, T, Compare, Allocator>::iterator
+ft::map<Key, T, Compare, Allocator>::lower_bound(const Key &key)
+{
+	node_type *root = this->_tree.getRoot();
+	node_type *node = root;
+	node_type *result = NULL;
+	key_compare comp;
+
+	while (node != NULL)
+	{
+		if (not comp(key, node->value.first))
+		{
+			result = node;
+			node = node->left;
+		}
+		else
+		{
+			node = node->right;
+		}
+	}
+	return iterator(result, root);
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+typename ft::map<Key, T, Compare, Allocator>::const_iterator
+ft::map<Key, T, Compare, Allocator>::lower_bound(const Key &key) const
+{
+	node_type *root = this->_tree.getRoot();
+	node_type *node = root;
+	node_type *result = NULL;
+	key_compare comp;
+
+	while (node != NULL)
+	{
+		if (not comp(key, node->value.first))
+		{
+			result = node;
+			node = node->left;
+		}
+		else
+		{
+			node = node->right;
+		}
+	}
+	return const_iterator(result, root);
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+typename ft::map<Key, T, Compare, Allocator>::iterator
+ft::map<Key, T, Compare, Allocator>::upper_bound(const Key &key)
+{
+	node_type *root = this->_tree.getRoot();
+	node_type *node = root;
+	node_type *result = NULL;
+	key_compare comp;
+
+	while (node != NULL)
+	{
+		if (comp(key, node->value.first))
+		{
+			result = node;
+			node = node->left;
+		}
+		else
+		{
+			node = node->right;
+		}
+	}
+	return iterator(result, root);
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+typename ft::map<Key, T, Compare, Allocator>::const_iterator
+ft::map<Key, T, Compare, Allocator>::upper_bound(const Key &key) const
+{
+	node_type *root = this->_tree.getRoot();
+	node_type *node = root;
+	node_type *result = NULL;
+	key_compare comp;
+
+	while (node != NULL)
+	{
+		if (comp(key, node->value.first))
+		{
+			result = node;
+			node = node->left;
+		}
+		else
+		{
+			node = node->right;
+		}
+	}
+	return const_iterator(result, root);
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+ft::pair<
+	typename ft::map<Key, T, Compare, Allocator>::iterator,
+	typename ft::map<Key, T, Compare, Allocator>::iterator
+>
+ft::map<Key, T, Compare, Allocator>::equal_range(const Key &key)
+{
+	return ft::make_pair(
+		this->lower_bound(key),
+		this->upper_bound(key)
+	);
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+ft::pair<
+	typename ft::map<Key, T, Compare, Allocator>::const_iterator,
+	typename ft::map<Key, T, Compare, Allocator>::const_iterator
+>
+ft::map<Key, T, Compare, Allocator>::equal_range(const Key &key) const
+{
+	return ft::make_pair(
+		this->lower_bound(key),
+		this->upper_bound(key)
+	);
+}
