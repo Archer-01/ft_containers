@@ -30,7 +30,7 @@ ft::map<Key, T, Compare, Allocator>::map(
 }
 
 template <typename Key, typename T, typename Compare, typename Allocator>
-ft::map<Key, T, Compare, Allocator>::map(const map &other) : _tree(other.tree), _size(other.size) {}
+ft::map<Key, T, Compare, Allocator>::map(const map &other) : _tree(other._tree), _size(other._size) {}
 
 template <typename Key, typename T, typename Compare, typename Allocator>
 ft::map<Key, T, Compare, Allocator>::~map() { (void) this; }
@@ -559,7 +559,7 @@ bool ft::operator<(
 		lhs.end(),
 		rhs.begin(),
 		rhs.end(),
-		lhs->value_comp()
+		lhs.value_comp()
 	);
 }
 
@@ -582,7 +582,7 @@ bool ft::operator>(
 }
 
 template <typename Key, typename T, typename Compare, typename Allocator>
-bool operator>=(
+bool ft::operator>=(
 	const ft::map<Key, T, Compare, Allocator> &lhs,
 	const ft::map<Key, T, Compare, Allocator> &rhs
 )
