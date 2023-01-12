@@ -20,10 +20,10 @@ ft::map<Key, T, Compare, Allocator>::map(
 	const Allocator &alloc
 ) : _tree(value_compare(comp), alloc), _size(0)
 {
+	#pragma unroll
 	while (first != last)
 	{
-		// TODO: Change this to map::insert (Make sure size is updated properly)
-		this->_tree.insert(*first);
+		this->insert(*first);
 		++first;
 	}
 }
@@ -59,6 +59,7 @@ T &ft::map<Key, T, Compare, Allocator>::at(const Key &key)
 	node_type *node = this->_tree.getRoot();
 	key_compare comp;
 
+	#pragma unroll
 	while (node != NULL)
 	{
 		if (comp(key, node->value.first))
@@ -83,6 +84,7 @@ const T &ft::map<Key, T, Compare, Allocator>::at(const Key &key) const
 	node_type *node = this->_tree.getRoot();
 	key_compare comp;
 
+	#pragma unroll
 	while (node != NULL)
 	{
 		if (comp(key, node->value.first))
@@ -107,6 +109,7 @@ T &ft::map<Key, T, Compare, Allocator>::operator[](const Key &key)
 	node_type *node = this->_tree.getRoot();
 	key_compare comp;
 
+	#pragma unroll
 	while (node != NULL)
 	{
 		if (comp(key, node->value.first))
@@ -122,8 +125,7 @@ T &ft::map<Key, T, Compare, Allocator>::operator[](const Key &key)
 			return node->value.second;
 		}
 	}
-	// TODO: Change this to map::insert (Make sure to update the size properly)
-	return this->_tree.insert(
+	return this->insert(
 		value_type(key, T())
 	).first->second;
 }
@@ -202,4 +204,51 @@ typename ft::map<Key, T, Compare, Allocator>::size_type
 ft::map<Key, T, Compare, Allocator>::max_size() const
 {
 	return this->_tree.getAllocator().max_size();
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+void ft::map<Key, T, Compare, Allocator>::clear()
+{
+	this->_tree.clear();
+	this->_size = 0;
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+ft::pair<typename ft::map<Key, T, Compare, Allocator>::iterator, bool>
+ft::map<Key, T, Compare, Allocator>::insert(const value_type &value)
+{
+	ft::pair<iterator, bool> result;
+
+	result = this->_tree.insert(value);
+	if (result.second == true)
+	{
+		++this->_size;
+	}
+	return result;
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+typename ft::map<Key, T, Compare, Allocator>::iterator
+ft::map<Key, T, Compare, Allocator>::insert(
+	iterator position,
+	const value_type &value
+)
+{
+	++this->_size;
+	return this->_tree.insertAt(position, value);
+}
+
+template <typename Key, typename T, typename Compare, typename Allocator>
+template <typename InputIterator>
+void ft::map<Key, T, Compare, Allocator>::insert(
+	InputIterator first,
+	InputIterator last
+)
+{
+	#pragma unroll
+	while (first != last)
+	{
+		this->insert(*first);
+		++first;
+	}
 }

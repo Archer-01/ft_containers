@@ -79,6 +79,13 @@ ft::RedBlackTree<T, Compare, Allocator>::getCompare() const
 }
 
 template <typename T, typename Compare, typename Allocator>
+void ft::RedBlackTree<T, Compare, Allocator>::clear()
+{
+	this->clear(this->root);
+	this->root = NULL;
+}
+
+template <typename T, typename Compare, typename Allocator>
 void ft::RedBlackTree<T, Compare, Allocator>::clear(node_type *root)
 {
 	if (root == NULL)
@@ -137,6 +144,33 @@ ft::RedBlackTree<T, Compare, Allocator>::insert(const value_type &value)
 	}
 	this->insertFixup(newNode);
 	return ft::make_pair(iterator(newNode, this->root), true);
+}
+
+template <typename T, typename Compare, typename Allocator>
+typename ft::RedBlackTree<T, Compare, Allocator>::iterator
+ft::RedBlackTree<T, Compare, Allocator>::insertAt(
+	iterator position,
+	const value_type &value
+)
+{
+	if (position == this->end())
+	{
+		return this->insert(value).first;
+	}
+
+	node_type *root = position.getCurrent();
+
+	if (this->compare(value, root->value))
+	{
+		return this->insertAt(
+			iterator(root->left, this->root),
+			value
+		);
+	}
+	return this->insertAt(
+		iterator(root->right, this->root),
+		value
+	);
 }
 
 template <typename T, typename Compare, typename Allocator>
