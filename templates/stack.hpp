@@ -38,6 +38,20 @@ namespace ft
 			 */
 			stack &operator=(const stack &other);
 
+			/**
+			 * @def Element access
+			 *
+			 */
+			reference top();
+			const_reference top() const;
+
+			/**
+			 * @def Capacity
+			 *
+			 */
+			bool empty() const;
+			size_type size() const;
+
 		protected:
 			/**
 			 * @def Attributes

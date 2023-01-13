@@ -20,3 +20,29 @@ ft::stack<T, Container> &ft::stack<T, Container>::operator=(const stack &other)
 	}
 	return *this;
 }
+
+template <typename T, typename Container>
+typename ft::stack<T, Container>::reference ft::stack<T, Container>::top()
+{
+	return this->c.back();
+}
+
+template <typename T, typename Container>
+typename ft::stack<T, Container>::const_reference
+ft::stack<T, Container>::top() const
+{
+	return this->c.back();
+}
+
+template <typename T, typename Container>
+bool ft::stack<T, Container>::empty() const
+{
+	return this->c.empty();
+}
+
+template <typename T, typename Container>
+typename ft::stack<T, Container>::size_type
+ft::stack<T, Container>::size() const
+{
+	return this->c.size();
+}
