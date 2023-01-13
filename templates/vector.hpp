@@ -59,6 +59,10 @@ namespace ft
 					InputIterator
 				>::type last,
 				const Allocator& alloc = Allocator()
+				// HACK: Notice me
+				/* typename ft::enable_if< */
+				/* 	not ft::is_integral<InputIterator>::value */
+				/* >::type * = 0 */
 			);
 
 			vector(const vector& other);

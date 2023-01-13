@@ -1,8 +1,8 @@
 #pragma once
 
+#include "vector.hpp"
 #include <cassert>
 #include <memory>
-#include "vector.hpp"
 
 template <
 	template <typename T, typename Allocator = std::allocator<T> > class Vector

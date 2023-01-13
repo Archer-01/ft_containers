@@ -2,7 +2,6 @@
 
 #include "iterator.hpp"
 #include "tests.hpp"
-#include <vector>
 
 template <template <typename Iterator> class ReverseIterator>
 void test_reverse_iterator_vector()

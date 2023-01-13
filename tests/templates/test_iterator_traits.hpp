@@ -2,7 +2,6 @@
 
 #include "iterator.hpp"
 #include "tests.hpp"
-#include <vector>
 
 template <template <typename Iterator> class IteratorTraits>
 void test_iterator_traits_vector()

@@ -2,7 +2,6 @@
 
 #include "algorithm.hpp"
 #include "tests.hpp"
-#include <vector>
 
 template<typename T>
 static bool myPredicate(const T& first, const T& second)

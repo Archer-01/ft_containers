@@ -32,5 +32,9 @@ int main()
 	{
 		test_vector<std::vector>();
 	}
+	// Map
+	{
+		test_map<std::pair, std::map>(std::make_pair);
+	}
 	return 0;
 }
