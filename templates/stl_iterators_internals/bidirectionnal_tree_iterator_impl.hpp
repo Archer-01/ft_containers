@@ -64,7 +64,7 @@ bool ft::bidirectionnal_tree_iterator<NodeType, T>::operator==(
 	const bidirectionnal_tree_iterator<OtherNodeType, U> &rhs
 ) const
 {
-	return this->root == rhs.getRoot() and this->current == rhs.getCurrent();
+	return this->current == rhs.getCurrent();
 }
 
 template <typename NodeType, typename T>
