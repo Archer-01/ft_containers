@@ -52,3 +52,59 @@ ft::set<Key, Compare, Allocator>::get_allocator() const
 {
 	return this->_tree.get_allocator();
 }
+
+template <typename Key, typename Compare, typename Allocator>
+typename ft::set<Key, Compare, Allocator>::iterator
+ft::set<Key, Compare, Allocator>::begin()
+{
+	return this->_tree.begin();
+}
+
+template <typename Key, typename Compare, typename Allocator>
+typename ft::set<Key, Compare, Allocator>::const_iterator
+ft::set<Key, Compare, Allocator>::begin() const
+{
+	return this->_tree.begin();
+}
+
+template <typename Key, typename Compare, typename Allocator>
+typename ft::set<Key, Compare, Allocator>::iterator
+ft::set<Key, Compare, Allocator>::end()
+{
+	return this->_tree.end();
+}
+
+template <typename Key, typename Compare, typename Allocator>
+typename ft::set<Key, Compare, Allocator>::const_iterator
+ft::set<Key, Compare, Allocator>::end() const
+{
+	return this->_tree.end();
+}
+
+template <typename Key, typename Compare, typename Allocator>
+typename ft::set<Key, Compare, Allocator>::reverse_iterator
+ft::set<Key, Compare, Allocator>::rbegin()
+{
+	return reverse_iterator(this->end());
+}
+
+template <typename Key, typename Compare, typename Allocator>
+typename ft::set<Key, Compare, Allocator>::const_reverse_iterator
+ft::set<Key, Compare, Allocator>::rbegin() const
+{
+	return const_reverse_iterator(this->end());
+}
+
+template <typename Key, typename Compare, typename Allocator>
+typename ft::set<Key, Compare, Allocator>::reverse_iterator
+ft::set<Key, Compare, Allocator>::rend()
+{
+	return reverse_iterator(this->begin());
+}
+
+template <typename Key, typename Compare, typename Allocator>
+typename ft::set<Key, Compare, Allocator>::const_reverse_iterator
+ft::set<Key, Compare, Allocator>::rend() const
+{
+	return const_reverse_iterator(this->begin());
+}
