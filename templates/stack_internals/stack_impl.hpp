@@ -58,3 +58,57 @@ void ft::stack<T, Container>::pop()
 {
 	this->c.pop_back();
 }
+
+template <typename T, typename Container>
+bool ft::operator==(
+	const ft::stack<T, Container> &lhs,
+	const ft::stack<T, Container> &rhs
+)
+{
+	return lhs._container == rhs._container;
+}
+
+template <typename T, typename Container>
+bool ft::operator!=(
+	const ft::stack<T, Container> &lhs,
+	const ft::stack<T, Container> &rhs
+)
+{
+	return lhs._container != rhs._container;
+}
+
+template <typename T, typename Container>
+bool ft::operator<(
+	const ft::stack<T, Container> &lhs,
+	const ft::stack<T, Container> &rhs
+)
+{
+	return lhs._container < rhs._container;
+}
+
+template <typename T, typename Container>
+bool ft::operator<=(
+	const ft::stack<T, Container> &lhs,
+	const ft::stack<T, Container> &rhs
+)
+{
+	return lhs._container <= rhs._container;
+}
+
+template <typename T, typename Container>
+bool ft::operator>(
+	const ft::stack<T, Container> &lhs,
+	const ft::stack<T, Container> &rhs
+)
+{
+	return lhs._container > rhs._container;
+}
+
+template <typename T, typename Container>
+bool ft::operator>=(
+	const ft::stack<T, Container> &lhs,
+	const ft::stack<T, Container> &rhs
+)
+{
+	return lhs._container >= rhs._container;
+}

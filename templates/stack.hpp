@@ -67,6 +67,46 @@ namespace ft
 			container_type c;
 	};
 
+	/**
+	 * @def Relationnal operators (Non-member functions)
+	 *
+	 */
+	template <typename T, typename Container>
+	bool operator==(
+		const ft::stack<T, Container> &lhs,
+		const ft::stack<T, Container> &rhs
+	);
+
+	template <typename T, typename Container>
+	bool operator!=(
+		const ft::stack<T, Container> &lhs,
+		const ft::stack<T, Container> &rhs
+	);
+
+	template <typename T, typename Container>
+	bool operator<(
+		const ft::stack<T, Container> &lhs,
+		const ft::stack<T, Container> &rhs
+	);
+
+	template <typename T, typename Container>
+	bool operator<=(
+		const ft::stack<T, Container> &lhs,
+		const ft::stack<T, Container> &rhs
+	);
+
+	template <typename T, typename Container>
+	bool operator>(
+		const ft::stack<T, Container> &lhs,
+		const ft::stack<T, Container> &rhs
+	);
+
+	template <typename T, typename Container>
+	bool operator>=(
+		const ft::stack<T, Container> &lhs,
+		const ft::stack<T, Container> &rhs
+	);
+
 }; // namespace ft
 
 #include "stack_internals/stack_impl.hpp"
