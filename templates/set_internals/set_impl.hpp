@@ -22,8 +22,7 @@ ft::set<Key, Compare, Allocator>::set(
 {
 	while (first != last)
 	{
-		// TODO: Replace this with set::insert
-		this->_tree.insert(*first);
+		this->insert(*first);
 		++first;
 	}
 }
@@ -127,4 +126,58 @@ typename ft::set<key, compare, allocator>::size_type
 ft::set<key, compare, allocator>::max_size() const
 {
 	return this->_tree.getAllocator().max_size();
+}
+
+template <typename Key, typename Compare, typename Allocator>
+void ft::set<Key, Compare, Allocator>::clear()
+{
+	this->_tree.clear();
+	this->_size = 0;
+}
+
+template <typename Key, typename Compare, typename Allocator>
+ft::pair<typename ft::set<Key, Compare, Allocator>::iterator, bool>
+ft::set<Key, Compare, Allocator>::insert(const value_type &value)
+{
+	ft::pair<iterator, bool> result;
+
+	result = this->_tree.insert(value);
+
+	if (result.second == true)
+	{
+		++this->_size;
+	}
+	return result;
+}
+
+template <typename Key, typename Compare, typename Allocator>
+typename ft::set<Key, Compare, Allocator>::iterator
+ft::set<Key, Compare, Allocator>::insert(
+	iterator position,
+	const value_type &value
+)
+{
+	ft::pair<iterator, bool> result;
+
+	result = this->_tree.insertAt(position, value);
+	if (result.second == true)
+	{
+		++this->_size;
+	}
+	return result.first;
+}
+
+template <typename Key, typename Compare, typename Allocator>
+template <typename InputIterator>
+void ft::set<Key, Compare, Allocator>::insert(
+	InputIterator first,
+	InputIterator last
+)
+{
+	#pragma unroll
+	while (first != last)
+	{
+		this->insert(*first);
+		++first;
+	}
 }

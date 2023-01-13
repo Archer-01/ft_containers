@@ -105,6 +105,19 @@ namespace ft
 			size_type size() const;
 			size_type max_size() const;
 
+			/**
+			 * @def Modifiers
+			 *
+			 */
+			void clear();
+
+			ft::pair<iterator, bool> insert(const value_type &value);
+
+			iterator insert(iterator position, const value_type &value);
+
+			template <typename InputIterator>
+			void insert(InputIterator first, InputIterator last);
+
 		private:
 			/**
 			 * @def Private typedefs
