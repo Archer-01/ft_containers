@@ -126,6 +126,7 @@ ft::bidirectionnal_tree_iterator<NodeType, T>::operator--()
 {
 	if (this->current == NULL)
 	{
+		this->root = this->updateRoot(this->root);
 		this->current = this->rightmostNode(this->root);
 	}
 	else if (this->current->left != NULL)
@@ -164,6 +165,19 @@ ft::bidirectionnal_tree_iterator<NodeType, T>::rightmostNode(
 	while (node->right != NULL)
 	{
 		node = node->right;
+	}
+	return node;
+}
+
+template <typename NodeType, typename T>
+typename ft::bidirectionnal_tree_iterator<NodeType, T>::node_pointer
+ft::bidirectionnal_tree_iterator<NodeType, T>::updateRoot(node_pointer node)
+{
+	assert(node != NULL);
+
+	while (node->parent != NULL)
+	{
+		node = node->parent;
 	}
 	return node;
 }

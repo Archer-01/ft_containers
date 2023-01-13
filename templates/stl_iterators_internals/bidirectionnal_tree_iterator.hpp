@@ -93,6 +93,7 @@ class ft::bidirectionnal_tree_iterator
 		 */
 		node_pointer leftmostNode(node_pointer node) const;
 		node_pointer rightmostNode(node_pointer node) const;
+		node_pointer updateRoot(node_pointer node);
 };
 
 #include "bidirectionnal_tree_iterator_impl.hpp"
