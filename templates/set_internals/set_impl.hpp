@@ -270,3 +270,10 @@ ft::set<Key, Compare, Allocator>::find(const key_type &key) const
 	}
 	return this->end();
 }
+
+template <typename Key, typename Compare, typename Allocator>
+void ft::set<Key, Compare, Allocator>::swap(set &other)
+{
+	std::swap(this->_tree, other._tree);
+	std::swap(this->_size, other._size);
+}

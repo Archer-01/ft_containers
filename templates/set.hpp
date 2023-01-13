@@ -122,6 +122,8 @@ namespace ft
 			void erase(iterator first, iterator last);
 			size_type erase(const key_type &key);
 
+			void swap(set &other);
+
 			/**
 			 * @def Lookup
 			 *
