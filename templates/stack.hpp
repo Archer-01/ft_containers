@@ -65,6 +65,47 @@ namespace ft
 			 *
 			 */
 			container_type c;
+
+		/**
+		 * @def Friend declarations
+		 *
+		 */
+
+		template <typename U, typename OtherContainer>
+		friend bool ft::operator==(
+			const stack<U, OtherContainer> &lhs,
+			const stack<U, OtherContainer> &rhs
+		);
+
+		template <typename U, typename OtherContainer>
+		friend bool ft::operator!=(
+			const stack<U, OtherContainer> &lhs,
+			const stack<U, OtherContainer> &rhs
+		);
+
+		template <typename U, typename OtherContainer>
+		friend bool ft::operator<(
+			const stack<U, OtherContainer> &lhs,
+			const stack<U, OtherContainer> &rhs
+		);
+
+		template <typename U, typename OtherContainer>
+		friend bool ft::operator<=(
+			const stack<U, OtherContainer> &lhs,
+			const stack<U, OtherContainer> &rhs
+		);
+
+		template <typename U, typename OtherContainer>
+		friend bool ft::operator>(
+			const stack<U, OtherContainer> &lhs,
+			const stack<U, OtherContainer> &rhs
+		);
+
+		template <typename U, typename OtherContainer>
+		friend bool ft::operator>=(
+			const stack<U, OtherContainer> &lhs,
+			const stack<U, OtherContainer> &rhs
+		);
 	};
 
 	/**

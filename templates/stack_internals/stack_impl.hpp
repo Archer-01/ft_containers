@@ -6,7 +6,7 @@ template <typename T, typename Container>
 ft::stack<T, Container>::stack(const container_type &cont) : c(cont) {}
 
 template <typename T, typename Container>
-ft::stack<T, Container>::stack(const stack &other) : c(other._container) {}
+ft::stack<T, Container>::stack(const stack &other) : c(other.c) {}
 
 template <typename T, typename Container>
 ft::stack<T, Container>::~stack() { (void) this; }
@@ -16,7 +16,7 @@ ft::stack<T, Container> &ft::stack<T, Container>::operator=(const stack &other)
 {
 	if (this != &other)
 	{
-		this->_container = other._container;
+		this->c = other.c;
 	}
 	return *this;
 }
@@ -65,7 +65,7 @@ bool ft::operator==(
 	const ft::stack<T, Container> &rhs
 )
 {
-	return lhs._container == rhs._container;
+	return lhs.c == rhs.c;
 }
 
 template <typename T, typename Container>
@@ -74,7 +74,7 @@ bool ft::operator!=(
 	const ft::stack<T, Container> &rhs
 )
 {
-	return lhs._container != rhs._container;
+	return lhs.c != rhs.c;
 }
 
 template <typename T, typename Container>
@@ -83,7 +83,7 @@ bool ft::operator<(
 	const ft::stack<T, Container> &rhs
 )
 {
-	return lhs._container < rhs._container;
+	return lhs.c < rhs.c;
 }
 
 template <typename T, typename Container>
@@ -92,7 +92,7 @@ bool ft::operator<=(
 	const ft::stack<T, Container> &rhs
 )
 {
-	return lhs._container <= rhs._container;
+	return lhs.c <= rhs.c;
 }
 
 template <typename T, typename Container>
@@ -101,7 +101,7 @@ bool ft::operator>(
 	const ft::stack<T, Container> &rhs
 )
 {
-	return lhs._container > rhs._container;
+	return lhs.c > rhs.c;
 }
 
 template <typename T, typename Container>
@@ -110,5 +110,5 @@ bool ft::operator>=(
 	const ft::stack<T, Container> &rhs
 )
 {
-	return lhs._container >= rhs._container;
+	return lhs.c >= rhs.c;
 }
