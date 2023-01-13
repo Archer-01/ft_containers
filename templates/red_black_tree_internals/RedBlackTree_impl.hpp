@@ -458,7 +458,6 @@ void ft::RedBlackTree<T, Compare, Allocator>::erase(const value_type &value)
 		return;
 	}
 	this->erase(node);
-	delete node;
 }
 
 template <typename T, typename Compare, typename Allocator>
@@ -503,6 +502,7 @@ void ft::RedBlackTree<T, Compare, Allocator>::erase(node_type *nodeToErase)
 		{
 			fixupNode->color = BLACK;
 		}
+		delete nodeToErase;
 		return;
 	}
 
@@ -510,6 +510,7 @@ void ft::RedBlackTree<T, Compare, Allocator>::erase(node_type *nodeToErase)
 	{
 		this->eraseFixup(fixupNode, fixupSide);
 	}
+	delete nodeToErase;
 }
 
 template <typename T, typename Compare, typename Allocator>
