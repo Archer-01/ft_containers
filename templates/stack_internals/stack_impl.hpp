@@ -1,6 +1,6 @@
 #pragma once
 
-#include "stack.hpp"
+#include "../stack.hpp"
 
 template <typename T, typename Container>
 ft::stack<T, Container>::stack(const container_type &cont) : c(cont) {}
