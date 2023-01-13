@@ -1,6 +1,6 @@
 #pragma once
 
-#include "algorithm.hpp"
+#include "../algorithm.hpp"
 #include <algorithm>
 
 template <typename InputIterator1, typename InputIterator2>

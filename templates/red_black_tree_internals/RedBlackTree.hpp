@@ -1,8 +1,8 @@
 #pragma once
 
-#include "red_black_tree.hpp"
-#include "stl_iterators.hpp"
-#include "utility.hpp"
+#include "../red_black_tree.hpp"
+#include "../stl_iterators.hpp"
+#include "../utility.hpp"
 #include <iomanip>
 #include <iostream>
 
@@ -118,4 +118,4 @@ class ft::RedBlackTree
 		void clear(node_type *root);
 };
 
-#include "red_black_tree_internals/RedBlackTree_impl.hpp"
+#include "RedBlackTree_impl.hpp"

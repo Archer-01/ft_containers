@@ -1,7 +1,7 @@
 #pragma once
 
-#include "algorithm.hpp"
-#include "map.hpp"
+#include "../algorithm.hpp"
+#include "../map.hpp"
 
 template <typename Key, typename T, typename Compare, typename Allocator>
 ft::map<Key, T, Compare, Allocator>::map() : _tree(value_compare(Compare()), Allocator()), _size(0) {}

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "type_traits.hpp"
+#include "../type_traits.hpp"
 
 template <bool Cond, typename T>
 struct ft::enable_if {};

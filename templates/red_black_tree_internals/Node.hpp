@@ -1,6 +1,6 @@
 #pragma once
 
-#include "red_black_tree.hpp"
+#include "../red_black_tree.hpp"
 #include <cstddef>
 
 template <typename T, typename Allocator>
@@ -59,4 +59,4 @@ struct ft::Node
 	void linkChild(Node *child, NodeSide side);
 };
 
-#include "red_black_tree_internals/Node_impl.hpp"
+#include "Node_impl.hpp"

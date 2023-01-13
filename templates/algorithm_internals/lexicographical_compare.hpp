@@ -1,6 +1,6 @@
 #pragma once
 
-#include "algorithm.hpp"
+#include "../algorithm.hpp"
 
 template <typename InputIterator1, typename InputIterator2>
 bool ft::lexicographical_compare(
