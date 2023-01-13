@@ -71,6 +71,18 @@ namespace ft
 			 */
 			~set();
 
+			/**
+			 * @def Assignment operator
+			 *
+			 */
+			set &operator=(const set &other);
+
+			/**
+			 * @def Get allocator
+			 *
+			 */
+			allocator_type get_allocator() const;
+
 		private:
 			/**
 			 * @def Private typedefs

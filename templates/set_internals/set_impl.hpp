@@ -33,3 +33,22 @@ ft::set<Key, Compare, Allocator>::set(const set &other) : _tree(other._tree), _s
 
 template <typename Key, typename Compare, typename Allocator>
 ft::set<Key, Compare, Allocator>::~set() { (void) this; }
+
+template <typename Key, typename Compare, typename Allocator>
+ft::set<Key, Compare, Allocator>&
+ft::set<Key, Compare, Allocator>::operator=(const set &other)
+{
+	if (this != &other)
+	{
+		this->_size = other._size;
+		this->_tree = other._tree;
+	}
+	return *this;
+}
+
+template <typename Key, typename Compare, typename Allocator>
+typename ft::set<Key, Compare, Allocator>::allocator_type
+ft::set<Key, Compare, Allocator>::get_allocator() const
+{
+	return this->_tree.get_allocator();
+}
