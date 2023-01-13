@@ -2,6 +2,7 @@
 
 #include "../algorithm.hpp"
 #include "../map.hpp"
+#include <limits>
 
 template <typename Key, typename T, typename Compare, typename Allocator>
 ft::map<Key, T, Compare, Allocator>::map() : _tree(value_compare(Compare()), Allocator()), _size(0) {}
@@ -402,7 +403,7 @@ ft::map<Key, T, Compare, Allocator>::lower_bound(const Key &key)
 
 	while (node != NULL)
 	{
-		if (not comp(key, node->value.first))
+		if (not comp(node->value.first, key))
 		{
 			result = node;
 			node = node->left;
@@ -426,7 +427,7 @@ ft::map<Key, T, Compare, Allocator>::lower_bound(const Key &key) const
 
 	while (node != NULL)
 	{
-		if (not comp(key, node->value.first))
+		if (not comp(node->value.first, key))
 		{
 			result = node;
 			node = node->left;
@@ -558,8 +559,7 @@ bool ft::operator<(
 		lhs.begin(),
 		lhs.end(),
 		rhs.begin(),
-		rhs.end(),
-		lhs.value_comp()
+		rhs.end()
 	);
 }
 
