@@ -1,7 +1,7 @@
 #include "test_map.hpp"
 #include "tests.hpp"
 
-typedef ft::RedBlackTree<int, std::less<int>, std::allocator<int> > tree_type;
+#include <stack>
 
 int main()
 {
@@ -37,6 +37,10 @@ int main()
 	// Map
 	{
 		test_map<ft::pair, ft::map>(ft::make_pair);
+	}
+	// Stack
+	{
+		test_stack<ft::stack>();
 	}
 	return 0;
 }

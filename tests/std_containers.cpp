@@ -36,5 +36,9 @@ int main()
 	{
 		test_map<std::pair, std::map>(std::make_pair);
 	}
+	// Stack
+	{
+		test_stack<std::stack>();
+	}
 	return 0;
 }
