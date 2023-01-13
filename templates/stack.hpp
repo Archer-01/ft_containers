@@ -52,6 +52,13 @@ namespace ft
 			bool empty() const;
 			size_type size() const;
 
+			/**
+			 * @def Modifiers
+			 *
+			 */
+			void push(const value_type &value);
+			void pop();
+
 		protected:
 			/**
 			 * @def Attributes

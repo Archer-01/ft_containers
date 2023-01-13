@@ -46,3 +46,15 @@ ft::stack<T, Container>::size() const
 {
 	return this->c.size();
 }
+
+template <typename T, typename Container>
+void ft::stack<T, Container>::push(const value_type &value)
+{
+	this->c.push_back(value);
+}
+
+template <typename T, typename Container>
+void ft::stack<T, Container>::pop()
+{
+	this->c.pop_back();
+}
