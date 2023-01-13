@@ -1,6 +1,7 @@
 #pragma once
 
 #include "set.hpp"
+#include <stdexcept>
 
 template <typename Key, typename Compare, typename Allocator>
 ft::set<Key, Compare, Allocator>::set() : _tree(key_compare(), allocator_type()), _size(0) {}
@@ -180,4 +181,92 @@ void ft::set<Key, Compare, Allocator>::insert(
 		this->insert(*first);
 		++first;
 	}
+}
+
+template <typename Key, typename Compare, typename Allocator>
+void ft::set<Key, Compare, Allocator>::erase(iterator position)
+{
+	if (this->find(*position) == this->end())
+	{
+		return;
+	}
+	this->_tree.erase(position.getCurrent());
+	--this->_size;
+}
+
+template <typename Key, typename Compare, typename Allocator>
+void ft::set<Key, Compare, Allocator>::erase(iterator first, iterator last)
+{
+	while (first != last)
+	{
+		iterator tmp = first;
+
+		++first;
+		this->erase(tmp);
+	}
+}
+
+template <typename Key, typename Compare, typename Allocator>
+typename ft::set<Key, Compare, Allocator>::size_type
+ft::set<Key, Compare, Allocator>::erase(const key_type &key)
+{
+	if (this->find(key) == this->end())
+	{
+		return 0;
+	}
+	this->_tree.erase(key);
+	--this->_size;
+	return 1;
+}
+
+template <typename Key, typename Compare, typename Allocator>
+typename ft::set<Key, Compare, Allocator>::iterator
+ft::set<Key, Compare, Allocator>::find(const key_type &key)
+{
+	node_type *root = this->_tree.getRoot();
+	node_type *node = root;
+	key_compare comp;
+
+	while (node != NULL)
+	{
+		if (comp(key, node->value))
+		{
+			node = node->left;
+		}
+		else if (comp(node->value, key))
+		{
+			node = node->right;
+		}
+		else // Found the key
+		{
+			return iterator(node, root);
+		}
+	}
+	return this->end();
+}
+
+template <typename Key, typename Compare, typename Allocator>
+typename ft::set<Key, Compare, Allocator>::const_iterator
+ft::set<Key, Compare, Allocator>::find(const key_type &key) const
+{
+	node_type *root = this->_tree.getRoot();
+	node_type *node = root;
+	key_compare comp;
+
+	while (node != NULL)
+	{
+		if (comp(key, node->value))
+		{
+			node = node->left;
+		}
+		else if (comp(node->value, key))
+		{
+			node = node->right;
+		}
+		else // Found the key
+		{
+			return const_iterator(node, root);
+		}
+	}
+	return this->end();
 }
