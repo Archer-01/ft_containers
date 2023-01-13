@@ -97,6 +97,14 @@ namespace ft
 			reverse_iterator rend();
 			const_reverse_iterator rend() const;
 
+			/**
+			 * @def Capacity
+			 *
+			 */
+			bool empty() const;
+			size_type size() const;
+			size_type max_size() const;
+
 		private:
 			/**
 			 * @def Private typedefs

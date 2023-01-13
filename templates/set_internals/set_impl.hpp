@@ -108,3 +108,23 @@ ft::set<Key, Compare, Allocator>::rend() const
 {
 	return const_reverse_iterator(this->begin());
 }
+
+template <typename Key, typename Compare, typename Allocator>
+bool ft::set<Key, Compare ,Allocator>::empty() const
+{
+	return this->_size == 0;
+}
+
+template <typename key, typename compare, typename allocator>
+typename ft::set<key, compare, allocator>::size_type
+ft::set<key, compare, allocator>::size() const
+{
+	return this->_size;
+}
+
+template <typename key, typename compare, typename allocator>
+typename ft::set<key, compare, allocator>::size_type
+ft::set<key, compare, allocator>::max_size() const
+{
+	return this->_tree.getAllocator().max_size();
+}
