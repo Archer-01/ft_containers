@@ -1,7 +1,6 @@
 #pragma once
 
 #include "set.hpp"
-#include <stdexcept>
 
 template <typename Key, typename Compare, typename Allocator>
 ft::set<Key, Compare, Allocator>::set() : _tree(key_compare(), allocator_type()), _size(0) {}
@@ -419,4 +418,75 @@ typename ft::set<Key, Compare, Allocator>::value_compare
 ft::set<Key, Compare, Allocator>::value_comp() const
 {
 	return value_compare();
+}
+
+template <typename Key, typename Compare, typename Allocator>
+bool ft::operator==(
+	const ft::set<Key, Compare, Allocator> &lhs,
+	const ft::set<Key, Compare, Allocator> &rhs
+)
+{
+	return (
+		lhs.size() == rhs.size()
+		and ft::equal(lhs.begin(), lhs.end(), rhs.begin())
+	);
+}
+
+template <typename Key, typename Compare, typename Allocator>
+bool ft::operator!=(
+	const ft::set<Key, Compare, Allocator> &lhs,
+	const ft::set<Key, Compare, Allocator> &rhs
+)
+{
+	return not (lhs == rhs);
+}
+
+template <typename Key, typename Compare, typename Allocator>
+bool ft::operator<(
+	const ft::set<Key, Compare, Allocator> &lhs,
+	const ft::set<Key, Compare, Allocator> &rhs
+)
+{
+	return ft::lexicographical_compare(
+		lhs.begin(),
+		lhs.end(),
+		rhs.begin(),
+		rhs.end()
+	);
+}
+
+template <typename Key, typename Compare, typename Allocator>
+bool ft::operator<=(
+	const ft::set<Key, Compare, Allocator> &lhs,
+	const ft::set<Key, Compare, Allocator> &rhs
+)
+{
+	return lhs < rhs or lhs == rhs;
+}
+
+template <typename Key, typename Compare, typename Allocator>
+bool ft::operator>(
+	const ft::set<Key, Compare, Allocator> &lhs,
+	const ft::set<Key, Compare, Allocator> &rhs
+)
+{
+	return not (lhs <= rhs);
+}
+
+template <typename Key, typename Compare, typename Allocator>
+bool ft::operator>=(
+	const ft::set<Key, Compare, Allocator> &lhs,
+	const ft::set<Key, Compare, Allocator> &rhs
+)
+{
+	return lhs > rhs or lhs == rhs;
+}
+
+template <typename Key, typename Compare, typename Allocator>
+void ft::swap(
+	ft::set<Key, Compare, Allocator> &lhs,
+	ft::set<Key, Compare, Allocator> &rhs
+)
+{
+	lhs.swap(rhs);
 }

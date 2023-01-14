@@ -1,10 +1,12 @@
 #pragma once
 
-#include "red_black_tree.hpp"
+#include "algorithm.hpp"
 #include "iterator.hpp"
+#include "red_black_tree.hpp"
 #include "stl_iterators.hpp"
 #include <functional>
 #include <memory>
+#include <stdexcept>
 
 namespace ft
 {
@@ -165,6 +167,56 @@ namespace ft
 			tree_type _tree;
 			size_type _size;
 	};
+
+	/**
+	 * @def Relationnal operators (Non-member function)
+	 *
+	 */
+	template <typename Key, typename Compare, typename Allocator>
+	bool operator==(
+		const set<Key, Compare, Allocator> &lhs,
+		const set<Key, Compare, Allocator> &rhs
+	);
+
+	template <typename Key, typename Compare, typename Allocator>
+	bool operator!=(
+		const set<Key, Compare, Allocator> &lhs,
+		const set<Key, Compare, Allocator> &rhs
+	);
+
+	template <typename Key, typename Compare, typename Allocator>
+	bool operator<(
+		const set<Key, Compare, Allocator> &lhs,
+		const set<Key, Compare, Allocator> &rhs
+	);
+
+	template <typename Key, typename Compare, typename Allocator>
+	bool operator<=(
+		const set<Key, Compare, Allocator> &lhs,
+		const set<Key, Compare, Allocator> &rhs
+	);
+
+	template <typename Key, typename Compare, typename Allocator>
+	bool operator>(
+		const set<Key, Compare, Allocator> &lhs,
+		const set<Key, Compare, Allocator> &rhs
+	);
+
+	template <typename Key, typename Compare, typename Allocator>
+	bool operator>=(
+		const set<Key, Compare, Allocator> &lhs,
+		const set<Key, Compare, Allocator> &rhs
+	);
+
+	/**
+	 * @def Swap (Non-member function)
+	 *
+	 */
+	template <typename Key, typename Compare, typename Allocator>
+	void swap(
+		ft::set<Key, Compare, Allocator> &lhs,
+		ft::set<Key, Compare, Allocator> &rhs
+	);
 
 }; // namespace ft
 
