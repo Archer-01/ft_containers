@@ -3,7 +3,6 @@
 #include "red_black_tree.hpp"
 #include "iterator.hpp"
 #include "stl_iterators.hpp"
-#include <algorithm>
 #include <functional>
 #include <memory>
 #include <stdexcept>

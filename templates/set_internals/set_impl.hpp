@@ -1,6 +1,6 @@
 #pragma once
 
-#include "set.hpp"
+#include "../set.hpp"
 
 template <typename Key, typename Compare, typename Allocator>
 ft::set<Key, Compare, Allocator>::set() : _tree(key_compare(), allocator_type()), _size(0) {}
@@ -49,7 +49,7 @@ template <typename Key, typename Compare, typename Allocator>
 typename ft::set<Key, Compare, Allocator>::allocator_type
 ft::set<Key, Compare, Allocator>::get_allocator() const
 {
-	return this->_tree.get_allocator();
+	return this->_tree.getAllocator();
 }
 
 template <typename Key, typename Compare, typename Allocator>
