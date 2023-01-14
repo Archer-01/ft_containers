@@ -54,15 +54,11 @@ namespace ft
 			template <typename InputIterator>
 			vector(
 				InputIterator first,
+				InputIterator last,
+				const Allocator& alloc = Allocator(),
 				typename ft::enable_if<
-					not ft::is_integral<InputIterator>::value,
-					InputIterator
-				>::type last,
-				const Allocator& alloc = Allocator()
-				// HACK: Notice me
-				/* typename ft::enable_if< */
-				/* 	not ft::is_integral<InputIterator>::value */
-				/* >::type * = 0 */
+					not ft::is_integral<InputIterator>::value
+				>::type* /*unused*/ = 0
 			);
 
 			vector(const vector& other);

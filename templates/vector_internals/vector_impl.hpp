@@ -43,11 +43,11 @@ template <typename T, typename Allocator>
 template <typename InputIterator>
 ft::vector<T, Allocator>::vector(
 	InputIterator first,
+	InputIterator last,
+	const Allocator& alloc,
 	typename ft::enable_if<
-		not ft::is_integral<InputIterator>::value,
-		InputIterator
-	>::type last,
-	const Allocator& alloc
+		not ft::is_integral<InputIterator>::value
+	>::type* /*unused*/
 )
 {
 	m_Data = NULL;
