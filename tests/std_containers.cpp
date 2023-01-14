@@ -40,5 +40,9 @@ int main()
 	{
 		test_stack<std::stack>();
 	}
+	// Set
+	{
+		test_set<std::set>();
+	}
 	return 0;
 }

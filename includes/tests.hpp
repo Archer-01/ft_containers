@@ -9,6 +9,7 @@
 #include "test_algorithm.hpp"
 #include "test_map.hpp"
 #include "test_reverse_iterator.hpp"
+#include "test_set.hpp"
 #include "test_stack.hpp"
 #include "test_type_traits.hpp"
 #include "test_utility.hpp"

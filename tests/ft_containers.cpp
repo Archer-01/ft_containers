@@ -1,8 +1,6 @@
 #include "test_map.hpp"
 #include "tests.hpp"
 
-#include <stack>
-
 int main()
 {
 	// Iterator traits
@@ -41,6 +39,10 @@ int main()
 	// Stack
 	{
 		test_stack<ft::stack>();
+	}
+	// Set
+	{
+		test_set<ft::set>();
 	}
 	return 0;
 }
