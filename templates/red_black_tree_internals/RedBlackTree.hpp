@@ -79,9 +79,9 @@ class ft::RedBlackTree
 		void clear();
 		node_type *find(const value_type &val) const;
 		ft::pair<iterator, bool> insert(const value_type &value);
-		ft::pair<iterator, bool> insertAt(iterator position, const value_type &value);
+		ft::pair<iterator, bool> insertAt(const_iterator position, const value_type &value);
 		void erase(const value_type &value);
-		void erase(node_type *node);
+		void erase(const node_type *node);
 
 		/**
 		 * @def Print method
