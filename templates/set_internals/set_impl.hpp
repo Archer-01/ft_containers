@@ -277,3 +277,132 @@ void ft::set<Key, Compare, Allocator>::swap(set &other)
 	std::swap(this->_tree, other._tree);
 	std::swap(this->_size, other._size);
 }
+
+template <typename Key, typename Compare, typename Allocator>
+typename ft::set<Key, Compare, Allocator>::size_type
+ft::set<Key, Compare, Allocator>::count(const key_type &key) const
+{
+	return (this->find(key) != this->end()) ? 1 : 0;
+}
+
+template <typename Key, typename Compare, typename Allocator>
+typename ft::set<Key, Compare, Allocator>::iterator
+ft::set<Key, Compare, Allocator>::lower_bound(const key_type &key)
+{
+	node_type *root = this->_tree.getRoot();
+	node_type *node = root;
+	node_type *result = NULL;
+	key_compare comp;
+
+	while (node != NULL)
+	{
+		if (not comp(node->value, key))
+		{
+			result = node;
+			node = node->left;
+		}
+		else
+		{
+			node = node->right;
+		}
+	}
+	return iterator(result, root);
+}
+
+template <typename Key, typename Compare, typename Allocator>
+typename ft::set<Key, Compare, Allocator>::const_iterator
+ft::set<Key, Compare, Allocator>::lower_bound(const key_type &key) const
+{
+	node_type *root = this->_tree.getRoot();
+	node_type *node = root;
+	node_type *result = NULL;
+	key_compare comp;
+
+	while (node != NULL)
+	{
+		if (not comp(node->value, key))
+		{
+			result = node;
+			node = node->left;
+		}
+		else
+		{
+			node = node->right;
+		}
+	}
+	return const_iterator(result, root);
+}
+
+template <typename Key, typename Compare, typename Allocator>
+typename ft::set<Key, Compare, Allocator>::iterator
+ft::set<Key, Compare, Allocator>::upper_bound(const key_type &key)
+{
+	node_type *root = this->_tree.getRoot();
+	node_type *node = root;
+	node_type *result = NULL;
+	key_compare comp;
+
+	while (node != NULL)
+	{
+		if (comp(key, node->value))
+		{
+			result = node;
+			node = node->left;
+		}
+		else
+		{
+			node = node->right;
+		}
+	}
+	return iterator(result, root);
+}
+
+template <typename Key, typename Compare, typename Allocator>
+typename ft::set<Key, Compare, Allocator>::const_iterator
+ft::set<Key, Compare, Allocator>::upper_bound(const key_type &key) const
+{
+	node_type *root = this->_tree.getRoot();
+	node_type *node = root;
+	node_type *result = NULL;
+	key_compare comp;
+
+	while (node != NULL)
+	{
+		if (comp(key, node->value))
+		{
+			result = node;
+			node = node->left;
+		}
+		else
+		{
+			node = node->right;
+		}
+	}
+	return const_iterator(result, root);
+}
+
+template <typename Key, typename Compare, typename Allocator>
+ft::pair<
+	typename ft::set<Key, Compare, Allocator>::iterator,
+	typename ft::set<Key, Compare, Allocator>::iterator
+>
+ft::set<Key, Compare, Allocator>::equal_range(const key_type &key)
+{
+	return ft::make_pair(
+		this->lower_bound(key),
+		this->upper_bound(key)
+	);
+}
+
+template <typename Key, typename Compare, typename Allocator>
+ft::pair<
+	typename ft::set<Key, Compare, Allocator>::const_iterator,
+	typename ft::set<Key, Compare, Allocator>::const_iterator
+>
+ft::set<Key, Compare, Allocator>::equal_range(const key_type &key) const
+{
+	return ft::make_pair(
+		this->lower_bound(key),
+		this->upper_bound(key)
+	);
+}
