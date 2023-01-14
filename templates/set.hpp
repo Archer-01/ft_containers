@@ -144,6 +144,13 @@ namespace ft
 				const key_type &key
 			) const;
 
+			/**
+			 * @def Observers
+			 *
+			 */
+			key_compare key_comp() const;
+			value_compare value_comp() const;
+
 		private:
 			/**
 			 * @def Private typedefs

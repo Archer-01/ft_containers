@@ -406,3 +406,17 @@ ft::set<Key, Compare, Allocator>::equal_range(const key_type &key) const
 		this->upper_bound(key)
 	);
 }
+
+template <typename Key, typename Compare, typename Allocator>
+typename ft::set<Key, Compare, Allocator>::key_compare
+ft::set<Key, Compare, Allocator>::key_comp() const
+{
+	return key_compare();
+}
+
+template <typename Key, typename Compare, typename Allocator>
+typename ft::set<Key, Compare, Allocator>::value_compare
+ft::set<Key, Compare, Allocator>::value_comp() const
+{
+	return value_compare();
+}
